@@ -1,0 +1,42 @@
+name: rookiesblog-directus
+services:
+  directus:
+    image: directus/directus
+    container_name: directus
+    restart: unless-stopped
+    ports:
+      - '8055:8055'
+    volumes:
+      - ./tempdata/directus/uploads:/directus/uploads
+      - ./tempdata/directus/extensions:/directus/extensions
+    environment:
+      SECRET: ${DIRECTUS_SECRET_KEY:-this_is_not_secure_change_in_production}
+
+      DB_CLIENT: postgres
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_DATABASE: ${POSTGRES_DB}
+      DB_USER: ${POSTGRES_USER}
+      DB_PASSWORD: ${POSTGRES_PASSWORD}
+
+      ADMIN_EMAIL: ${DIRECTUS_ADMIN_EMAIL}
+      ADMIN_PASSWORD: ${DIRECTUS_ADMIN_PASSWORD}
+    networks:
+      - directus-network
+
+  postgres:
+    image: postgres:18
+    container_name: directus_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - ./tempdata/postgres:/var/lib/postgresql/
+    networks:
+      - directus-network
+
+networks:
+  directus-network:
+    driver: bridge
