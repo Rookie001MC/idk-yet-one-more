@@ -137,8 +137,6 @@
 	}
 
 	.welcome-text {
-		font-size: 1.25rem;
-		font-weight: 300;
 		margin: 0;
 
 		& + .welcome-text {
