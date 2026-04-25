@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { BlogPost } from '$lib/server/directus';
 	import { PUBLIC_DIRECTUS_URL } from '$env/static/public';
+	import { resolve } from '$app/paths';
 
 	let {
 		post,
@@ -25,7 +26,7 @@
 
 <article class="post-card" class:featured class:compact>
 	{#if post.featuredImage}
-		<a href="/blog/{post.slug}" class="post-image">
+		<a href={resolve(`/blog/${post.slug}`)} class="post-image">
 			<img
 				src={`${PUBLIC_DIRECTUS_URL}/assets/${post.featuredImage.id}?width=${featured ? 1200 : 800}&height=${featured ? 600 : 450}&fit=cover`}
 				alt={post.featuredImage.title}
@@ -37,7 +38,7 @@
 	<div class="post-content">
 		<div class="post-meta">
 			{#if post.category}
-				<a href="/category/{post.category.slug}" class="post-category">
+				<a href={resolve(`/category/${post.category.slug}`)} class="post-category">
 					{post.category.name}
 				</a>
 				<span class="meta-divider">·</span>
@@ -46,7 +47,7 @@
 		</div>
 
 		<h3 class="post-title">
-			<a href="/blog/{post.slug}">{post.title}</a>
+			<a href={resolve(`/blog/${post.slug}`)}>{post.title}</a>
 		</h3>
 
 		{#if !compact}
