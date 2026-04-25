@@ -36,9 +36,9 @@
     "wrangler": "^4.81.0"
   },
   "dependencies": {
-    "@fontsource/eb-garamond": "^5.2.7",
+    "@fontsource-variable/eb-garamond": "^5.2.7",
+    "@fontsource-variable/jetbrains-mono": "^5.2.8",
     "@fontsource/instrument-serif": "^5.2.8",
-    "@fontsource/jetbrains-mono": "^5.2.8",
     "marked": "^18.0.2",
     "svelte-sonner": "^1.1.1"
   },
