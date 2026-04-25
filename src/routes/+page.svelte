@@ -101,7 +101,7 @@
 		width: 100%;
 		max-width: 1200px;
 		margin: 0 auto;
-		padding: 0 var(--space-md) var(--space-xl);
+		padding: 0 var(--space-sm) var(--space-xl);
 		height: 100%;
 		display: flex;
 		align-items: flex-end;
@@ -124,7 +124,7 @@
 	.welcome-container {
 		max-width: 1200px;
 		margin: 0 auto;
-		padding: 0 var(--space-md);
+		padding: 0 var(--space-sm);
 		display: flex;
 		flex-direction: column;
 		gap: var(--space-md);
@@ -151,7 +151,7 @@
 	.posts-container {
 		max-width: 1200px;
 		margin: 0 auto;
-		padding: 0 var(--space-md);
+		padding: 0 var(--space-sm);
 		display: flex;
 		flex-direction: column;
 		gap: var(--space-lg);

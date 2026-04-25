@@ -78,7 +78,7 @@
 		width: 100%;
 		max-width: 1200px;
 		margin: 0 auto;
-		padding: 0 var(--space-md);
+		padding: 0 var(--space-sm);
 	}
 
 	.footer-grid {
