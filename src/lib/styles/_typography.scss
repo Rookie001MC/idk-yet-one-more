@@ -1,6 +1,6 @@
-@use '@fontsource/instrument-serif';
-@use '@fontsource/eb-garamond';
-@use '@fontsource/jetbrains-mono';
+@import '@fontsource/instrument-serif/index.css';
+@import '@fontsource-variable/eb-garamond/index.css';
+@import '@fontsource-variable/jetbrains-mono/index.css';
 
 :root {
 	--font-heading: 'Instrument Serif', serif;
