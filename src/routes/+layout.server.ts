@@ -5,13 +5,13 @@ export async function load() {
 		const categories = await fetchCategories();
 		return {
 			categories,
-			cmsError: categories.length === 0
+			cmsError: false
 		};
 	} catch (error) {
+		console.error('Layout load error:', error);
 		return {
 			categories: [],
-			cmsError: true,
-			error
+			cmsError: true
 		};
 	}
 }

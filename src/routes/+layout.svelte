@@ -1,11 +1,42 @@
 <script lang="ts">
-	import favicon from '$lib/assets/favicon.svg';
+	import '$lib/styles/main.scss';
 
-	let { children } = $props();
+	import Header from '$lib/components/Header.svelte';
+	import Footer from '$lib/components/Footer.svelte';
+	import { Toaster, toast } from 'svelte-sonner';
+	import { onMount } from 'svelte';
+
+	let { data, children } = $props();
+
+	onMount(() => {
+		if (data.cmsError) {
+			toast.error('CMS Connection Failed', {
+				description: 'The site is currently running on fallback content.',
+				duration: 5000,
+				position: 'bottom-right'
+			});
+		}
+	});
 </script>
 
-<svelte:head>
-	<link rel="icon" href={favicon} />
-</svelte:head>
+<Toaster richColors closeButton />
 
-{@render children()}
+<div class="app-layout">
+	<Header />
+	<main class="main-content">
+		{@render children()}
+	</main>
+	<Footer />
+</div>
+
+<style>
+	.app-layout {
+		display: flex;
+		flex-direction: column;
+		min-height: 100vh;
+	}
+
+	.main-content {
+		flex: 1;
+	}
+</style>
