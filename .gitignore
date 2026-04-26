@@ -25,3 +25,5 @@ vite.config.ts.timestamp-*
 convertingWPtoSveltekit/*
 
 directus/tempdata/*
+*storybook.log
+storybook-static
