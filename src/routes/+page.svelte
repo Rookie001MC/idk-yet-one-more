@@ -5,7 +5,6 @@
 
 	let { data } = $props();
 	let latestPosts = $derived(data.latestPosts);
-	let heroPost = $derived(latestPosts[0]);
 </script>
 
 <svelte:head>
