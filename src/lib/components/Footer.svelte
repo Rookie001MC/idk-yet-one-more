@@ -56,6 +56,7 @@
 					<a href={resolve('/contact')} class="footer-link">Contact</a>
 				</div>
 				<div class="nav-column">
+					<a href={resolve('/about')} class="footer-link">About</a>
 					<a href={resolve('/privacy-policy')} class="footer-link">Privacy Policy</a>
 				</div>
 			</div>
