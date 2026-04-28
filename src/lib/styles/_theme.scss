@@ -6,7 +6,7 @@
 	--color-contrast: #f6f4f5;
 	--color-contrast-2: #ffffff;
 	--color-accent: #00a4cb;
-	--color-secondary-text: #000;
+	--color-secondary: #000;
 	--color-border: rgba(255, 255, 255, 0.301);
 
 	--color-bg: var(--color-base);
@@ -14,8 +14,6 @@
 	--color-text-muted: var(--color-contrast-2);
 	--color-bg-light: var(--color-base-2);
 	--color-bg-deep: var(--color-base-3);
-	--color-accent: var(--color-accent);
-	--color-secondary-text: var(--color-secondary-text);
 }
 
 body {
