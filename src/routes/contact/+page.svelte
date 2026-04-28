@@ -13,7 +13,7 @@
 >
 	<div class="contact-content">
 		<p>
-			Feel free to write for any reason! No matter what’s on your mind, I’m happy to listen. (Rest
+			Feel free to write for any reason! No matter what's on your mind, I'm happy to listen. (Rest
 			assured, no spam here!)
 		</p>
 

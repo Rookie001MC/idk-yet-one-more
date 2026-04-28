@@ -36,7 +36,7 @@
 			<p>
 				This website is hosted on <strong>Cloudflare Pages</strong>. Cloudflare acts as a reverse
 				proxy and may collect some technical data (like your IP address) for security purposes, such
-				as DDoS protection. This data is handled according to Cloudflare’s privacy policy.
+				as DDoS protection. This data is handled according to Cloudflare's privacy policy.
 			</p>
 		</section>
 

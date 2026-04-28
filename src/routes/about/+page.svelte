@@ -47,18 +47,18 @@
 			</p>
 			<p>
 				And, I know I do, I still have a lot to go through in my years of living on my own terms, on
-				my own ways. I have a long way to go, obviously I’m in my twenties, so why not blow up my
+				my own ways. I have a long way to go, obviously I'm in my twenties, so why not blow up my
 				life without regrets?
 			</p>
 		</section>
 
 		<section class="section">
-			<h2 class="font-heading">I’m a broadcast engineer.</h2>
+			<h2 class="font-heading">I'm a broadcast engineer.</h2>
 			<p><i>well, a junior one at that…</i></p>
 			<h3 class="font-heading">BEUS-Esports</h3>
 			<p>
-				Since freshman year, I’ve been the Head of Broadcast of the University of Science’s Esports
-				Club. And since the summer of 2023, I’ve also been the Head of Broadcast of BEUS Esports.
+				Since freshman year, I've been the Head of Broadcast of the University of Science's Esports
+				Club. And since the summer of 2023, I've also been the Head of Broadcast of BEUS Esports.
 			</p>
 			<p>
 				My work at BEUS Esports been quite a lot. I was the Producer, Technical Director, and
@@ -67,8 +67,8 @@
 				Đoàn Đà Nẵng, and many other small, community events.
 			</p>
 			<p>
-				Besides the events, I also have worked as an Observer for Garena Vietnam’s Arena of Valor
-				tournaments, most notably Arena of Valor’s International Championship 2023 and 2024.
+				Besides the events, I also have worked as an Observer for Garena Vietnam's Arena of Valor
+				tournaments, most notably Arena of Valor's International Championship 2023 and 2024.
 			</p>
 			<img
 				src="https://itsrookienguyen.me/wp-content/uploads/2026/04/DSC_0546-1024x680.jpg"
@@ -78,7 +78,7 @@
 		</section>
 
 		<section class="section">
-			<h2 class="font-heading">I’m a photographer.</h2>
+			<h2 class="font-heading">I'm a photographer.</h2>
 			<p>
 				Photography has been a part of me since grade 10, and my first (and now primary) camera is
 				Fujifilm X-T20. The film-camera-like body design, the beautiful straight-out-of-camera
@@ -96,14 +96,14 @@
 		</section>
 
 		<section class="section">
-			<h2 class="font-heading">What’s this website about?</h2>
+			<h2 class="font-heading">What's this website about?</h2>
 			<p>
 				One of the biggest reason that motivated me to made this blog is from a content creator
 				named Tâm (Instagram, YouTube). Specifically, the YouTube video titled Lý do mình “tài liệu
 				hoá” cuộc đời mình (Why I document my life).
 			</p>
 			<p>
-				I’ll write about the whole thing later, but in short: I wanted to record my life, to keep my
+				I'll write about the whole thing later, but in short: I wanted to record my life, to keep my
 				thoughts in a place I can reflect in the future, or to jot down quick thoughts that I want
 				to share, and so on.
 			</p>
