@@ -1,11 +1,11 @@
 <script lang="ts">
 	import { Admonition } from '$lib/components/ui/admonition';
 
-	interface Props {
-		variant?: 'note' | 'tip' | 'warning' | 'caution';
+	type Props = {
+		variant?: 'note' | 'tip' | 'important' | 'warning' | 'caution';
 		title?: string;
 		content?: string;
-	}
+	};
 
 	let { variant = 'note', title, content }: Props = $props();
 </script>

@@ -1,12 +1,11 @@
-import type { Meta, StoryObj } from '@storybook/svelte';
-import { Admonition } from '../ui/admonition';
+import type { Meta, StoryObj } from '@storybook/sveltekit';
 import AdmonitionDemo from './AdmonitionDemo.svelte';
 
 const meta = {
 	title: 'UI/Admonition',
 	component: AdmonitionDemo,
 	tags: ['autodocs']
-} satisfies Meta<AdmonitionDemo>;
+} satisfies Meta<typeof AdmonitionDemo>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
@@ -15,7 +14,8 @@ export const Default: Story = {
 	args: {
 		variant: 'note',
 		title: 'Note',
-		content: 'This is a note admonition. It highlights information that users should take into account.'
+		content:
+			'This is a note admonition. It highlights information that users should take into account.'
 	}
 };
 
