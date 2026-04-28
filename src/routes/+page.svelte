@@ -1,6 +1,5 @@
 <script lang="ts">
 	import PostCard from '$lib/components/PostCard.svelte';
-	import { PUBLIC_DIRECTUS_URL } from '$env/static/public';
 	import siteCover from '$lib/assets/site-cover.jpg';
 
 	let { data } = $props();
