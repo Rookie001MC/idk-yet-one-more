@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { Admonition } from '$lib/components/ui/admonition';
 	// Static content replicated from https://itsrookienguyen.me/about/
 </script>
 
@@ -111,10 +112,15 @@
 				Development, like those Jamstack sites and all, and also to train my long lost eye of art
 				that I only recently found.
 			</p>
-			<p class="update-note">
-				<strong>Update (15/04/2026):</strong> As of right now though, I have basically moved to WordPress
-				for this blog. Feels bad for not maintaining that old version, but Svelte 5 broke a lot…
-			</p>
+			<Admonition variant="note">
+				<Admonition.Title>Update (15/04/2026)</Admonition.Title>
+				<Admonition.Description>
+					<p>
+						As of right now though, I have basically moved to WordPress for this blog. Feels bad for
+						not maintaining that old version, but Svelte 5 broke a lot…
+					</p>
+				</Admonition.Description>
+			</Admonition>
 			<p>
 				Since this is still considered ever-changing, it may break frequently as this website goes
 				through constant changes and updates, and I get less dumb at coding/design in general, and
@@ -214,13 +220,6 @@
 				width: 100%;
 				border-radius: var(--radius-md);
 				margin: var(--space-lg) 0;
-			}
-
-			.update-note {
-				background-color: var(--color-bg-light);
-				padding: var(--space-md);
-				border-radius: var(--radius-md);
-				border-left: 4px solid var(--color-text);
 			}
 		}
 	}
