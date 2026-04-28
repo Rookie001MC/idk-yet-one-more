@@ -1,4 +1,5 @@
 import type { Preview } from '@storybook/sveltekit'
+import '$lib/styles/main.scss'
 
 const preview: Preview = {
   parameters: {
