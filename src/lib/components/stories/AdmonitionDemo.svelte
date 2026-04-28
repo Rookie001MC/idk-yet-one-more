@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { Admonition } from '../ui/admonition';
-	
+	import { Admonition } from '$lib/components/ui/admonition';
+
 	interface Props {
 		variant?: 'note' | 'tip' | 'warning' | 'caution';
 		title?: string;
