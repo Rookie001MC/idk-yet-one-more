@@ -2,7 +2,7 @@ import { getDirectusClient } from '$lib/server/directus';
 import { readItems } from '@directus/sdk';
 import type Tag from '$lib/types/tag';
 
-export async function fetchTags(fetch: typeof globalThis.fetch): Promise<Tag[]> {
+export async function fetchTags(fetch?: typeof globalThis.fetch): Promise<Tag[]> {
 	const client = getDirectusClient(fetch);
 	const tags = await client.request(
 		readItems('tags', {
@@ -15,7 +15,7 @@ export async function fetchTags(fetch: typeof globalThis.fetch): Promise<Tag[]> 
 
 export async function fetchTagBySlug(
 	slug: string,
-	fetch: typeof globalThis.fetch
+	fetch?: typeof globalThis.fetch
 ): Promise<Tag | null> {
 	const client = getDirectusClient(fetch);
 	const tags = await client.request(
@@ -33,14 +33,17 @@ export async function fetchTagBySlug(
 }
 
 // Tags are usually are multiple, and the data type is usually an array of int[]
-export async function fetchTagsByIds(id: number[], fetch: typeof globalThis.fetch): Promise<Tag[]> {
+export async function fetchTagsByIds(
+	id: number[],
+	fetch?: typeof globalThis.fetch
+): Promise<Tag[]> {
 	const client = getDirectusClient(fetch);
 	const tags = await client.request(
 		readItems('tags', {
 			fields: ['*'],
 			filter: {
 				id: {
-					in: id
+					_in: id
 				}
 			},
 			limit: 20

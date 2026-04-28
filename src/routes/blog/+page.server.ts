@@ -3,12 +3,10 @@ import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ fetch }) => {
 	try {
-		const posts = await fetchAllPosts(fetch, [
-			'*',
-			'category.*',
-			'tags.tagsId.*',
-			'featuredImage.*'
-		]);
+		const posts = await fetchAllPosts(
+			['*', 'category.*', 'tags.tagsId.*', 'featuredImage.*'],
+			fetch
+		);
 
 		return {
 			posts

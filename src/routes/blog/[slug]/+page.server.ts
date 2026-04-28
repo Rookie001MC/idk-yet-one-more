@@ -4,12 +4,11 @@ import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ params, fetch }) => {
 	try {
-		const post = await fetchPostBySlug(params.slug, fetch, [
-			'*',
-			'category.*',
-			'tags.tagsId.*',
-			'featuredImage.*'
-		]);
+		const post = await fetchPostBySlug(
+			params.slug,
+			['*', 'category.*', 'tags.tagsId.*', 'featuredImage.*'],
+			fetch
+		);
 		if (!post) {
 			throw error(404, 'Post not found');
 		}

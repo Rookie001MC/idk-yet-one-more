@@ -2,7 +2,7 @@ import { getDirectusClient } from '$lib/server/directus';
 import { readItems } from '@directus/sdk';
 import type Category from '$lib/types/category';
 
-export async function fetchCategories(fetch: typeof globalThis.fetch): Promise<Category[]> {
+export async function fetchCategories(fetch?: typeof globalThis.fetch): Promise<Category[]> {
 	const client = getDirectusClient(fetch);
 	const categories = await client.request(
 		readItems('categories', {
@@ -15,7 +15,7 @@ export async function fetchCategories(fetch: typeof globalThis.fetch): Promise<C
 
 export async function fetchCategoriesBySlug(
 	slug: string,
-	fetch: typeof globalThis.fetch
+	fetch?: typeof globalThis.fetch
 ): Promise<Category | null> {
 	const client = getDirectusClient(fetch);
 	const categories = await client.request(
@@ -34,7 +34,7 @@ export async function fetchCategoriesBySlug(
 
 export async function fetchCategoryById(
 	id: number,
-	fetch: typeof globalThis.fetch
+	fetch?: typeof globalThis.fetch
 ): Promise<Category | null> {
 	const client = getDirectusClient(fetch);
 	const categories = await client.request(

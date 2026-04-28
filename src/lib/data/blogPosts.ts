@@ -4,8 +4,8 @@ import type BlogPost from '$lib/types/blogPost';
 
 export async function fetchLatestPosts(
 	limit: number = 3,
-	fetch: typeof globalThis.fetch,
-	fields: any[] = ['*']
+	fields: any[] = ['*'],
+	fetch?: typeof globalThis.fetch
 ): Promise<BlogPost[]> {
 	const client = getDirectusClient(fetch);
 	const posts = await client.request(
@@ -24,8 +24,8 @@ export async function fetchLatestPosts(
 }
 
 export async function fetchAllPosts(
-	fetch: typeof globalThis.fetch,
-	fields: any[] = ['*']
+	fields: any[] = ['*'],
+	fetch?: typeof globalThis.fetch
 ): Promise<BlogPost[]> {
 	const client = getDirectusClient(fetch);
 	const posts = await client.request(
@@ -44,8 +44,8 @@ export async function fetchAllPosts(
 
 export async function fetchPostBySlug(
 	slug: string,
-	fetch: typeof globalThis.fetch,
-	fields: any[] = ['*']
+	fields: any[] = ['*'],
+	fetch: typeof globalThis.fetch
 ): Promise<BlogPost | null> {
 	const client = getDirectusClient(fetch);
 	const posts = await client.request(
