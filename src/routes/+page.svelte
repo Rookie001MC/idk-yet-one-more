@@ -1,6 +1,7 @@
 <script lang="ts">
 	import PostCard from '$lib/components/PostCard.svelte';
 	import siteCover from '$lib/assets/site-cover.jpg';
+	import { resolve } from '$app/paths';
 
 	let { data } = $props();
 	let latestPosts = $derived(data.latestPosts);
@@ -56,7 +57,7 @@
 			{/if}
 
 			<div class="view-all-wrapper">
-				<a href="/blog" class="btn-primary">View All Posts</a>
+				<a href={resolve('/blog')} class="btn-primary">View All Posts</a>
 			</div>
 		</div>
 	{/if}
