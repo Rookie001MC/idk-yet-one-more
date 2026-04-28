@@ -13,7 +13,7 @@
 
 <!-- Hero Section -->
 <section class="hero">
-	<img src={siteCover} alt="Site Cover" class="hero-bg" />
+	<enhanced:img src={siteCover} alt="Site Cover" class="hero-bg" />
 	<div class="hero-overlay"></div>
 
 	<div class="hero-content">
