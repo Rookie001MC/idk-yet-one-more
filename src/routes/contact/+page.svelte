@@ -49,11 +49,6 @@
 
 <style lang="scss">
 	.contact-content {
-		h2 {
-			font-size: var(--font-size-h2);
-			margin-bottom: var(--space-md);
-		}
-
 		p {
 			margin-bottom: var(--space-md);
 		}

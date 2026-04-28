@@ -38,7 +38,7 @@
 
 		<div class="header-content container">
 			<div class="post-meta">
-				{#if post.category}
+				{#if post.category && typeof post.category === 'object'}
 					<a href="/category/{post.category.slug}" class="post-category">
 						{post.category.name}
 					</a>
@@ -58,8 +58,10 @@
 		{#if post.tags && post.tags.length > 0}
 			<footer class="post-footer">
 				<div class="tags">
-					{#each post.tags as tagObj (tagObj.tagsId.id)}
-						<a href="/tag/{tagObj.tagsId.slug}" class="tag">#{tagObj.tagsId.name}</a>
+					{#each post.tags as tagObj (typeof tagObj.tagsId === 'object' ? tagObj.tagsId.id : tagObj.tagsId)}
+						{#if typeof tagObj.tagsId === 'object'}
+							<a href="/tag/{tagObj.tagsId.slug}" class="tag">#{tagObj.tagsId.name}</a>
+						{/if}
 					{/each}
 				</div>
 			</footer>

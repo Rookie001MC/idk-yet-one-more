@@ -1,15 +1,15 @@
-import type { Preview } from '@storybook/sveltekit'
-import '$lib/styles/main.scss'
+import type { Preview } from '@storybook/sveltekit';
+import '$lib/styles/main.scss';
 
 const preview: Preview = {
-  parameters: {
-    controls: {
-      matchers: {
-       color: /(background|color)$/i,
-       date: /Date$/i,
-      },
-    },
-  },
+	parameters: {
+		controls: {
+			matchers: {
+				color: /(background|color)$/i,
+				date: /Date$/i
+			}
+		}
+	}
 };
 
 export default preview;

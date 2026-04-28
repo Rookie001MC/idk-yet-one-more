@@ -105,13 +105,14 @@ export async function fetchPostsByTag(
 					_eq: 'published'
 				},
 				tags: {
+					// @ts-ignore - Directus SDK types can be tricky with M2M filtering
 					tagsId: {
 						slug: {
 							_eq: slug
 						}
 					}
 				}
-			}
+			} as any
 		})
 	);
 	return posts as unknown as BlogPost[];
@@ -132,13 +133,14 @@ export async function fetchPostsByTagId(
 					_eq: 'published'
 				},
 				tags: {
+					// @ts-ignore
 					tagsId: {
 						id: {
 							_eq: id
 						}
 					}
 				}
-			}
+			} as any
 		})
 	);
 	return posts as unknown as BlogPost[];

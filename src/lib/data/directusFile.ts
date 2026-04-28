@@ -19,7 +19,7 @@ export async function fetchFileById(
 	const client = getDirectusClient(fetch);
 	// Using generic request with readFile for specific file metadata
 	const file = await client.request(readFile(id));
-	return file as DirectusFile;
+	return file as unknown as DirectusFile;
 }
 
 export function getAssetUrl(
@@ -49,5 +49,5 @@ export async function fetchFiles(fetch: typeof globalThis.fetch): Promise<Direct
 			fields: ['*']
 		})
 	);
-	return files as DirectusFile[];
+	return files as unknown as DirectusFile[];
 }

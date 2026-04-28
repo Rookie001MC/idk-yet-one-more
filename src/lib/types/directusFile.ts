@@ -11,7 +11,7 @@ export default interface DirectusFile {
 	modified_by: string | null;
 	modified_on: string;
 	charset: string | null;
-	filesize: number;
+	filesize: number | string;
 	width: number | null;
 	height: number | null;
 	duration: number | null;
