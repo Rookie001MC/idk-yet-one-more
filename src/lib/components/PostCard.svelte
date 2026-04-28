@@ -37,7 +37,7 @@
 
 	<div class="post-content">
 		<div class="post-meta">
-			{#if post.category}
+			{#if post.category && typeof post.category === 'object'}
 				<a href={resolve(`/category/${post.category.slug}`)} class="post-category">
 					{post.category.name}
 				</a>
@@ -52,8 +52,8 @@
 
 		{#if post.tags && post.tags.length > 0}
 			<div class="post-tags">
-				{#each post.tags as tagObj (tagObj.id)}
-					{#if typeof tagObj.tagsId !== 'number'}
+				{#each post.tags as tagObj}
+					{#if tagObj.tagsId && typeof tagObj.tagsId === 'object'}
 						<a href={resolve(`/tag/${tagObj.tagsId.slug}`)} class="post-tag">
 							#{tagObj.tagsId.name}
 						</a>

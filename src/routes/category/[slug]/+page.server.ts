@@ -9,7 +9,11 @@ export async function load({ params }) {
 			throw error(404, 'Category not found');
 		}
 
-		const posts = await fetchPostsByCategory(params.slug);
+		const posts = await fetchPostsByCategory(
+			params.slug,
+			['*', 'category.*', 'tags.tagsId.*', 'featuredImage.*'],
+			fetch
+		);
 
 		return {
 			category,
