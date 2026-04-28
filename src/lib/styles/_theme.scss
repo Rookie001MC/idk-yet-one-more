@@ -1,9 +1,22 @@
 :root {
-	--color-bg: #0a042a;
-	--color-text: #f6f4f5;
-	--color-text-muted: #a0a0b0;
-	--color-border: rgba(255, 255, 255, 0.1);
-	--color-bg-light: rgba(255, 255, 255, 0.05);
+	// Copied directly from WP, with some modifications to fit my style
+	--color-base: #0a042a;
+	--color-base-2: #1d1745;
+	--color-base-3: #241a66;
+	--color-contrast: #f6f4f5;
+	--color-contrast-2: #ffffff;
+	--color-accent: #00a4cb;
+	--color-secondary-text: #000;
+	--color-border: #000;
+
+	--color-bg: var(--color-base);
+	--color-text: var(--color-contrast);
+	--color-text-muted: var(--color-contrast-2);
+	--color-border: var(--color-border);
+	--color-bg-light: var(--color-base-2);
+	--color-bg-deep: var(--color-base-3);
+	--color-accent: var(--color-accent);
+	--color-secondary-text: var(--color-secondary-text);
 }
 
 body {
