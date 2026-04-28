@@ -1,8 +1,13 @@
-import { fetchLatestPosts } from '$lib/server/directus';
+import { fetchLatestPosts } from '$lib/data/blogPosts';
 
 export async function load() {
 	try {
-		const latestPosts = await fetchLatestPosts(6);
+		const latestPosts = await fetchLatestPosts(6, fetch, [
+			'*',
+			'category.*',
+			'tags.tagsId.*',
+			'featuredImage.*'
+		]);
 		return {
 			latestPosts
 		};

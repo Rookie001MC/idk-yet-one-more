@@ -1,18 +1,24 @@
-import { fetchPostBySlug } from '$lib/server/directus';
+import { fetchPostBySlug } from '$lib/data/blogPosts';
 import { error } from '@sveltejs/kit';
+import type { PageServerLoad } from './$types';
 
-export async function load({ params }) {
+export const load: PageServerLoad = async ({ params, fetch }) => {
 	try {
-		const post = await fetchPostBySlug(params.slug);
+		const post = await fetchPostBySlug(params.slug, fetch, [
+			'*',
+			'category.*',
+			'tags.tagsId.*',
+			'featuredImage.*'
+		]);
 		if (!post) {
 			throw error(404, 'Post not found');
 		}
 		return {
 			post
 		};
-	} catch (err: any) {
-		if (err.status === 404) throw err;
+	} catch (err) {
+		if (err instanceof Error && 'status' in err && err.status === 404) throw err;
 		console.error('Single post load error:', err);
 		throw error(500, 'Internal Server Error');
 	}
-}
+};

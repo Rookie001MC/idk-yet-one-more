@@ -1,8 +1,15 @@
-import { fetchAllPosts } from '$lib/server/directus';
+import { fetchAllPosts } from '$lib/data/blogPosts';
+import type { PageServerLoad } from './$types';
 
-export async function load() {
+export const load: PageServerLoad = async ({ fetch }) => {
 	try {
-		const posts = await fetchAllPosts();
+		const posts = await fetchAllPosts(fetch, [
+			'*',
+			'category.*',
+			'tags.tagsId.*',
+			'featuredImage.*'
+		]);
+
 		return {
 			posts
 		};
@@ -12,4 +19,4 @@ export async function load() {
 			posts: []
 		};
 	}
-}
+};
