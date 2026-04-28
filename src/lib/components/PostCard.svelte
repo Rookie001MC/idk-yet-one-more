@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { BlogPost } from '$lib/server/directus';
+	import type BlogPost from '$lib/types/blogPost';
 	import { PUBLIC_DIRECTUS_URL } from '$env/static/public';
 	import { resolve } from '$app/paths';
 
@@ -49,6 +49,18 @@
 		<h3 class="post-title">
 			<a href={resolve(`/blog/${post.slug}`)}>{post.title}</a>
 		</h3>
+
+		{#if post.tags && post.tags.length > 0}
+			<div class="post-tags">
+				{#each post.tags as tagObj (tagObj.id)}
+					{#if typeof tagObj.tagsId !== 'number'}
+						<a href={resolve(`/tag/${tagObj.tagsId.slug}`)} class="post-tag">
+							#{tagObj.tagsId.name}
+						</a>
+					{/if}
+				{/each}
+			</div>
+		{/if}
 
 		{#if !compact}
 			<p class="post-excerpt">
@@ -123,6 +135,27 @@
 				opacity: 0.8;
 				text-decoration: underline;
 			}
+		}
+	}
+
+	.post-tags {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--space-xs);
+		margin-top: var(--space-xs);
+	}
+
+	.post-tag {
+		font-size: var(--font-size-sm);
+		color: var(--color-text-muted);
+		text-decoration: none;
+		background-color: var(--color-base-3);
+		padding: 2px 8px;
+		border-radius: var(--radius-sm);
+
+		&:hover {
+			color: var(--color-primary);
+			background-color: var(--color-accent);
 		}
 	}
 
