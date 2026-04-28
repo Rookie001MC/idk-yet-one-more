@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/sveltekit';
 import PostCard from '../PostCard.svelte';
-import type { BlogPost } from '$lib/server/directus';
+import type BlogPost from '$lib/types/blogPost';
 
 const meta = {
 	title: 'Components/PostCard',
