@@ -1,4 +1,5 @@
-import { fetchCategoryBySlug, fetchPostsByCategory } from '$lib/server/directus';
+import { fetchPostsByCategory } from '$lib/data/blogPosts';
+import { fetchCategoryBySlug } from '$lib/data/categories';
 import { error } from '@sveltejs/kit';
 
 export async function load({ params }) {
