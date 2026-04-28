@@ -3,12 +3,14 @@
 - **Language**: TypeScript
 - **Package Manager**: bun
 - **Add-ons**: prettier, eslint, sveltekit-adapter, mcp
+- **Styling**: Sass
+- **Icons**: `@lucide/svelte`, `simple-icons`
 
 ---
 
 You are able to use the Svelte MCP server, where you have access to comprehensive Svelte 5 and SvelteKit documentation. Here's how to use the available tools effectively:
 
-## Available Svelte MCP Tools:
+## Available Svelte MCP Tools
 
 ### 1. list-sections
 
