@@ -1,4 +1,4 @@
-import { fetchCategories } from '$lib/server/directus';
+import { fetchCategories } from '$lib/data/categories';
 
 export async function load() {
 	try {
