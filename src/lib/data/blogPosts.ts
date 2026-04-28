@@ -64,3 +64,82 @@ export async function fetchPostBySlug(
 	);
 	return posts.length > 0 ? (posts[0] as unknown as BlogPost) : null;
 }
+
+export async function fetchPostsByCategory(
+	slug: string,
+	fields: any[] = ['*'],
+	fetch?: typeof globalThis.fetch
+): Promise<BlogPost[]> {
+	const client = getDirectusClient(fetch);
+	const posts = await client.request(
+		readItems('blogPosts', {
+			fields,
+			sort: ['-datePublished'],
+			filter: {
+				status: {
+					_eq: 'published'
+				},
+				category: {
+					slug: {
+						_eq: slug
+					}
+				}
+			}
+		})
+	);
+	return posts as unknown as BlogPost[];
+}
+
+export async function fetchPostsByTag(
+	slug: string,
+	fields: any[] = ['*'],
+	fetch?: typeof globalThis.fetch
+): Promise<BlogPost[]> {
+	const client = getDirectusClient(fetch);
+	const posts = await client.request(
+		readItems('blogPosts', {
+			fields,
+			sort: ['-datePublished'],
+			filter: {
+				status: {
+					_eq: 'published'
+				},
+				tags: {
+					tagsId: {
+						slug: {
+							_eq: slug
+						}
+					}
+				}
+			}
+		})
+	);
+	return posts as unknown as BlogPost[];
+}
+
+export async function fetchPostsByTagId(
+	id: number,
+	fields: any[] = ['*'],
+	fetch?: typeof globalThis.fetch
+): Promise<BlogPost[]> {
+	const client = getDirectusClient(fetch);
+	const posts = await client.request(
+		readItems('blogPosts', {
+			fields,
+			sort: ['-datePublished'],
+			filter: {
+				status: {
+					_eq: 'published'
+				},
+				tags: {
+					tagsId: {
+						id: {
+							_eq: id
+						}
+					}
+				}
+			}
+		})
+	);
+	return posts as unknown as BlogPost[];
+}

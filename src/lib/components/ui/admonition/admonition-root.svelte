@@ -27,11 +27,7 @@
 	const color = $derived(colors[variant]);
 </script>
 
-<div
-	class="admonition admonition-{variant} {className}"
-	style:--admonition-color={color}
-	{...rest}
->
+<div class="admonition admonition-{variant} {className}" style:--admonition-color={color} {...rest}>
 	{@render children?.()}
 </div>
 

@@ -10,14 +10,15 @@ export async function load({ params }) {
 		}
 
 		const posts = await fetchPostsByCategory(params.slug);
-		
+
 		return {
 			category,
 			posts
 		};
-	} catch (err: any) {
-		if (err.status === 404) throw err;
+	} catch (err) {
+		if (err && typeof err === 'object' && 'status' in err && err.status === 404) throw err;
 		console.error('Category page load error:', err);
 		throw error(500, 'Internal Server Error');
 	}
 }
+

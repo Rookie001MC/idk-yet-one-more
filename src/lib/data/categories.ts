@@ -13,7 +13,7 @@ export async function fetchCategories(fetch?: typeof globalThis.fetch): Promise<
 	return categories as Category[];
 }
 
-export async function fetchCategoriesBySlug(
+export async function fetchCategoryBySlug(
 	slug: string,
 	fetch?: typeof globalThis.fetch
 ): Promise<Category | null> {

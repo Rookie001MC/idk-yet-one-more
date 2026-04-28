@@ -4,7 +4,7 @@ import { createDirectus, rest, staticToken } from '@directus/sdk';
 import type { Schema } from '$lib/types/schema';
 
 /**
- * Legacy fetch wrapper for raw API calls. 
+ * Legacy fetch wrapper for raw API calls.
  * @deprecated Use getDirectusClient(fetch).request(...) instead for full type safety.
  */
 export async function fetchDirectus<T>(path: string, options: RequestInit = {}): Promise<T> {

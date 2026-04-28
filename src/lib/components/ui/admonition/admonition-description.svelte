@@ -17,7 +17,7 @@
 	.admonition-content {
 		line-height: 1.6;
 	}
-	
+
 	.admonition-content :global(p:last-child) {
 		margin-bottom: 0;
 	}
