@@ -13,7 +13,9 @@
 	<header class="page-header">
 		<div class="container">
 			<h1 class="page-title font-heading">Blog</h1>
-			<p class="page-description">A collection of random thoughts, experiences, and whatever comes to mind.</p>
+			<p class="page-description">
+				A collection of random thoughts, experiences, and whatever comes to mind.
+			</p>
 		</div>
 	</header>
 
@@ -40,7 +42,7 @@
 	}
 
 	.page-header {
-		padding: var(--space-xl) 0 var(--space-lg);
+		padding: var(--space-lg) 0 var(--space-lg);
 		background-color: var(--color-bg);
 	}
 

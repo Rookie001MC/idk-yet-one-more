@@ -7,12 +7,11 @@
 	--color-contrast-2: #ffffff;
 	--color-accent: #00a4cb;
 	--color-secondary-text: #000;
-	--color-border: #000;
+	--color-border: rgba(255, 255, 255, 0.301);
 
 	--color-bg: var(--color-base);
 	--color-text: var(--color-contrast);
 	--color-text-muted: var(--color-contrast-2);
-	--color-border: var(--color-border);
 	--color-bg-light: var(--color-base-2);
 	--color-bg-deep: var(--color-base-3);
 	--color-accent: var(--color-accent);
@@ -36,4 +35,24 @@ button {
 	color: inherit;
 	cursor: pointer;
 	font: inherit;
+}
+
+hr {
+	margin: var(--space-lg) 0;
+	border-top: 0.5px solid var(--color-border);
+}
+
+strong {
+	color: var(--color-accent);
+	font-weight: 600;
+}
+
+a {
+	color: var(--color-accent);
+	transition: color 0.2s ease;
+
+	&:hover {
+		text-decoration: underline;
+		color: var(--color-text);
+	}
 }

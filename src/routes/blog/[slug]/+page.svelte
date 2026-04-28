@@ -15,7 +15,7 @@
 			: ''
 	);
 
-	const htmlContent = $derived(marked.parse(post.content || ''));
+	const htmlContent = $derived(marked.parse(post.content || '', {}));
 </script>
 
 <svelte:head>
