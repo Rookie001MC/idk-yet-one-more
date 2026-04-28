@@ -1,6 +1,5 @@
 <script lang="ts">
-	import { SiFacebook, SiInstagram, SiGithub, SiBluesky } from '@icons-pack/svelte-simple-icons';
-
+	import siteConfig from '$lib/config';
 	import { resolve } from '$app/paths';
 
 	const currentYear = new Date().getFullYear();
@@ -13,51 +12,32 @@
 			<div class="footer-left">
 				<div class="site-title font-heading">Rookie's Blog</div>
 				<div class="social-links">
-					<a
-						href="https://facebook.com/realrookie001"
-						target="_blank"
-						rel="noopener noreferrer"
-						aria-label="Facebook"
-					>
-						<SiFacebook />
-					</a>
-					<a
-						href="https://instagram.com/realrookie001"
-						target="_blank"
-						rel="noopener noreferrer"
-						aria-label="Instagram"
-					>
-						<SiInstagram />
-					</a>
-					<a
-						href="https://github.com/rookie001mc"
-						target="_blank"
-						rel="noopener noreferrer"
-						aria-label="GitHub"
-					>
-						<SiGithub />
-					</a>
-					<a
-						href="https://bsky.app/profile/itsrookienguyen.me"
-						target="_blank"
-						rel="noopener noreferrer"
-						aria-label="Bluesky"
-					>
-						<SiBluesky />
-					</a>
+					{#each siteConfig.social as social (social.name)}
+						{@const Icon = social.icon}
+						<a
+							// eslint-disable-next-line svelte/no-navigation-without-resolve
+							href={social.url}
+							target="_blank"
+							rel="noopener noreferrer"
+							aria-label={social.name}
+						>
+							<Icon></Icon>
+						</a>
+					{/each}
 				</div>
 			</div>
 
 			<!-- Right Column -->
 			<div class="footer-right">
 				<div class="nav-column">
-					<a href={resolve('/')} class="footer-link">Home</a>
-					<a href={resolve('/blog')} class="footer-link">Blog</a>
-					<a href={resolve('/contact')} class="footer-link">Contact</a>
+					{#each siteConfig.leftFooterMenu as menu (menu.label)}
+						<a href={resolve(menu.path)} class="footer-link">{menu.label}</a>
+					{/each}
 				</div>
 				<div class="nav-column">
-					<a href={resolve('/about')} class="footer-link">About</a>
-					<a href={resolve('/privacy-policy')} class="footer-link">Privacy Policy</a>
+					{#each siteConfig.rightFooterMenu as menu (menu.label)}
+						<a href={resolve(menu.path)} class="footer-link">{menu.label}</a>
+					{/each}
 				</div>
 			</div>
 		</div>

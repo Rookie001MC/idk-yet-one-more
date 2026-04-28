@@ -17,6 +17,15 @@ const siteConfig = {
 		{ label: 'Home', path: '/' },
 		{ label: 'About', path: '/about' },
 		{ label: 'Blog', path: '/blog' }
+	],
+	leftFooterMenu: [
+		{ label: 'Home', path: '/' },
+		{ label: 'About', path: '/about' },
+		{ label: 'Blog', path: '/blog' }
+	],
+	rightFooterMenu: [
+		{ label: 'Contact', path: '/contact' },
+		{ label: 'Privacy Policy', path: '/privacy-policy' }
 	]
 };
 
