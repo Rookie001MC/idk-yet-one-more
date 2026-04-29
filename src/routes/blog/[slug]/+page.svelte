@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { marked } from 'marked';
-	import { PUBLIC_DIRECTUS_URL } from '$env/static/public';
-
+	import { resolve } from '$app/paths';
 	let { data } = $props();
 	let post = $derived(data.post);
 
@@ -25,13 +24,9 @@
 
 <article class="single-post">
 	<header class="post-header">
-		{#if post.featuredImage}
+		{#if data.featuredImageUrl}
 			<div class="post-hero">
-				<img
-					src={`${PUBLIC_DIRECTUS_URL}/assets/${post.featuredImage.id}?width=1920&height=1080&fit=cover`}
-					alt={post.featuredImage.title}
-					class="hero-image"
-				/>
+				<img src={data.featuredImageUrl} alt={post.title} class="hero-image" />
 				<div class="hero-overlay"></div>
 			</div>
 		{/if}
@@ -39,7 +34,7 @@
 		<div class="header-content container">
 			<div class="post-meta">
 				{#if post.category && typeof post.category === 'object'}
-					<a href="/category/{post.category.slug}" class="post-category">
+					<a href={resolve(`/category/${post.category.slug}`)} class="post-category">
 						{post.category.name}
 					</a>
 					<span class="meta-divider">·</span>
@@ -60,7 +55,7 @@
 				<div class="tags">
 					{#each post.tags as tagObj (typeof tagObj.tagsId === 'object' ? tagObj.tagsId.id : tagObj.tagsId)}
 						{#if typeof tagObj.tagsId === 'object'}
-							<a href="/tag/{tagObj.tagsId.slug}" class="tag">#{tagObj.tagsId.name}</a>
+							<a href={resolve(`/tag/${tagObj.tagsId.slug}`)} class="tag">#{tagObj.tagsId.name}</a>
 						{/if}
 					{/each}
 				</div>

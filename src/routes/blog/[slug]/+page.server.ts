@@ -1,4 +1,5 @@
 import { fetchPostBySlug } from '$lib/data/blogPosts';
+import { getAssetUrl } from '$lib/data/directusFile';
 import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 
@@ -12,8 +13,14 @@ export const load: PageServerLoad = async ({ params, fetch }) => {
 		if (!post) {
 			throw error(404, 'Post not found');
 		}
+
+		let featuredImageUrl = null;
+		if (post.featuredImage && typeof post.featuredImage !== 'string') {
+			featuredImageUrl = getAssetUrl(post.featuredImage, fetch);
+		}
 		return {
-			post
+			post,
+			featuredImageUrl
 		};
 	} catch (err) {
 		if (err instanceof Error && 'status' in err && err.status === 404) throw err;
