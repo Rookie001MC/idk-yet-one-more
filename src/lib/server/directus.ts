@@ -1,4 +1,4 @@
-import { DIRECTUS_TOKEN } from '$env/dynamic/private';
+import { DIRECTUS_TOKEN } from '$env/static/private';
 import { PUBLIC_DIRECTUS_URL } from '$env/static/public';
 import { createDirectus, rest, staticToken } from '@directus/sdk';
 import type { Schema } from '$lib/types/schema';
