@@ -1,6 +1,5 @@
 <script lang="ts">
 	import PostCard from '$lib/components/PostCard.svelte';
-
 	let { data } = $props();
 	let posts = $derived(data.posts);
 </script>
