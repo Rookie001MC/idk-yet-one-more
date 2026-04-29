@@ -3,7 +3,7 @@ import { getAssetUrl } from '$lib/data/directusFile';
 import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 
-export const load: PageServerLoad = async ({ params, fetch }) => {
+export const load: PageServerLoad = async ({ params, fetch, setHeaders }) => {
 	try {
 		const post = await fetchPostBySlug(
 			params.slug,
@@ -14,9 +14,13 @@ export const load: PageServerLoad = async ({ params, fetch }) => {
 			throw error(404, 'Post not found');
 		}
 
+		setHeaders({
+			'cache-control': 'public, s-maxage=3600, max-age=60'
+		});
+
 		let featuredImageUrl = null;
 		if (post.featuredImage && typeof post.featuredImage !== 'string') {
-			featuredImageUrl = getAssetUrl(post.featuredImage, fetch);
+			featuredImageUrl = getAssetUrl(post.featuredImage);
 		}
 		return {
 			post,
