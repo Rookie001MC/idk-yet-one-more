@@ -2,6 +2,7 @@
 	import PostCard from '$lib/components/PostCard.svelte';
 	import { resolve } from '$app/paths';
 	import siteCover from '$lib/assets/site-cover.jpg';
+	import { Admonition } from '$lib/components/ui/admonition';
 
 	let { data } = $props();
 	let latestPosts = $derived(data.latestPosts);
@@ -23,45 +24,56 @@
 	</div>
 </section>
 
-<!-- Welcome Section -->
-<section class="welcome">
-	<div class="welcome-container">
-		<h2 class="section-heading">Hi there!</h2>
-		<p class="welcome-text">
-			This is the place where I would be writing anything that comes to my mind. Of course, being an
-			outlet of my own <i>(almost)</i> unfiltered thoughts, this place will be random as hell.
-		</p>
-		<p class="welcome-text">So, with that being said, have fun, and be my guest.</p>
-	</div>
-</section>
-
-<!-- Latest Posts Section -->
-<section class="latest-posts">
-	<!-- if connection to Directus is not available, disable this section entirely-->
-	{#if !data.cmsError}
-		<div class="posts-container">
-			<h2 class="section-heading">Latest posts</h2>
-
-			{#if latestPosts.length > 0}
-				<div class="featured-post-wrapper">
-					<PostCard post={latestPosts[0]} featured={true} />
-				</div>
-			{/if}
-
-			{#if latestPosts.length > 1}
-				<div class="posts-grid">
-					{#each latestPosts.slice(1) as post (post.id)}
-						<PostCard {post} compact={true} />
-					{/each}
-				</div>
-			{/if}
-
-			<div class="view-all-wrapper">
-				<a href={resolve('/blog')} class="btn-primary">View All Posts</a>
-			</div>
+<div class="page-main-content">
+	<!-- Welcome Section -->
+	<section class="welcome">
+		<div class="welcome-container">
+			<h2 class="section-heading">Hi there!</h2>
+			<p class="welcome-text">
+				This is the place where I would be writing anything that comes to my mind. Of course, being
+				an outlet of my own <i>(almost)</i> unfiltered thoughts, this place will be random as hell.
+			</p>
+			<p class="welcome-text">So, with that being said, have fun, and be my guest.</p>
 		</div>
-	{/if}
-</section>
+	</section>
+
+	<Admonition variant="important">
+		<Admonition.Title>Here Be Warned!</Admonition.Title>
+		<Admonition.Description>
+			This site is still currently under construction! As this is completely rebuilt from the ground
+			up, a lot of features might not work, and the site might be broken in some cases. Thanks for
+			your understanding!
+		</Admonition.Description>
+	</Admonition>
+
+	<!-- Latest Posts Section -->
+	<section class="latest-posts">
+		<!-- if connection to Directus is not available, disable this section entirely-->
+		{#if !data.cmsError}
+			<div class="posts-container">
+				<h2 class="section-heading">Latest posts</h2>
+
+				{#if latestPosts.length > 0}
+					<div class="featured-post-wrapper">
+						<PostCard post={latestPosts[0]} featured={true} />
+					</div>
+				{/if}
+
+				{#if latestPosts.length > 1}
+					<div class="posts-grid">
+						{#each latestPosts.slice(1) as post (post.id)}
+							<PostCard {post} compact={true} />
+						{/each}
+					</div>
+				{/if}
+
+				<div class="view-all-wrapper">
+					<a href={resolve('/blog')} class="btn-primary">View All Posts</a>
+				</div>
+			</div>
+		{/if}
+	</section>
+</div>
 
 <style lang="scss">
 	.hero {
@@ -116,12 +128,17 @@
 		margin: 0;
 	}
 
+	.page-main-content {
+		max-width: 1300px;
+		margin: 0 auto;
+		padding: 0 var(--space-sm);
+	}
+
 	.welcome {
 		padding: var(--space-xl) 0;
 	}
 
 	.welcome-container {
-		max-width: 1200px;
 		margin: 0 auto;
 		padding: 0 var(--space-sm);
 		display: flex;
@@ -148,7 +165,6 @@
 	}
 
 	.posts-container {
-		max-width: 1200px;
 		margin: 0 auto;
 		padding: 0 var(--space-sm);
 		display: flex;
