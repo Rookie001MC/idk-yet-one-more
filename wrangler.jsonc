@@ -10,6 +10,16 @@
 	},
 	"workers_dev": true,
 	"preview_urls": true,
+	"routes": [
+		{
+			"pattern": "staging.itsrookienguyen.me",
+			"custom_domain": true
+		},
+		{
+			"pattern": "itsrookienguyen.me",
+			"custom_domain": true
+		}
+	],
 	"secrets": {
 		"required": ["DIRECTUS_TOKEN"]
 	},
