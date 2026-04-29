@@ -1,4 +1,4 @@
-import { DIRECTUS_TOKEN } from '$env/static/private';
+import { env } from '$env/dynamic/private';
 import { PUBLIC_DIRECTUS_URL } from '$env/static/public';
 import { createDirectus, rest, staticToken } from '@directus/sdk';
 import type { Schema } from '$lib/types/schema';
@@ -11,7 +11,7 @@ export async function fetchDirectus<T>(path: string, options: RequestInit = {}):
 	const response = await fetch(`${PUBLIC_DIRECTUS_URL}${path}`, {
 		...options,
 		headers: {
-			Authorization: `Bearer ${DIRECTUS_TOKEN}`,
+			Authorization: `Bearer ${env.DIRECTUS_TOKEN}`,
 			'Content-Type': 'application/json',
 			...options.headers
 		}
@@ -37,6 +37,6 @@ export function getDirectusClient(customFetch?: typeof fetch) {
 			fetch: customFetch || fetch
 		}
 	})
-		.with(staticToken(DIRECTUS_TOKEN))
+		.with(staticToken(env.DIRECTUS_TOKEN))
 		.with(rest());
 }
