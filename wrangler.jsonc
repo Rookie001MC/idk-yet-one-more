@@ -9,7 +9,5 @@
 		"directory": ".svelte-kit/cloudflare"
 	},
 	"workers_dev": true,
-	"preview_urls": true,
-	// Remove this when finished fixing issue
-	"upload_source_maps": true
+	"preview_urls": true
 }
