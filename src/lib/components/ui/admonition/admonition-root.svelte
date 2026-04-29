@@ -39,6 +39,7 @@
 		border-left: 4px solid var(--admonition-color);
 		background-color: var(--color-bg-light);
 		color: var(--color-text);
+		min-height: 4rem;
 	}
 
 	/* Variants - backgrounds */
