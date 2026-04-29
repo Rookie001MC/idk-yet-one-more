@@ -9,5 +9,22 @@
 		"directory": ".svelte-kit/cloudflare"
 	},
 	"workers_dev": true,
-	"preview_urls": true
+	"preview_urls": true,
+	"secrets": {
+		"required": ["DIRECTUS_TOKEN"]
+	},
+	"env": {
+		"staging": {
+			"vars": {
+				"PUBLIC_DIRECTUS_URL": "https://directus.itsrookienguyen.me",
+				"PUBLIC_BASE_URL": "https://staging.itsrookienguyen.me"
+			}
+		},
+		"production": {
+			"vars": {
+				"PUBLIC_DIRECTUS_URL": "https://directus.itsrookienguyen.me",
+				"PUBLIC_BASE_URL": "https://itsrookienguyen.me"
+			}
+		}
+	}
 }
