@@ -1,7 +1,7 @@
 <script lang="ts">
 	import PostCard from '$lib/components/PostCard.svelte';
-	import siteCover from '$lib/assets/site-cover.jpg';
 	import { resolve } from '$app/paths';
+	import siteCover from '$lib/assets/site-cover.jpg';
 
 	let { data } = $props();
 	let latestPosts = $derived(data.latestPosts);
@@ -13,7 +13,7 @@
 
 <!-- Hero Section -->
 <section class="hero">
-	<enhanced:img src={siteCover} alt="Site Cover" class="hero-bg" />
+	<img src={siteCover} alt="Site Cover" class="hero-bg" />
 	<div class="hero-overlay"></div>
 
 	<div class="hero-content">
