@@ -1,6 +1,5 @@
 import type Category from './category';
 import type Tag from './tag';
-import type DirectusFile from './directusFile';
 
 export default interface BlogPost {
 	id: number;
@@ -10,7 +9,7 @@ export default interface BlogPost {
 	excerpt: string | null;
 	content: string | null;
 	datePublished: string | null;
-	featuredImage: DirectusFile | null;
+	featuredImage: string | null; // UUID
 	category: Category | number | null;
 	tags: { tagsId: Tag | number }[];
 	user_created: string | null;
