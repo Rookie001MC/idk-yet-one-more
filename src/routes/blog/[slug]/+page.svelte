@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { marked } from 'marked';
 	import { resolve } from '$app/paths';
+	import MarkdownParser from '$lib/components/markdown/MarkdownParser.svelte';
 	let { data } = $props();
 	let post = $derived(data.post);
 
@@ -13,8 +13,6 @@
 				})
 			: ''
 	);
-
-	const htmlContent = $derived(marked.parse(post.content || '', {}));
 </script>
 
 <svelte:head>
@@ -46,7 +44,7 @@
 
 	<div class="post-body container">
 		<div class="content">
-			{@html htmlContent}
+			<MarkdownParser content={post.content ?? ''} />
 		</div>
 
 		{#if post.tags && post.tags.length > 0}
