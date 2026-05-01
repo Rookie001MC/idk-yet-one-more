@@ -1,5 +1,6 @@
-<script lang="ts">
+﻿<script lang="ts">
 	import { Admonition } from '$lib/components/ui/admonition';
+	import Blockquote from '$lib/components/ui/Blockquote.svelte';
 	// Static content replicated from https://itsrookienguyen.me/about/
 </script>
 
@@ -37,10 +38,10 @@
 			<p>
 				Fast forward a few years later, and I found a new meaning, a new life to once-dumb name.
 			</p>
-			<blockquote>
-				“Rookie”, in the Cambridge English dictionary, is defined as a person who is new to an
+			<Blockquote>
+				"Rookie", in the Cambridge English dictionary, is defined as a person who is new to an
 				organization or an activity.
-			</blockquote>
+			</Blockquote>
 			<p>
 				It represents well to how I am now. Who is still pretty much a rookie in life. Who still
 				have too much to learn.
@@ -206,14 +207,6 @@
 			p {
 				margin-bottom: var(--space-md);
 				line-height: 1.8;
-			}
-
-			blockquote {
-				border-left: 4px solid var(--color-text);
-				padding-left: var(--space-md);
-				margin: var(--space-lg) 0;
-				font-style: italic;
-				font-size: 1.1em;
 			}
 
 			.content-image {
