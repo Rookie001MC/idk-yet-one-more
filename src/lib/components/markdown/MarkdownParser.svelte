@@ -1,8 +1,11 @@
 <script lang="ts">
 	import SvelteMarkdown from '@humanspeak/svelte-markdown';
 	import { markedAlert } from '@humanspeak/svelte-markdown/extensions';
+
+	// Custom UI components to wire into Svelte-Markdown
 	import Admonition from '$lib/components/ui/admonition/index';
 	import type { AdmonitionVariant } from '$lib/components/ui/admonition/index';
+	import Blockquote from '$lib/components/ui/Blockquote.svelte';
 
 	let {
 		content,
@@ -20,12 +23,7 @@
 	const renderers = {};
 </script>
 
-<SvelteMarkdown
-	source={content ?? ''}
-	{renderers}
-	extensions={[markedAlert()]}
-	isInline={inline}
->
+<SvelteMarkdown source={content ?? ''} {renderers} extensions={[markedAlert()]} isInline={inline}>
 	{#snippet alert(props: { alertType: string; text: string })}
 		<Admonition variant={props.alertType.toLowerCase() as AdmonitionVariant}>
 			<Admonition.Title />
@@ -35,5 +33,10 @@
 				{@html props.text}
 			</Admonition.Description>
 		</Admonition>
+	{/snippet}
+
+	{#snippet blockquote(props)}
+		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
+		<Blockquote>{@html props.text}</Blockquote>
 	{/snippet}
 </SvelteMarkdown>
