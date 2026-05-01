@@ -7,6 +7,11 @@
 	import type { AdmonitionVariant } from '$lib/components/ui/admonition/index';
 	import Blockquote from '$lib/components/ui/Blockquote.svelte';
 
+	// Self-import for recursive rendering of blockquote / alert inner content.
+	// props.text is raw markdown, not HTML — so it must be parsed again to get
+	// proper paragraph breaks, inline formatting, etc.
+	import MarkdownParser from './MarkdownParser.svelte';
+
 	let {
 		content,
 		inline = false
@@ -28,15 +33,14 @@
 		<Admonition variant={props.alertType.toLowerCase() as AdmonitionVariant}>
 			<Admonition.Title />
 			<Admonition.Description>
-				<!-- Content comes from trusted CMS, not user input -->
-				<!-- eslint-disable-next-line svelte/no-at-html-tags -->
-				{@html props.text}
+				<MarkdownParser content={props.text ?? ''} />
 			</Admonition.Description>
 		</Admonition>
 	{/snippet}
 
-	{#snippet blockquote(props)}
-		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
-		<Blockquote>{@html props.text}</Blockquote>
+	{#snippet blockquote(props: { text?: string })}
+		<Blockquote>
+			<MarkdownParser content={props.text ?? ''} />
+		</Blockquote>
 	{/snippet}
 </SvelteMarkdown>
