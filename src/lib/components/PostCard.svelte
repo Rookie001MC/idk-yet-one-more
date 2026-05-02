@@ -5,8 +5,7 @@
 	let {
 		post,
 		featured = false,
-		compact = false,
-		featuredImageUrl = ''
+		compact = false
 	} = $props<{
 		post: BlogPost;
 		featured?: boolean;
