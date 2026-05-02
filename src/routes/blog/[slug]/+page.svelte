@@ -24,12 +24,9 @@
 	<header class="post-header">
 		{#if data.featuredImageUrl}
 			<div class="post-hero">
-				<img
-					src={data.featuredImageUrl}
-					alt={post.title}
-					class="hero-image"
-					style={`view-transition-name: image-${post.slug}`}
-				/>
+				<div class="hero-image-wrapper" style={`view-transition-name: image-${post.slug}`}>
+					<img src={data.featuredImageUrl} alt={post.title} class="hero-image" />
+				</div>
 				<div class="hero-overlay"></div>
 			</div>
 		{/if}
@@ -98,6 +95,11 @@
 			width: 100%;
 			height: 100%;
 			object-fit: cover;
+		}
+
+		.hero-image-wrapper {
+			width: 100%;
+			height: 100%;
 		}
 
 		.hero-overlay {

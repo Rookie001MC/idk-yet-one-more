@@ -26,12 +26,15 @@
 
 <article class="post-card" class:featured class:compact>
 	{#if post.featuredImageUrl}
-		<a href={resolve(`/blog/${post.slug}`)} class="post-image">
+		<a
+			href={resolve(`/blog/${post.slug}`)}
+			class="post-image"
+			style={`view-transition-name: image-${post.slug}`}
+		>
 			<img
 				src={post.featuredImageUrl}
 				alt={post.featuredImage?.title || post.title}
 				loading="lazy"
-				style={`view-transition-name: image-${post.slug}`}
 			/>
 		</a>
 	{/if}
