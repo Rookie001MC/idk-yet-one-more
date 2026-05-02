@@ -23,7 +23,7 @@
 			{#if posts.length > 0}
 				<div class="posts-grid">
 					{#each posts as post (post.id)}
-						<PostCard {post} />
+						<PostCard {post} featuredImageUrl={post.featuredImage ?? undefined} />
 					{/each}
 				</div>
 			{:else}
