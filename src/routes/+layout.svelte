@@ -3,7 +3,8 @@
 
 	import Header from '$lib/components/Header.svelte';
 	import Footer from '$lib/components/Footer.svelte';
-	import { Toaster, toast } from 'svelte-sonner';
+	import { Toaster } from '$lib/components/ui/sonner';
+	import { toast } from 'svelte-sonner';
 	import { onMount } from 'svelte';
 	import { onNavigate } from '$app/navigation';
 
