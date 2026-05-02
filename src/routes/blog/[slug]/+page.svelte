@@ -24,7 +24,12 @@
 	<header class="post-header">
 		{#if data.featuredImageUrl}
 			<div class="post-hero">
-				<img src={data.featuredImageUrl} alt={post.title} class="hero-image" />
+				<img
+					src={data.featuredImageUrl}
+					alt={post.title}
+					class="hero-image"
+					style={`view-transition-name: image-${post.slug}`}
+				/>
 				<div class="hero-overlay"></div>
 			</div>
 		{/if}

@@ -31,6 +31,7 @@
 				src={post.featuredImageUrl}
 				alt={post.featuredImage?.title || post.title}
 				loading="lazy"
+				style={`view-transition-name: image-${post.slug}`}
 			/>
 		</a>
 	{/if}
