@@ -3,6 +3,7 @@
 	import { resolve } from '$app/paths';
 	import siteCover from '$lib/assets/site-cover.jpg';
 	import { Admonition } from '$lib/components/ui/admonition';
+	import { Button } from '$lib/components/ui/button';
 
 	let { data } = $props();
 	let latestPosts = $derived(data.latestPosts);
@@ -68,8 +69,12 @@
 				{/if}
 
 				<div class="view-all-wrapper">
-					<a href={resolve('/blog')} class="btn-primary">View All Posts</a>
+					<Button href={resolve('/blog')} variant="outline">View All Posts</Button>
 				</div>
+			</div>
+		{:else}
+			<div class="posts-container">
+				<p>Failed to load posts. Please try again later.</p>
 			</div>
 		{/if}
 	</section>
@@ -193,28 +198,6 @@
 	.view-all-wrapper {
 		text-align: center;
 		margin-top: var(--space-lg);
-	}
-
-	.btn-primary {
-		display: inline-block;
-		padding: 0.75rem 2rem;
-		border: 1px solid var(--color-text);
-		border-radius: var(--radius-full);
-		font-family: var(--font-heading);
-		font-size: 1.25rem;
-		font-weight: 600;
-		text-transform: uppercase;
-		letter-spacing: 0.05em;
-		text-decoration: none;
-		color: var(--color-text);
-		transition:
-			background-color 0.2s ease,
-			color 0.2s ease;
-
-		&:hover {
-			background-color: var(--color-text);
-			color: var(--color-bg);
-		}
 	}
 
 	@media (max-width: 768px) {
