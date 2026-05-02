@@ -3,8 +3,10 @@
 
 	import Header from '$lib/components/Header.svelte';
 	import Footer from '$lib/components/Footer.svelte';
-	import { Toaster, toast } from 'svelte-sonner';
+	import { Toaster } from '$lib/components/ui/sonner';
+	import { toast } from 'svelte-sonner';
 	import { onMount } from 'svelte';
+	import { onNavigate } from '$app/navigation';
 
 	let { data, children } = $props();
 
@@ -16,6 +18,19 @@
 				position: 'bottom-right'
 			});
 		}
+	});
+
+	// Wire up the View Transitions API for smooth page-to-page animations.
+	// Progressive enhancement: falls back gracefully on unsupported browsers.
+	onNavigate((navigation) => {
+		if (!document.startViewTransition) return;
+
+		return new Promise((resolve) => {
+			document.startViewTransition(async () => {
+				resolve();
+				await navigation.complete;
+			});
+		});
 	});
 </script>
 

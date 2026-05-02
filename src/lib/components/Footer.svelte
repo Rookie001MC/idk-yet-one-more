@@ -43,7 +43,7 @@
 		</div>
 
 		<div class="footer-bottom">
-			<p>&copy; {currentYear}. Rookie's Blog. Replicated from WordPress with SvelteKit.</p>
+			<p>&copy; {currentYear}. Rookie's Blog. Built with SvelteKit.</p>
 		</div>
 	</div>
 </footer>
