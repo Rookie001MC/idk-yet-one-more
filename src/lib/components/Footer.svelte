@@ -31,12 +31,12 @@
 			<div class="footer-right">
 				<div class="nav-column">
 					{#each siteConfig.leftFooterMenu as menu (menu.label)}
-						<a href={resolve(menu.path)} class="footer-link">{menu.label}</a>
+						<a href={resolve(menu.path as any)} class="footer-link">{menu.label}</a>
 					{/each}
 				</div>
 				<div class="nav-column">
 					{#each siteConfig.rightFooterMenu as menu (menu.label)}
-						<a href={resolve(menu.path)} class="footer-link">{menu.label}</a>
+						<a href={resolve(menu.path as any)} class="footer-link">{menu.label}</a>
 					{/each}
 				</div>
 			</div>
