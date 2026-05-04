@@ -31,15 +31,20 @@ export function getAssetUrl(
 	}
 
 	const id = typeof fileOrString === 'string' ? fileOrString : fileOrString.id;
-	const url = new URL(`${PUBLIC_DIRECTUS_URL}/assets/${id}`);
+	let path = `/api/assets/${id}`;
 
 	if (params) {
-		Object.entries(params).forEach(([key, values]) => {
-			if (values !== undefined) url.searchParams.set(key, String(values));
+		const searchParams = new URLSearchParams();
+		Object.entries(params).forEach(([key, value]) => {
+			if (value !== undefined) searchParams.set(key, String(value));
 		});
+		const queryString = searchParams.toString();
+		if (queryString) {
+			path += `?${queryString}`;
+		}
 	}
 
-	return url.toString();
+	return path;
 }
 
 export async function fetchFiles(fetch: typeof globalThis.fetch): Promise<DirectusFile[]> {
