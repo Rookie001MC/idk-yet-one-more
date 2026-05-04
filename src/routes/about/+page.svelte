@@ -68,11 +68,7 @@
 				Besides the events, I also have worked as an Observer for Garena Vietnam's Arena of Valor
 				tournaments, most notably Arena of Valor's International Championship 2023 and 2024.
 			</p>
-			<img
-				src="https://itsrookienguyen.me/wp-content/uploads/2026/04/DSC_0546-1024x680.jpg"
-				alt="Broadcast Work"
-				class="content-image"
-			/>
+			<Image src="/images/0546.jpg" alt="Broadcast Work" class="content-image" />
 		</section>
 
 		<section class="section">
@@ -86,11 +82,7 @@
 				To see objects, scenery, and a lot of everyday life inside a small frame, to imagine how
 				things work in these objects is a thrilling work on its own.
 			</p>
-			<img
-				src="https://itsrookienguyen.me/wp-content/uploads/2026/04/the-film-cam-1024x700.jpg"
-				alt="Photography"
-				class="content-image"
-			/>
+			<Image src="/images/the-film-cam.jpg" alt="Photography" class="content-image" />
 		</section>
 
 		<section class="section">
@@ -189,12 +181,6 @@
 			p {
 				margin-bottom: var(--space-md);
 				line-height: 1.8;
-			}
-
-			.content-image {
-				width: 100%;
-				border-radius: var(--radius-md);
-				margin: var(--space-lg) 0;
 			}
 		}
 	}
