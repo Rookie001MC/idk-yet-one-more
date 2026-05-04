@@ -2,7 +2,7 @@ import { fetchPostsByCategory } from '$lib/data/blogPosts';
 import { fetchCategoryBySlug } from '$lib/data/categories';
 import { error } from '@sveltejs/kit';
 
-export async function load({ params }) {
+export async function load({ fetch, params }) {
 	try {
 		const category = await fetchCategoryBySlug(params.slug);
 		if (!category) {
@@ -25,4 +25,3 @@ export async function load({ params }) {
 		throw error(500, 'Internal Server Error');
 	}
 }
-

@@ -1,6 +1,6 @@
 import { fetchCategories } from '$lib/data/categories';
 
-export async function load() {
+export async function load({ fetch }) {
 	try {
 		const categories = await fetchCategories(fetch);
 		return {
