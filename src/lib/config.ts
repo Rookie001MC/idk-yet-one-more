@@ -28,6 +28,6 @@ const siteConfig = {
 		{ label: 'Contact', path: '/contact' },
 		{ label: 'Privacy Policy', path: '/privacy-policy' }
 	]
-};
+} as const;
 
 export default siteConfig;
