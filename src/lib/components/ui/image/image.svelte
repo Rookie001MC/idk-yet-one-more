@@ -134,7 +134,7 @@
 		const optimized = path.replace(STATIC_SOURCE_PREFIX, STATIC_OPTIMIZED_PREFIX);
 		// Strip original extension; image-transmutation always names outputs by stem.
 		const stem = optimized.replace(/\.[^./]+$/, '');
-		return `${stem}-${width}.${format}`;
+		return `${stem}-${width}w.${format}`;
 	}
 
 	// -------------------------------------------------------------------------
