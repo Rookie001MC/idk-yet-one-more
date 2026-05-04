@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { fade, fly } from 'svelte/transition';
-
+	import { resolve } from '$app/paths';
 	let isMenuOpen = $state(false);
-
+	import siteConfig from '$lib/config';
 	function toggleMenu() {
 		isMenuOpen = !isMenuOpen;
 	}
@@ -10,7 +10,7 @@
 
 <header class="header">
 	<div class="header-container">
-		<a href="/" class="site-title font-heading"> Rookie's Blog </a>
+		<a href={resolve('/')} class="site-title font-heading"> Rookie's Blog </a>
 
 		<button
 			class="menu-toggle"
@@ -38,9 +38,10 @@
 	{#if isMenuOpen}
 		<nav class="mobile-nav" transition:fade={{ duration: 300 }}>
 			<div class="mobile-nav-content" in:fly={{ y: 20, duration: 400, delay: 100 }}>
-				<a href="/" onclick={toggleMenu} class="nav-link">Home</a>
-				<a href="/blog" onclick={toggleMenu} class="nav-link">Blog</a>
-				<a href="/contact" onclick={toggleMenu} class="nav-link">Contact</a>
+				{#each siteConfig.mainMenu as item (item.path)}
+					<a href={resolve(item.path)} class="nav-link" onclick={() => toggleMenu()}>{item.label}</a
+					>
+				{/each}
 			</div>
 		</nav>
 	{/if}
