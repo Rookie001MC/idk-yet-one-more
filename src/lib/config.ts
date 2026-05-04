@@ -13,10 +13,11 @@ const siteConfig = {
 		{ name: 'Email', url: 'mailto:nhqthang@itsrookienguyen.me', icon: Mail },
 		{ name: 'GitHub', url: 'https://github.com/rookie001mc', icon: SiGithub }
 	],
-	staticPages: [
+	mainMenu: [
 		{ label: 'Home', path: '/' },
 		{ label: 'About', path: '/about' },
-		{ label: 'Blog', path: '/blog' }
+		{ label: 'Blog', path: '/blog' },
+		{ label: 'Contact', path: '/contact' }
 	],
 	leftFooterMenu: [
 		{ label: 'Home', path: '/' },
