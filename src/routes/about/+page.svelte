@@ -1,6 +1,7 @@
 ﻿<script lang="ts">
 	import { Admonition } from '$lib/components/ui/admonition';
 	import Blockquote from '$lib/components/ui/Blockquote.svelte';
+	import { Image } from '$lib/components/ui/image';
 	// Static content replicated from https://itsrookienguyen.me/about/
 </script>
 
@@ -11,12 +12,12 @@
 <article class="about-page">
 	<header class="about-header">
 		<div class="header-image-container">
-			<img
+			<Image
 				src="https://itsrookienguyen.me/wp-content/uploads/2026/04/000053-1024x693.jpg"
 				alt="Hero"
-				class="header-image"
+				class="hero-bg"
 			/>
-			<div class="header-overlay"></div>
+			<div class="hero-overlay"></div>
 		</div>
 		<div class="container header-content">
 			<h1 class="font-heading">A bit about myself.</h1>

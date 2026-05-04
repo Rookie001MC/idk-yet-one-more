@@ -4,6 +4,7 @@
 	import siteCover from '$lib/assets/site-cover.jpg';
 	import { Admonition } from '$lib/components/ui/admonition';
 	import { Button } from '$lib/components/ui/button';
+	import { Image } from '$lib/components/ui/image';
 
 	let { data } = $props();
 	let latestPosts = $derived(data.latestPosts);
@@ -15,7 +16,7 @@
 
 <!-- Hero Section -->
 <section class="hero">
-	<img src={siteCover} alt="Site Cover" class="hero-bg" />
+	<Image src={siteCover} alt="Site Cover" class="hero-bg" />
 	<div class="hero-overlay"></div>
 
 	<div class="hero-content">
@@ -89,26 +90,6 @@
 		align-items: center;
 		justify-content: center;
 		overflow: hidden;
-	}
-
-	.hero-bg {
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
-		object-fit: cover;
-		z-index: 1;
-	}
-
-	.hero-overlay {
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
-		background: linear-gradient(to bottom, rgba(16, 13, 46, 0.3) 0%, var(--color-bg) 100%);
-		z-index: 2;
 	}
 
 	.hero-content {
