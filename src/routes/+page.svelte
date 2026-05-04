@@ -1,7 +1,6 @@
 <script lang="ts">
 	import PostCard from '$lib/components/PostCard.svelte';
 	import { resolve } from '$app/paths';
-	import siteCover from '$lib/assets/site-cover.jpg';
 	import { Admonition } from '$lib/components/ui/admonition';
 	import { Button } from '$lib/components/ui/button';
 	import { Image } from '$lib/components/ui/image';
@@ -16,7 +15,7 @@
 
 <!-- Hero Section -->
 <section class="hero">
-	<Image src={siteCover} alt="Site Cover" class="hero-bg" />
+	<Image src="/images/site-cover.jpg" alt="Site Cover" class="hero-bg" />
 	<div class="hero-overlay"></div>
 
 	<div class="hero-content">

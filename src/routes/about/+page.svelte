@@ -12,11 +12,7 @@
 <article class="about-page">
 	<header class="about-header">
 		<div class="header-image-container">
-			<Image
-				src="https://itsrookienguyen.me/wp-content/uploads/2026/04/000053-1024x693.jpg"
-				alt="Hero"
-				class="hero-bg"
-			/>
+			<Image src="/images/about-cover.jpg" alt="Hero" class="hero-bg" />
 			<div class="hero-overlay"></div>
 		</div>
 		<div class="container header-content">
