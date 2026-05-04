@@ -5,8 +5,6 @@ import { fetchCategories } from '$lib/data/categories';
 import { fetchTags } from '$lib/data/tags';
 import { PUBLIC_BASE_URL } from '$env/static/public';
 
-export const prerender = true;
-
 export const GET: RequestHandler = async ({ fetch }) => {
 	const [posts, categories, tags] = await Promise.all([
 		fetchAllPosts(['slug'], fetch),
