@@ -1,6 +1,5 @@
 /// <reference types="vitest/config" />
 import { sveltekit } from '@sveltejs/kit/vite';
-import { enhancedImages } from '@sveltejs/enhanced-img';
 import { defineConfig } from 'vite';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -11,7 +10,7 @@ const dirname =
 
 // More info at: https://storybook.js.org/docs/next/writing-tests/integrations/vitest-addon
 export default defineConfig({
-	plugins: [enhancedImages(), sveltekit()],
+	plugins: [sveltekit()],
 	test: {
 		projects: [
 			{
