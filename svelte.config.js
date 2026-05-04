@@ -9,7 +9,19 @@ const config = {
 		runes: ({ filename }) => (filename.split(/[/\\]/).includes('node_modules') ? undefined : true)
 	},
 	kit: {
-		adapter: adapter()
+		adapter: adapter(),
+		csp: {
+			mode: 'hash',
+			directives: {
+				'script-src': ["'self'"],
+				'style-src': ["'self'", "'unsafe-inline'"],
+				'img-src': ["'self'", 'https:', 'data:', 'blob:'], // Consider that I might embed some other stuff in here
+				'frame-ancestors': ["'self'", `${process.env.PUBLIC_DIRECTUS_URL}`],
+				'font-src': ["'self'", 'https:'],
+				'connect-src': ["'self'"],
+				'object-src': ["'none'"]
+			}
+		}
 	}
 };
 

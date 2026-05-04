@@ -1,6 +1,5 @@
 <script lang="ts">
 	import type BlogPost from '$lib/types/blogPost';
-	import { PUBLIC_DIRECTUS_URL } from '$env/static/public';
 	import { resolve } from '$app/paths';
 
 	let {
@@ -11,6 +10,7 @@
 		post: BlogPost;
 		featured?: boolean;
 		compact?: boolean;
+		featuredImageUrl?: string;
 	}>();
 
 	const formattedDate = $derived(
@@ -25,11 +25,15 @@
 </script>
 
 <article class="post-card" class:featured class:compact>
-	{#if post.featuredImage}
-		<a href={resolve(`/blog/${post.slug}`)} class="post-image">
+	{#if post.featuredImageUrl}
+		<a
+			href={resolve(`/blog/${post.slug}`)}
+			class="post-image"
+			style={`view-transition-name: image-${post.slug}`}
+		>
 			<img
-				src={`${PUBLIC_DIRECTUS_URL}/assets/${post.featuredImage.id}?width=${featured ? 1200 : 800}&height=${featured ? 600 : 450}&fit=cover`}
-				alt={post.featuredImage.title}
+				src={post.featuredImageUrl}
+				alt={post.featuredImage?.title || post.title}
 				loading="lazy"
 			/>
 		</a>
@@ -52,7 +56,7 @@
 
 		{#if post.tags && post.tags.length > 0}
 			<div class="post-tags">
-				{#each post.tags as tagObj}
+				{#each post.tags as tagObj (tagObj.tagsId.id)}
 					{#if tagObj.tagsId && typeof tagObj.tagsId === 'object'}
 						<a href={resolve(`/tag/${tagObj.tagsId.slug}`)} class="post-tag">
 							#{tagObj.tagsId.name}

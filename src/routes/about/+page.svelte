@@ -1,6 +1,7 @@
 ﻿<script lang="ts">
 	import { Admonition } from '$lib/components/ui/admonition';
 	import Blockquote from '$lib/components/ui/Blockquote.svelte';
+	import { Image } from '$lib/components/ui/image';
 	// Static content replicated from https://itsrookienguyen.me/about/
 </script>
 
@@ -11,12 +12,8 @@
 <article class="about-page">
 	<header class="about-header">
 		<div class="header-image-container">
-			<img
-				src="https://itsrookienguyen.me/wp-content/uploads/2026/04/000053-1024x693.jpg"
-				alt="Hero"
-				class="header-image"
-			/>
-			<div class="header-overlay"></div>
+			<Image src="/images/about-cover.jpg" alt="Hero" class="hero-bg" />
+			<div class="hero-overlay"></div>
 		</div>
 		<div class="container header-content">
 			<h1 class="font-heading">A bit about myself.</h1>
@@ -71,11 +68,7 @@
 				Besides the events, I also have worked as an Observer for Garena Vietnam's Arena of Valor
 				tournaments, most notably Arena of Valor's International Championship 2023 and 2024.
 			</p>
-			<img
-				src="https://itsrookienguyen.me/wp-content/uploads/2026/04/DSC_0546-1024x680.jpg"
-				alt="Broadcast Work"
-				class="content-image"
-			/>
+			<Image src="/images/0546.jpg" alt="Broadcast Work" class="content-image" />
 		</section>
 
 		<section class="section">
@@ -89,11 +82,7 @@
 				To see objects, scenery, and a lot of everyday life inside a small frame, to imagine how
 				things work in these objects is a thrilling work on its own.
 			</p>
-			<img
-				src="https://itsrookienguyen.me/wp-content/uploads/2026/04/the-film-cam-1024x700.jpg"
-				alt="Photography"
-				class="content-image"
-			/>
+			<Image src="/images/the-film-cam.jpg" alt="Photography" class="content-image" />
 		</section>
 
 		<section class="section">
@@ -153,21 +142,6 @@
 		width: 100%;
 		height: 100%;
 		z-index: 1;
-
-		.header-image {
-			width: 100%;
-			height: 100%;
-			object-fit: cover;
-		}
-
-		.header-overlay {
-			position: absolute;
-			top: 0;
-			left: 0;
-			width: 100%;
-			height: 100%;
-			background: linear-gradient(to bottom, rgba(10, 4, 42, 0.2) 0%, var(--color-bg) 100%);
-		}
 	}
 
 	.header-content {
@@ -207,12 +181,6 @@
 			p {
 				margin-bottom: var(--space-md);
 				line-height: 1.8;
-			}
-
-			.content-image {
-				width: 100%;
-				border-radius: var(--radius-md);
-				margin: var(--space-lg) 0;
 			}
 		}
 	}

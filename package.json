@@ -14,7 +14,10 @@
 		"format": "prettier --write .",
 		"gen": "wrangler types",
 		"storybook": "storybook dev -p 6006",
-		"build-storybook": "storybook build"
+		"build-storybook": "storybook build",
+		"optimize-images": "image-transmutation --run --sourceFolder \"static/images\" --targetFolder \"static/optimized-images\" --inputFormats jpg --inputFormats jpeg --inputFormats png --outputFormats png --outputFormats webp --outputFormats avif --widths 400 --widths 800 --widths 1200 --widths 1600",
+		"optimize-images-cloudflare": "image-transmutation --run --sourceFolder \"./.svelte-kit/cloudflare/images\" --targetFolder \"./.svelte-kit/cloudflare/optimized-images\" --inputFormats jpg --inputFormats jpeg --inputFormats png --outputFormats png --outputFormats webp --outputFormats avif --widths 400 --widths 800 --widths 1200 --widths 1600",
+		"postbuild": "bun run optimize-images-cloudflare"
 	},
 	"devDependencies": {
 		"@chromatic-com/storybook": "^5.1.2",
@@ -26,7 +29,6 @@
 		"@storybook/addon-vitest": "^10.3.5",
 		"@storybook/sveltekit": "^10.3.5",
 		"@sveltejs/adapter-cloudflare": "^7.2.8",
-		"@sveltejs/enhanced-img": "^0.10.4",
 		"@sveltejs/kit": "^2.57.0",
 		"@sveltejs/vite-plugin-svelte": "^7.0.0",
 		"@types/node": "^24",
@@ -37,13 +39,16 @@
 		"eslint-plugin-storybook": "^10.3.5",
 		"eslint-plugin-svelte": "^3.17.0",
 		"globals": "^17.4.0",
+		"image-transmutation": "^1.1.1",
 		"playwright": "^1.59.1",
 		"prettier": "^3.8.1",
 		"prettier-plugin-svelte": "^3.5.1",
 		"sass-embedded": "^1.99.0",
 		"storybook": "^10.3.5",
+		"super-sitemap": "^1.0.12",
 		"svelte": "^5.55.2",
 		"svelte-check": "^4.4.6",
+		"svelte-sitemap": "^3.1.0",
 		"typescript": "^6.0.2",
 		"typescript-eslint": "^8.58.1",
 		"vite": "^8.0.7",
@@ -62,6 +67,9 @@
 		"svelte-sonner": "^1.1.1"
 	},
 	"trustedDependencies": [
-		"@parcel/watcher"
+		"@parcel/watcher",
+		"esbuild",
+		"sharp",
+		"workerd"
 	]
 }

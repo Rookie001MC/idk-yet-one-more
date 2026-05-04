@@ -1,8 +1,9 @@
 <script lang="ts">
 	import PostCard from '$lib/components/PostCard.svelte';
 	import { resolve } from '$app/paths';
-	import siteCover from '$lib/assets/site-cover.jpg';
 	import { Admonition } from '$lib/components/ui/admonition';
+	import { Button } from '$lib/components/ui/button';
+	import { Image } from '$lib/components/ui/image';
 
 	let { data } = $props();
 	let latestPosts = $derived(data.latestPosts);
@@ -14,7 +15,7 @@
 
 <!-- Hero Section -->
 <section class="hero">
-	<img src={siteCover} alt="Site Cover" class="hero-bg" />
+	<Image src="/images/site-cover.jpg" alt="Site Cover" class="hero-bg" />
 	<div class="hero-overlay"></div>
 
 	<div class="hero-content">
@@ -68,8 +69,12 @@
 				{/if}
 
 				<div class="view-all-wrapper">
-					<a href={resolve('/blog')} class="btn-primary">View All Posts</a>
+					<Button href={resolve('/blog')} variant="outline">View All Posts</Button>
 				</div>
+			</div>
+		{:else}
+			<div class="posts-container">
+				<p>Failed to load posts. Please try again later.</p>
 			</div>
 		{/if}
 	</section>
@@ -84,26 +89,6 @@
 		align-items: center;
 		justify-content: center;
 		overflow: hidden;
-	}
-
-	.hero-bg {
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
-		object-fit: cover;
-		z-index: 1;
-	}
-
-	.hero-overlay {
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
-		background: linear-gradient(to bottom, rgba(16, 13, 46, 0.3) 0%, var(--color-bg) 100%);
-		z-index: 2;
 	}
 
 	.hero-content {
@@ -193,28 +178,6 @@
 	.view-all-wrapper {
 		text-align: center;
 		margin-top: var(--space-lg);
-	}
-
-	.btn-primary {
-		display: inline-block;
-		padding: 0.75rem 2rem;
-		border: 1px solid var(--color-text);
-		border-radius: var(--radius-full);
-		font-family: var(--font-heading);
-		font-size: 1.25rem;
-		font-weight: 600;
-		text-transform: uppercase;
-		letter-spacing: 0.05em;
-		text-decoration: none;
-		color: var(--color-text);
-		transition:
-			background-color 0.2s ease,
-			color 0.2s ease;
-
-		&:hover {
-			background-color: var(--color-text);
-			color: var(--color-bg);
-		}
 	}
 
 	@media (max-width: 768px) {

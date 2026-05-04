@@ -6,6 +6,7 @@
 	import Admonition from '$lib/components/ui/admonition/index';
 	import type { AdmonitionVariant } from '$lib/components/ui/admonition/index';
 	import Blockquote from '$lib/components/ui/Blockquote.svelte';
+	import ImageRenderer from './ImageRenderer.svelte';
 
 	// Self-import for recursive rendering of blockquote / alert inner content.
 	// props.text is raw markdown, not HTML — so it must be parsed again to get
@@ -25,7 +26,9 @@
 	 *   code: CodeBlockRenderer,
 	 *   link: LinkRenderer,
 	 */
-	const renderers = {};
+	const renderers = {
+		image: ImageRenderer
+	};
 </script>
 
 <SvelteMarkdown source={content ?? ''} {renderers} extensions={[markedAlert()]} isInline={inline}>
