@@ -5,7 +5,7 @@
 	let post = $derived(data.post);
 
 	const formattedDate = $derived(
-		post.datePublished
+		post?.datePublished
 			? new Date(post.datePublished).toLocaleDateString('vi-VN', {
 					day: '2-digit',
 					month: '2-digit',
@@ -16,62 +16,100 @@
 </script>
 
 <svelte:head>
-	<title>{post.title} | Rookie's Blog</title>
-	<meta name="description" content={post.excerpt} />
+	<title>{post ? `${post.title} | Rookie's Blog` : "Post Not Found | Rookie's Blog"}</title>
+	{#if post}
+		<meta name="description" content={post.excerpt} />
+	{/if}
 </svelte:head>
 
-<article class="single-post">
-	<header class="post-header">
-		{#if data.featuredImageUrl}
-			<div class="post-hero">
-				<div class="hero-image-wrapper" style={`view-transition-name: image-${post.slug}`}>
-					<img src={data.featuredImageUrl} alt={post.title} class="hero-image" />
-				</div>
-				<div class="hero-overlay"></div>
-			</div>
-		{/if}
-
-		<div class="header-content container">
-			<div class="post-meta">
-				{#if post.category && typeof post.category === 'object'}
-					<a href={resolve(`/category/${post.category.slug}`)} class="post-category">
-						{post.category.name}
-					</a>
-				{/if}
-				<time datetime={post.datePublished}>{formattedDate}</time>
-			</div>
-			<h1 class="post-title font-heading">{post.title}</h1>
+{#if !post}
+	<div class="not-found">
+		<div class="not-found-content">
+			<h1 class="font-heading">Post not found.</h1>
+			<p>This post may have been removed, or something went wrong loading it.</p>
+			<a href={resolve('/blog')}>← Back to blog</a>
 		</div>
-	</header>
-
-	<div class="post-body container">
-		<div class="content">
-			<MarkdownParser content={post.content ?? ''} />
-		</div>
-
-		{#if post.tags && post.tags.length > 0}
-			<footer class="post-footer">
-				<p class="tags-label">Tags</p>
-				<div class="tags">
-					{#each post.tags as tagObj (typeof tagObj.tagsId === 'object' ? tagObj.tagsId.id : tagObj.tagsId)}
-						{#if typeof tagObj.tagsId === 'object'}
-							<a href={resolve(`/tag/${tagObj.tagsId.slug}`)} class="tag">#{tagObj.tagsId.name}</a>
-						{/if}
-					{/each}
-				</div>
-			</footer>
-		{/if}
 	</div>
-</article>
+{:else}
+	<article class="single-post">
+		<header class="post-header">
+			{#if data.featuredImageUrl}
+				<div class="post-hero">
+					<div class="hero-image-wrapper" style={`view-transition-name: image-${post.slug}`}>
+						<img src={data.featuredImageUrl} alt={post.title} class="hero-image" />
+					</div>
+					<div class="hero-overlay"></div>
+				</div>
+			{/if}
+
+			<div class="header-content container">
+				<div class="post-meta">
+					{#if post.category && typeof post.category === 'object'}
+						<a href={resolve(`/category/${post.category.slug}`)} class="post-category">
+							{post.category.name}
+						</a>
+					{/if}
+					<time datetime={post.datePublished}>{formattedDate}</time>
+				</div>
+				<h1 class="post-title font-heading">{post.title}</h1>
+			</div>
+		</header>
+
+		<div class="post-body container">
+			<div class="content">
+				<MarkdownParser content={post.content ?? ''} />
+			</div>
+
+			{#if post.tags && post.tags.length > 0}
+				<footer class="post-footer">
+					<p class="tags-label">Tags</p>
+					<div class="tags">
+						{#each post.tags as tagObj (typeof tagObj.tagsId === 'object' ? tagObj.tagsId.id : tagObj.tagsId)}
+							{#if typeof tagObj.tagsId === 'object'}
+								<a href={resolve(`/tag/${tagObj.tagsId.slug}`)} class="tag">#{tagObj.tagsId.name}</a
+								>
+							{/if}
+						{/each}
+					</div>
+				</footer>
+			{/if}
+		</div>
+	</article>
+{/if}
 
 <style lang="scss">
+	.not-found {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		min-height: 60vh;
+		padding: var(--space-xl) var(--space-sm);
+		text-align: center;
+	}
+
+	.not-found-content {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-md);
+
+		h1 {
+			font-size: var(--font-size-h2);
+		}
+
+		p {
+			color: var(--color-text-muted);
+			margin: 0;
+		}
+
+		a {
+			color: var(--color-accent);
+			text-decoration: underline;
+		}
+	}
+
 	.single-post {
 		padding-bottom: var(--space-xl);
 	}
-
-	// -------------------------
-	// Hero Header
-	// -------------------------
 
 	.post-header {
 		position: relative;
@@ -118,20 +156,12 @@
 		text-align: center;
 	}
 
-	// -------------------------
-	// Layout
-	// -------------------------
-
 	.container {
 		width: 100%;
 		max-width: 740px;
 		margin: 0 auto;
 		padding: 0 var(--space-sm);
 	}
-
-	// -------------------------
-	// Post Meta
-	// -------------------------
 
 	.post-meta {
 		display: flex;
@@ -166,10 +196,6 @@
 		margin: 0;
 	}
 
-	// -------------------------
-	// Article Body
-	// -------------------------
-
 	.post-body {
 		.content {
 			font-family: var(--font-body);
@@ -177,12 +203,10 @@
 			line-height: 1.85;
 			color: var(--color-text);
 
-			// --- Paragraphs ---
 			:global(p) {
 				margin-bottom: 1.6em;
 			}
 
-			// --- Links ---
 			:global(a) {
 				color: var(--color-accent);
 				text-decoration: underline;
@@ -198,7 +222,6 @@
 				}
 			}
 
-			// --- Headings ---
 			:global(h2) {
 				font-family: var(--font-heading);
 				font-size: var(--font-size-h2);
@@ -221,7 +244,6 @@
 				margin: 1.6em 0 0.4em;
 			}
 
-			// --- Images ---
 			:global(img) {
 				max-width: 100%;
 				border-radius: var(--radius-md);
@@ -229,7 +251,6 @@
 				display: block;
 			}
 
-			// --- Blockquote ---
 			:global(blockquote) {
 				border-left: 3px solid var(--color-accent);
 				padding: 0.2em 0 0.2em var(--space-md);
@@ -242,7 +263,6 @@
 				}
 			}
 
-			// --- Lists ---
 			:global(ul),
 			:global(ol) {
 				margin-bottom: 1.6em;
@@ -261,7 +281,6 @@
 				margin-bottom: 0.4em;
 			}
 
-			// --- Inline code ---
 			:global(code) {
 				font-family: var(--font-mono);
 				font-size: 0.875em;
@@ -271,7 +290,6 @@
 				border-radius: var(--radius-sm);
 			}
 
-			// --- Code block ---
 			:global(pre) {
 				background-color: var(--color-bg-light);
 				border: 1px solid var(--color-border);
@@ -280,7 +298,6 @@
 				overflow-x: auto;
 				margin-bottom: 1.6em;
 
-				// Reset inline-code styles when inside a block
 				:global(code) {
 					background: none;
 					border: none;
@@ -290,14 +307,12 @@
 				}
 			}
 
-			// --- HR ---
 			:global(hr) {
 				margin: var(--space-lg) 0;
 				border: none;
 				border-top: 1px solid var(--color-border);
 			}
 
-			// --- Strong / Em ---
 			:global(strong) {
 				font-weight: 600;
 				color: var(--color-text);
@@ -308,10 +323,6 @@
 			}
 		}
 	}
-
-	// -------------------------
-	// Footer & Tags
-	// -------------------------
 
 	.post-footer {
 		margin-top: var(--space-xl);
@@ -354,10 +365,6 @@
 			text-decoration: none;
 		}
 	}
-
-	// -------------------------
-	// Responsive
-	// -------------------------
 
 	@media (max-width: 768px) {
 		.post-title {

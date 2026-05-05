@@ -1,5 +1,6 @@
 <script lang="ts">
 	import PostCard from '$lib/components/PostCard.svelte';
+	import { resolve } from '$app/paths';
 
 	let { data } = $props();
 	let tag = $derived(data.tag);
@@ -7,35 +8,74 @@
 </script>
 
 <svelte:head>
-	<title>Tag: {tag.name} | Rookie's Blog</title>
+	<title>{tag ? `Tag: ${tag.name} | Rookie's Blog` : "Tag Not Found | Rookie's Blog"}</title>
 </svelte:head>
 
-<div class="tag-page">
-	<header class="page-header">
-		<div class="container">
-			<span class="eyebrow">Tag</span>
-			<h1 class="page-title font-heading">#{tag.name}</h1>
+{#if !tag}
+	<div class="not-found">
+		<div class="not-found-content">
+			<h1 class="font-heading">Tag not found.</h1>
+			<p>This tag may have been removed, or something went wrong loading it.</p>
+			<a href={resolve('/blog')}>← Back to blog</a>
 		</div>
-	</header>
+	</div>
+{:else}
+	<div class="tag-page">
+		<header class="page-header">
+			<div class="container">
+				<span class="eyebrow">Tag</span>
+				<h1 class="page-title font-heading">#{tag.name}</h1>
+			</div>
+		</header>
 
-	<main class="posts-section">
-		<div class="container">
-			{#if posts.length > 0}
-				<div class="posts-grid">
-					{#each posts as post (post.id)}
-						<PostCard {post} />
-					{/each}
-				</div>
-			{:else}
-				<div class="no-posts">
-					<p>No posts found with this tag.</p>
-				</div>
-			{/if}
-		</div>
-	</main>
-</div>
+		<main class="posts-section">
+			<div class="container">
+				{#if posts.length > 0}
+					<div class="posts-grid">
+						{#each posts as post (post.id)}
+							<PostCard {post} />
+						{/each}
+					</div>
+				{:else}
+					<div class="no-posts">
+						<p>No posts found with this tag.</p>
+					</div>
+				{/if}
+			</div>
+		</main>
+	</div>
+{/if}
 
 <style lang="scss">
+	.not-found {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		min-height: 60vh;
+		padding: var(--space-xl) var(--space-sm);
+		text-align: center;
+	}
+
+	.not-found-content {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-md);
+
+		h1 {
+			font-size: var(--font-size-h2);
+		}
+
+		p {
+			color: var(--color-text-muted);
+			margin: 0;
+		}
+
+		a {
+			color: var(--color-accent);
+			text-decoration: underline;
+		}
+	}
+
 	.tag-page {
 		padding-top: var(--space-xl);
 	}
