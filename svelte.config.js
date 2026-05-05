@@ -13,13 +13,17 @@ const config = {
 		csp: {
 			mode: 'hash',
 			directives: {
+				'default-src': ["'none'"],
 				'script-src': ["'self'"],
 				'style-src': ["'self'", "'unsafe-inline'"],
 				'img-src': ["'self'", 'https:', 'data:', 'blob:'], // Consider that I might embed some other stuff in here
+				'connect-src': ["'self'", `${process.env.PUBLIC_DIRECTUS_URL}`],
+				'form-action': ["'self'"],
+				'frame-src': ["'self'", 'https:'],
 				'frame-ancestors': ["'self'", `${process.env.PUBLIC_DIRECTUS_URL}`],
-				'font-src': ["'self'", 'https:'],
-				'connect-src': ["'self'"],
-				'object-src': ["'none'"]
+				'font-src': ["'self'"],
+				'object-src': ["'none'"],
+				'base-uri': ["'self'"]
 			}
 		}
 	}
