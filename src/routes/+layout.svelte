@@ -10,7 +10,7 @@
 	import { MetaTags, type MetaTagsProps } from 'svelte-meta-tags';
 	import { page } from '$app/state';
 	import { PUBLIC_BASE_URL } from '$env/static/public';
-	import { PUBLIC_UMAMI_URL, PUBLIC_UMAMI_WEBSITE_ID } from '$env/dynamic/public';
+	import { env } from '$env/dynamic/public';
 	import siteConfig from '$lib/config';
 
 	let { data, children } = $props();
@@ -70,8 +70,8 @@
 </script>
 
 <svelte:head>
-	{#if PUBLIC_UMAMI_URL !== '' && PUBLIC_UMAMI_WEBSITE_ID !== ''}
-		<script defer data-website-id={PUBLIC_UMAMI_WEBSITE_ID} src={PUBLIC_UMAMI_URL}></script>
+	{#if env.PUBLIC_UMAMI_URL !== '' && env.PUBLIC_UMAMI_WEBSITE_ID !== ''}
+		<script defer data-website-id={env.PUBLIC_UMAMI_WEBSITE_ID} src={env.PUBLIC_UMAMI_URL}></script>
 	{/if}
 </svelte:head>
 
