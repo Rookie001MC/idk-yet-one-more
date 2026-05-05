@@ -4,7 +4,7 @@ import type BlogPost from '$lib/types/blogPost';
 
 export async function fetchLatestPosts(
 	limit: number = 3,
-	fields: any[] = ['*'],
+	fields: string[] = ['*'],
 	fetch?: typeof globalThis.fetch
 ): Promise<BlogPost[]> {
 	try {
@@ -29,7 +29,7 @@ export async function fetchLatestPosts(
 }
 
 export async function fetchAllPosts(
-	fields: any[] = ['*'],
+	fields: string[] = ['*'],
 	fetch?: typeof globalThis.fetch
 ): Promise<BlogPost[]> {
 	try {
@@ -54,7 +54,7 @@ export async function fetchAllPosts(
 
 export async function fetchPostBySlug(
 	slug: string,
-	fields: any[] = ['*'],
+	fields: string[] = ['*'],
 	fetch: typeof globalThis.fetch
 ): Promise<BlogPost | null> {
 	try {
@@ -82,7 +82,7 @@ export async function fetchPostBySlug(
 
 export async function fetchPostsByCategory(
 	slug: string,
-	fields: any[] = ['*'],
+	fields: string[] = ['*'],
 	fetch?: typeof globalThis.fetch
 ): Promise<BlogPost[]> {
 	try {
@@ -112,7 +112,7 @@ export async function fetchPostsByCategory(
 
 export async function fetchPostsByTag(
 	slug: string,
-	fields: any[] = ['*'],
+	fields: string[] = ['*'],
 	fetch?: typeof globalThis.fetch
 ): Promise<BlogPost[]> {
 	try {
@@ -126,14 +126,14 @@ export async function fetchPostsByTag(
 						_eq: 'published'
 					},
 					tags: {
-						// @ts-ignore - Directus SDK types can be tricky with M2M filtering
+						// @ts-expect-error - Directus SDK types can be tricky with M2M filtering
 						tagsId: {
 							slug: {
 								_eq: slug
 							}
 						}
 					}
-				} as any
+				} as Record<string, unknown>
 			})
 		);
 		return posts as unknown as BlogPost[];
@@ -145,7 +145,7 @@ export async function fetchPostsByTag(
 
 export async function fetchPostsByTagId(
 	id: number,
-	fields: any[] = ['*'],
+	fields: string[] = ['*'],
 	fetch?: typeof globalThis.fetch
 ): Promise<BlogPost[]> {
 	try {
@@ -159,14 +159,14 @@ export async function fetchPostsByTagId(
 						_eq: 'published'
 					},
 					tags: {
-						// @ts-ignore
+						// @ts-expect-error - Directus SDK types can be tricky with M2M filtering
 						tagsId: {
 							id: {
 								_eq: id
 							}
 						}
 					}
-				} as any
+				} as Record<string, unknown>
 			})
 		);
 		return posts as unknown as BlogPost[];

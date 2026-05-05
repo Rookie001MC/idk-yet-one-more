@@ -1,7 +1,6 @@
 import { getDirectusClient } from '$lib/server/directus';
 import { readFile, readFiles } from '@directus/sdk';
 import type DirectusFile from '$lib/types/directusFile';
-import { PUBLIC_DIRECTUS_URL } from '$env/static/public';
 
 export interface AssetParams {
 	width?: number;

@@ -19,5 +19,5 @@ export default interface DirectusFile {
 	description: string | null;
 	location: string | null;
 	tags: string[] | null;
-	metadata: Record<string, any> | null;
+	metadata: Record<string, unknown> | null;
 }

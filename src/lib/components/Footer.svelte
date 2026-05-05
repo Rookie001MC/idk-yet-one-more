@@ -15,8 +15,7 @@
 					{#each siteConfig.social as social (social.name)}
 						{@const Icon = social.icon}
 						<a
-							// eslint-disable-next-line svelte/no-navigation-without-resolve
-							href={social.url}
+							href={resolve(social.url)}
 							target="_blank"
 							rel="noopener noreferrer"
 							aria-label={social.name}

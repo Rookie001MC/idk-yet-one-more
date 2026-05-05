@@ -12,6 +12,7 @@ export const handle: Handle = sequence(
 	Sentry.sentryHandle(),
 	async ({ event, resolve }) => {
 		const response = await resolve(event, {
+			// eslint-disable-next-line @typescript-eslint/no-unused-vars
 			filterSerializedResponseHeaders: (key, value) => {
 				return key.toLowerCase() === 'content-type';
 			}

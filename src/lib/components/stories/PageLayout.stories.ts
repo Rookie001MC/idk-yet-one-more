@@ -19,7 +19,7 @@ export const Default: Story = {
 	args: {
 		title: 'Sample Page Title',
 		description: 'This is a description of the page, providing context for the content below.',
-		// @ts-ignore
+		// @ts-expect-error - Storybook args don't match component props exactly
 		children: 'This is the main content area of the page layout.'
 	}
 };
@@ -32,14 +32,14 @@ export const WithFeaturedImage: Story = {
 			src: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&q=80&w=1200&h=400',
 			alt: 'Tech background'
 		},
-		// @ts-ignore
+		// @ts-expect-error - Storybook args don't match component props exactly
 		children: 'The content follows the header section.'
 	}
 };
 
 export const Minimal: Story = {
 	args: {
-		// @ts-ignore
+		// @ts-expect-error - Storybook args don't match component props exactly
 		children: 'A minimal page layout with only content and no header section.'
 	}
 };

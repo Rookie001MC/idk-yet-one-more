@@ -1,4 +1,5 @@
 <script lang="ts" module>
+	import { resolve } from '$app/paths';
 	import type { HTMLAnchorAttributes, HTMLButtonAttributes } from 'svelte/elements';
 
 	export type ButtonVariant =
@@ -50,7 +51,7 @@
 		bind:this={ref as HTMLAnchorElement}
 		data-slot="button"
 		class={buttonClasses}
-		href={disabled ? undefined : href}
+		href={disabled ? undefined : resolve(href)}
 		aria-disabled={disabled}
 		role={disabled ? 'link' : undefined}
 		tabindex={disabled ? -1 : undefined}

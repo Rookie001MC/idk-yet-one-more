@@ -23,7 +23,7 @@ export async function fetchDirectus<T>(path: string, options: RequestInit = {}):
 		throw new Error(`Directus API error: ${response.status}`);
 	}
 
-	const json = (await response.json()) as any;
+	const json = (await response.json()) as Record<string, T>;
 	return json.data as T;
 }
 

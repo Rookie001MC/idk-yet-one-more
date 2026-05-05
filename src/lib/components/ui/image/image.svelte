@@ -217,7 +217,10 @@
 {#if figcaption}
 	<figure class="cms-image-figure">
 		{@render img()}
-		<figcaption class="cms-image-caption">{@html figcaption}</figcaption>
+		<figcaption class="cms-image-caption">
+			<!-- eslint-disable-next-line svelte/no-at-html-tags -->
+			{@html figcaption}
+		</figcaption>
 	</figure>
 {:else}
 	{@render img()}
