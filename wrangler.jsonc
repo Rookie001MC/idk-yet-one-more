@@ -11,12 +11,10 @@
 	"observability": {
 		"logs": {
 			"enabled": true,
-			"invocation_logs": true,
-			"destinations": ["sentry-logs"]
+			"invocation_logs": true
 		},
 		"traces": {
-			"enabled": true,
-			"destinations": ["sentry-traces"]
+			"enabled": true
 		}
 	},
 	"workers_dev": true,
