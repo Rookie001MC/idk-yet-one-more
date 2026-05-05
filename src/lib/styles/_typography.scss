@@ -57,7 +57,7 @@ p {
 
 code,
 pre,
-:global(pre code) {
+pre code {
 	font-family: var(--font-mono);
 }
 

@@ -1,4 +1,4 @@
-import { handleErrorWithSentry, replayIntegration } from '@sentry/sveltekit';
+import { handleErrorWithSentry } from '@sentry/sveltekit';
 import * as Sentry from '@sentry/sveltekit';
 
 Sentry.init({
@@ -11,7 +11,11 @@ Sentry.init({
 
 	// Enable sending user PII (Personally Identifiable Information)
 	// https://docs.sentry.io/platforms/javascript/guides/sveltekit/configuration/options/#sendDefaultPii
-	sendDefaultPii: false
+	sendDefaultPii: false,
+	tracesSampleRate: 1.0,
+	integrations: [
+  	Sentry.feedbackIntegration()
+	]
 });
 
 // If you have a custom error handler, pass it to `handleErrorWithSentry`
