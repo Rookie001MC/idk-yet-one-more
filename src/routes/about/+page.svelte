@@ -2,12 +2,29 @@
 	import { Admonition } from '$lib/components/ui/admonition';
 	import Blockquote from '$lib/components/ui/Blockquote.svelte';
 	import { Image } from '$lib/components/ui/image';
+	import { MetaTags } from 'svelte-meta-tags';
+	import { PUBLIC_BASE_URL } from '$env/static/public';
 	// Static content replicated from https://itsrookienguyen.me/about/
 </script>
 
-<svelte:head>
-	<title>About | Rookie's Blog</title>
-</svelte:head>
+<MetaTags
+	title="About"
+	description="A bit about myself - Rookie Nguyen, broadcast engineer, photographer, and web developer."
+	openGraph={{
+		images: [
+			{
+				url: `${PUBLIC_BASE_URL}/images/about-cover.jpg`,
+				width: 1200,
+				height: 630,
+				alt: 'About Rookie Nguyen'
+			}
+		]
+	}}
+	twitter={{
+		image: `${PUBLIC_BASE_URL}/images/about-cover.jpg`,
+		imageAlt: 'About Rookie Nguyen'
+	}}
+/>
 
 <article class="about-page">
 	<header class="about-header">

@@ -1,5 +1,6 @@
 <script lang="ts">
 	import PostCard from '$lib/components/PostCard.svelte';
+	import { MetaTags } from 'svelte-meta-tags';
 	import { resolve } from '$app/paths';
 
 	let { data } = $props();
@@ -7,11 +8,14 @@
 	let posts = $derived(data.posts);
 </script>
 
-<svelte:head>
-	<title
-		>{category ? `${category.name} | Rookie's Blog` : "Category Not Found | Rookie's Blog"}</title
-	>
-</svelte:head>
+{#if category}
+	<MetaTags
+		title={category.name}
+		description={category.description ?? `Posts in the ${category.name} category`}
+	/>
+{:else}
+	<MetaTags title="Category Not Found" />
+{/if}
 
 {#if !category}
 	<div class="not-found">

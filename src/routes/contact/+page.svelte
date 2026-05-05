@@ -1,7 +1,10 @@
 <script lang="ts">
 	import PageLayout from '$lib/components/layouts/PageLayout.svelte';
 	import { SiInstagram } from '@icons-pack/svelte-simple-icons';
+	import { MetaTags } from 'svelte-meta-tags';
 </script>
+
+<MetaTags title="Contact" description="Drop me a hello! I'd love to hear from you." />
 
 <PageLayout
 	title="Contact"

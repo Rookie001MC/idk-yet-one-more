@@ -1,12 +1,14 @@
 <script lang="ts">
 	import PostCard from '$lib/components/PostCard.svelte';
+	import { MetaTags } from 'svelte-meta-tags';
 	let { data } = $props();
 	let posts = $derived(data.posts);
 </script>
 
-<svelte:head>
-	<title>Blog | Rookie's Blog</title>
-</svelte:head>
+<MetaTags
+	title="Blog"
+	description="A collection of random thoughts, experiences, and whatever comes to mind."
+/>
 
 <div class="blog-page">
 	<header class="page-header">

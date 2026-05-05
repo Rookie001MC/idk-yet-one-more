@@ -1,6 +1,12 @@
 <script lang="ts">
 	import PageLayout from '$lib/components/layouts/PageLayout.svelte';
+	import { MetaTags } from 'svelte-meta-tags';
 </script>
+
+<MetaTags
+	title="Privacy Policy"
+	description="Privacy policy for Rookie's Blog. I don't collect your personal info."
+/>
 
 <PageLayout title="Privacy Policy">
 	<div class="prose">

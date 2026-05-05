@@ -1,6 +1,8 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
 	import MarkdownParser from '$lib/components/markdown/MarkdownParser.svelte';
+	import { MetaTags } from 'svelte-meta-tags';
+	import { PUBLIC_BASE_URL } from '$env/static/public';
 	let { data } = $props();
 	let post = $derived(data.post);
 
@@ -13,14 +15,47 @@
 				})
 			: ''
 	);
+
+	const imageUrl = $derived(
+		data.featuredImageUrl
+			? `${PUBLIC_BASE_URL}${data.featuredImageUrl}`
+			: `${PUBLIC_BASE_URL}/images/site-cover.jpg`
+	);
 </script>
 
-<svelte:head>
-	<title>{post ? `${post.title} | Rookie's Blog` : "Post Not Found | Rookie's Blog"}</title>
-	{#if post}
-		<meta name="description" content={post.excerpt} />
-	{/if}
-</svelte:head>
+{#if post}
+	<MetaTags
+		title={post.title}
+		description={post.excerpt ?? ''}
+		openGraph={{
+			type: 'article',
+			url: `${PUBLIC_BASE_URL}/blog/${post.slug}`,
+			title: post.title,
+			description: post.excerpt ?? '',
+			images: [
+				{
+					url: imageUrl,
+					width: 1200,
+					height: 630,
+					alt: post.title
+				}
+			],
+			article: {
+				publishedTime: post.datePublished ?? undefined,
+				authors: ['Rookie Nguyen']
+			}
+		}}
+		twitter={{
+			cardType: 'summary_large_image',
+			title: post.title,
+			description: post.excerpt ?? '',
+			image: imageUrl,
+			imageAlt: post.title
+		}}
+	/>
+{:else}
+	<MetaTags title="Post Not Found" />
+{/if}
 
 {#if !post}
 	<div class="not-found">
