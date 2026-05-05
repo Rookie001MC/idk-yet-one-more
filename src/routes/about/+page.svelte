@@ -13,7 +13,7 @@
 	openGraph={{
 		images: [
 			{
-				url: `${PUBLIC_BASE_URL}/images/about-cover.jpg`,
+				url: `${PUBLIC_BASE_URL}/opengraph?title=About&description=A bit about myself - Rookie Nguyen, broadcast engineer, photographer, and web developer.`,
 				width: 1200,
 				height: 630,
 				alt: 'About Rookie Nguyen'
@@ -21,7 +21,7 @@
 		]
 	}}
 	twitter={{
-		image: `${PUBLIC_BASE_URL}/images/about-cover.jpg`,
+		image: `${PUBLIC_BASE_URL}/opengraph?title=About&description=A bit about myself - Rookie Nguyen, broadcast engineer, photographer, and web developer.`,
 		imageAlt: 'About Rookie Nguyen'
 	}}
 />

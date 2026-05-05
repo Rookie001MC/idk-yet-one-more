@@ -3,6 +3,7 @@
 	import MarkdownParser from '$lib/components/markdown/MarkdownParser.svelte';
 	import { MetaTags } from 'svelte-meta-tags';
 	import { PUBLIC_BASE_URL } from '$env/static/public';
+	import { SvelteURLSearchParams } from 'svelte/reactivity';
 	let { data } = $props();
 	let post = $derived(data.post);
 
@@ -16,11 +17,23 @@
 			: ''
 	);
 
-	const imageUrl = $derived(
-		data.featuredImageUrl
-			? `${PUBLIC_BASE_URL}${data.featuredImageUrl}`
-			: `${PUBLIC_BASE_URL}/images/site-cover.jpg`
-	);
+	const imageUrl = $derived.by(() => {
+		if (data.featuredImageUrl) {
+			return `${PUBLIC_BASE_URL}${data.featuredImageUrl}`;
+		}
+
+		// Generate dynamic OG image URL with post details
+		const params = new SvelteURLSearchParams({
+			title: post?.title || '',
+			description: post?.excerpt || ''
+		});
+
+		if (post?.category && typeof post.category === 'object') {
+			params.set('category', post.category.name);
+		}
+
+		return `${PUBLIC_BASE_URL}/opengraph?${params.toString()}`;
+	});
 </script>
 
 {#if post}

@@ -2,6 +2,7 @@
 	import PostCard from '$lib/components/PostCard.svelte';
 	import { MetaTags } from 'svelte-meta-tags';
 	import { resolve } from '$app/paths';
+	import { PUBLIC_BASE_URL } from '$env/static/public';
 
 	let { data } = $props();
 	let category = $derived(data.category);
@@ -12,6 +13,20 @@
 	<MetaTags
 		title={category.name}
 		description={category.description ?? `Posts in the ${category.name} category`}
+		openGraph={{
+			images: [
+				{
+					url: `${PUBLIC_BASE_URL}/opengraph?title=${encodeURIComponent(category.name)}&description=${encodeURIComponent(category.description ?? `Posts in the ${category.name} category`)}&category=Category`,
+					width: 1200,
+					height: 630,
+					alt: category.name
+				}
+			]
+		}}
+		twitter={{
+			image: `${PUBLIC_BASE_URL}/opengraph?title=${encodeURIComponent(category.name)}&description=${encodeURIComponent(category.description ?? `Posts in the ${category.name} category`)}&category=Category`,
+			imageAlt: category.name
+		}}
 	/>
 {:else}
 	<MetaTags title="Category Not Found" />

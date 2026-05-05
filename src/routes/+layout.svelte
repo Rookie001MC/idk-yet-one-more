@@ -27,7 +27,7 @@
 			description: siteConfig.description,
 			images: [
 				{
-					url: `${PUBLIC_BASE_URL}/images/site-cover.jpg`,
+					url: `${PUBLIC_BASE_URL}/opengraph`,
 					width: 1200,
 					height: 630,
 					alt: `${siteConfig.name} Cover`
@@ -39,7 +39,7 @@
 			cardType: 'summary_large_image',
 			title: siteConfig.name,
 			description: siteConfig.description,
-			image: `${PUBLIC_BASE_URL}/images/site-cover.jpg`,
+			image: `${PUBLIC_BASE_URL}/opengraph`,
 			imageAlt: `${siteConfig.name} Cover`
 		}
 	});
