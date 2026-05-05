@@ -10,7 +10,7 @@
 	title="Contact"
 	description="Drop me a hello!"
 	featuredImage={{
-		src: 'https://itsrookienguyen.me/wp-content/uploads/2026/04/the-film-cam-1024x700.jpg',
+		src: '/images/the-film-cam.jpg',
 		alt: 'Contact Hero'
 	}}
 >
@@ -41,11 +41,7 @@
 		</div>
 
 		<div class="signature-section">
-			<img
-				src="https://itsrookienguyen.me/wp-content/uploads/2026/04/qthang_signature.png"
-				alt="Signature"
-				class="signature-image"
-			/>
+			<img src="/images/qthang_signature.png" alt="Signature" class="signature-image" />
 		</div>
 	</div>
 </PageLayout>
@@ -85,7 +81,6 @@
 
 		.signature-image {
 			max-width: 200px;
-			filter: invert(1); // Since our theme is dark and the signature is likely dark on light
 			opacity: 0.8;
 		}
 	}
