@@ -33,4 +33,5 @@ Generates a Svelte Playground link with the provided code.
 After completing the code, ask the user if they want a playground link. Only call this tool after user confirmation and NEVER if code was written to files in their project.
 
 ## Checking SvelteKit code
+
 In addition to using Svelte-Autofixer, running `bun run check --output machine` will give diagnostics related to type checking.

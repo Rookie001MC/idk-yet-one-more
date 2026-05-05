@@ -30,7 +30,8 @@ export async function GET({ params, url, fetch }) {
 		}
 
 		const contentType = response.headers.get('Content-Type');
-		const cacheControl = response.headers.get('Cache-Control') || 'public, max-age=31536000, immutable';
+		const cacheControl =
+			response.headers.get('Cache-Control') || 'public, max-age=31536000, immutable';
 
 		return new Response(response.body, {
 			headers: {

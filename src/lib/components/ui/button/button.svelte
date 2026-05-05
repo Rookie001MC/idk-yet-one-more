@@ -1,8 +1,22 @@
 <script lang="ts" module>
 	import type { HTMLAnchorAttributes, HTMLButtonAttributes } from 'svelte/elements';
 
-	export type ButtonVariant = 'default' | 'outline' | 'secondary' | 'ghost' | 'destructive' | 'link';
-	export type ButtonSize = 'default' | 'xs' | 'sm' | 'lg' | 'icon' | 'icon-xs' | 'icon-sm' | 'icon-lg';
+	export type ButtonVariant =
+		| 'default'
+		| 'outline'
+		| 'secondary'
+		| 'ghost'
+		| 'destructive'
+		| 'link';
+	export type ButtonSize =
+		| 'default'
+		| 'xs'
+		| 'sm'
+		| 'lg'
+		| 'icon'
+		| 'icon-xs'
+		| 'icon-sm'
+		| 'icon-lg';
 
 	export type ButtonProps = (HTMLButtonAttributes & HTMLAnchorAttributes) & {
 		variant?: ButtonVariant;

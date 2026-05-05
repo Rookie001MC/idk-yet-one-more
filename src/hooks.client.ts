@@ -13,9 +13,7 @@ Sentry.init({
 	// https://docs.sentry.io/platforms/javascript/guides/sveltekit/configuration/options/#sendDefaultPii
 	sendDefaultPii: false,
 	tracesSampleRate: 1.0,
-	integrations: [
-  	Sentry.feedbackIntegration()
-	]
+	integrations: [Sentry.feedbackIntegration()]
 });
 
 // If you have a custom error handler, pass it to `handleErrorWithSentry`
