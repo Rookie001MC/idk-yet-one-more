@@ -6,11 +6,11 @@
 </script>
 
 <div
-	style="display: flex; flex-direction: column; width: 100%; height: 100%; background: linear-gradient(135deg, #100d2e 0%, #1a1640 100%); padding: 80px; font-family: 'EB Garamond', system-ui, -apple-system, sans-serif;"
+	style="display: flex; flex-direction: column; width: 100%; height: 100%; background: linear-gradient(135deg, #100d2e 0%, #1a1640 100%); padding: 40px; font-family: 'EB Garamond', system-ui, -apple-system, sans-serif;"
 >
 	<div style="display: flex; flex-direction: column; flex: 1; justify-content: space-between;">
 		<div style="display: flex; flex-direction: column; gap: 20px;">
-			<img src={Logo} alt="" />
+			<img src={Logo} alt="" style="max-width: 300px; height: 111px;" />
 			{#if category}
 				<div
 					style="color: #a78bfa; font-size: 24px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em;"
