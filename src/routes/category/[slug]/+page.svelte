@@ -1,44 +1,105 @@
 <script lang="ts">
 	import PostCard from '$lib/components/PostCard.svelte';
+	import { MetaTags } from 'svelte-meta-tags';
+	import { resolve } from '$app/paths';
+	import { PUBLIC_BASE_URL } from '$env/static/public';
 
 	let { data } = $props();
 	let category = $derived(data.category);
 	let posts = $derived(data.posts);
 </script>
 
-<svelte:head>
-	<title>{category.name} | Rookie's Blog</title>
-</svelte:head>
+{#if category}
+	<MetaTags
+		title={category.name}
+		description={category.description ?? `Posts in the ${category.name} category`}
+		openGraph={{
+			images: [
+				{
+					url: `${PUBLIC_BASE_URL}/opengraph?title=${encodeURIComponent(category.name)}&description=${encodeURIComponent(category.description ?? `Posts in the ${category.name} category`)}&category=Category`,
+					width: 1200,
+					height: 630,
+					alt: category.name
+				}
+			]
+		}}
+		twitter={{
+			image: `${PUBLIC_BASE_URL}/opengraph?title=${encodeURIComponent(category.name)}&description=${encodeURIComponent(category.description ?? `Posts in the ${category.name} category`)}&category=Category`,
+			imageAlt: category.name
+		}}
+	/>
+{:else}
+	<MetaTags title="Category Not Found" />
+{/if}
 
-<div class="category-page">
-	<header class="page-header">
-		<div class="container">
-			<span class="eyebrow">Category</span>
-			<h1 class="page-title font-heading">{category.name}</h1>
-			{#if category.description}
-				<p class="page-description">{category.description}</p>
-			{/if}
+{#if !category}
+	<div class="not-found">
+		<div class="not-found-content">
+			<h1 class="font-heading">Category not found.</h1>
+			<p>This category may have been removed, or something went wrong loading it.</p>
+			<a href={resolve('/blog')}>← Back to blog</a>
 		</div>
-	</header>
+	</div>
+{:else}
+	<div class="category-page">
+		<header class="page-header">
+			<div class="container">
+				<span class="eyebrow">Category</span>
+				<h1 class="page-title font-heading">{category.name}</h1>
+				{#if category.description}
+					<p class="page-description">{category.description}</p>
+				{/if}
+			</div>
+		</header>
 
-	<main class="posts-section">
-		<div class="container">
-			{#if posts.length > 0}
-				<div class="posts-grid">
-					{#each posts as post (post.id)}
-						<PostCard {post} />
-					{/each}
-				</div>
-			{:else}
-				<div class="no-posts">
-					<p>No posts found in this category.</p>
-				</div>
-			{/if}
-		</div>
-	</main>
-</div>
+		<main class="posts-section">
+			<div class="container">
+				{#if posts.length > 0}
+					<div class="posts-grid">
+						{#each posts as post (post.id)}
+							<PostCard {post} />
+						{/each}
+					</div>
+				{:else}
+					<div class="no-posts">
+						<p>No posts found in this category.</p>
+					</div>
+				{/if}
+			</div>
+		</main>
+	</div>
+{/if}
 
 <style lang="scss">
+	.not-found {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		min-height: 60vh;
+		padding: var(--space-xl) var(--space-sm);
+		text-align: center;
+	}
+
+	.not-found-content {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-md);
+
+		h1 {
+			font-size: var(--font-size-h2);
+		}
+
+		p {
+			color: var(--color-text-muted);
+			margin: 0;
+		}
+
+		a {
+			color: var(--color-accent);
+			text-decoration: underline;
+		}
+	}
+
 	.category-page {
 		padding-top: var(--space-xl);
 	}

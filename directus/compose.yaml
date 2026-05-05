@@ -1,7 +1,10 @@
 name: rookiesblog-directus
 services:
   directus:
-    image: directus/directus
+    # image: directus/directus
+    build:
+      context: .
+      dockerfile: Dockerfile
     container_name: directus
     restart: unless-stopped
     ports:

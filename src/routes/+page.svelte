@@ -4,14 +4,13 @@
 	import { Admonition } from '$lib/components/ui/admonition';
 	import { Button } from '$lib/components/ui/button';
 	import { Image } from '$lib/components/ui/image';
+	import { MetaTags } from 'svelte-meta-tags';
 
 	let { data } = $props();
 	let latestPosts = $derived(data.latestPosts);
 </script>
 
-<svelte:head>
-	<title>Home | Rookie's Blog</title>
-</svelte:head>
+<MetaTags title="Home" />
 
 <!-- Hero Section -->
 <section class="hero">

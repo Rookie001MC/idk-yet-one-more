@@ -7,8 +7,42 @@
 	import { toast } from 'svelte-sonner';
 	import { onMount } from 'svelte';
 	import { onNavigate } from '$app/navigation';
+	import { MetaTags, type MetaTagsProps } from 'svelte-meta-tags';
+	import { page } from '$app/state';
+	import { PUBLIC_BASE_URL } from '$env/static/public';
+	import siteConfig from '$lib/config';
 
 	let { data, children } = $props();
+
+	// Default meta tags for all pages
+	const defaultMetaTags: MetaTagsProps = $derived({
+		title: siteConfig.name,
+		titleTemplate: `%s | ${siteConfig.name}`,
+		description: siteConfig.description,
+		canonical: `${PUBLIC_BASE_URL}${page.url.pathname}`,
+		openGraph: {
+			type: 'website',
+			url: `${PUBLIC_BASE_URL}${page.url.pathname}`,
+			title: siteConfig.name,
+			description: siteConfig.description,
+			images: [
+				{
+					url: `${PUBLIC_BASE_URL}/opengraph`,
+					width: 1200,
+					height: 630,
+					alt: `${siteConfig.name} Cover`
+				}
+			],
+			siteName: siteConfig.name
+		},
+		twitter: {
+			cardType: 'summary_large_image',
+			title: siteConfig.name,
+			description: siteConfig.description,
+			image: `${PUBLIC_BASE_URL}/opengraph`,
+			imageAlt: `${siteConfig.name} Cover`
+		}
+	});
 
 	onMount(() => {
 		if (data.cmsError) {
@@ -33,6 +67,8 @@
 		});
 	});
 </script>
+
+<MetaTags {...defaultMetaTags} />
 
 <Toaster richColors closeButton />
 

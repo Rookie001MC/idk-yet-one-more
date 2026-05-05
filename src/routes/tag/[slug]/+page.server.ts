@@ -1,28 +1,34 @@
 import { fetchPostsByTag } from '$lib/data/blogPosts';
 import { fetchTagBySlug } from '$lib/data/tags';
-import { error } from '@sveltejs/kit';
+import { getAssetUrl } from '$lib/data/directusFile';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ params, fetch }) => {
 	try {
-		const tag = await fetchTagBySlug(params.slug, fetch);
+		const [tag, posts] = await Promise.all([
+			fetchTagBySlug(params.slug, fetch),
+			fetchPostsByTag(params.slug, ['*', 'category.*', 'tags.tagsId.*', 'featuredImage.*'], fetch)
+		]);
+
 		if (!tag) {
-			throw error(404, 'Tag not found');
+			return { tag: null, posts: [] };
 		}
 
-		const posts = await fetchPostsByTag(
-			params.slug,
-			['*', 'category.*', 'tags.tagsId.*', 'featuredImage.*'],
-			fetch
-		);
+		const resolvedPosts = posts.map((post) => {
+			let featuredImageUrl = null;
+			if (post.featuredImage && typeof post.featuredImage !== 'string') {
+				featuredImageUrl = getAssetUrl(post.featuredImage, {
+					width: 1200,
+					height: 600,
+					fit: 'cover'
+				});
+			}
+			return { ...post, featuredImageUrl };
+		});
 
-		return {
-			tag,
-			posts
-		};
-	} catch (err) {
-		if (err && typeof err === 'object' && 'status' in err && err.status === 404) throw err;
-		console.error('Tag page load error:', err);
-		throw error(500, 'Internal Server Error');
+		return { tag, posts: resolvedPosts };
+	} catch (error) {
+		console.error('Tag page load error:', error);
+		return { tag: null, posts: [] };
 	}
 };

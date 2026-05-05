@@ -3,22 +3,24 @@
 // Runtime types generated with workerd@1.20260415.1 2026-04-19 nodejs_als
 declare namespace Cloudflare {
 	interface GlobalProps {
-		mainModule: typeof import("./.svelte-kit/cloudflare/_worker");
+		// Avoid Svelte-check spewing tons of errors related to Cloudflare's build dir
+		// This must be done every time types are generated.
+		// mainModule: typeof import("./.svelte-kit/cloudflare/_worker");
 	}
 	interface StagingEnv {
 		ASSETS: Fetcher;
-		PUBLIC_DIRECTUS_URL: "https://directus.itsrookienguyen.me";
-		PUBLIC_BASE_URL: "https://staging.itsrookienguyen.me";
+		PUBLIC_DIRECTUS_URL: 'https://directus.itsrookienguyen.me';
+		PUBLIC_BASE_URL: 'https://staging.itsrookienguyen.me';
 	}
 	interface ProductionEnv {
 		ASSETS: Fetcher;
-		PUBLIC_DIRECTUS_URL: "https://directus.itsrookienguyen.me";
-		PUBLIC_BASE_URL: "https://itsrookienguyen.me";
+		PUBLIC_DIRECTUS_URL: 'https://directus.itsrookienguyen.me';
+		PUBLIC_BASE_URL: 'https://itsrookienguyen.me';
 	}
 	interface Env {
 		ASSETS: Fetcher;
-		PUBLIC_DIRECTUS_URL?: "https://directus.itsrookienguyen.me";
-		PUBLIC_BASE_URL?: "https://staging.itsrookienguyen.me" | "https://itsrookienguyen.me";
+		PUBLIC_DIRECTUS_URL?: 'https://directus.itsrookienguyen.me';
+		PUBLIC_BASE_URL?: 'https://staging.itsrookienguyen.me' | 'https://itsrookienguyen.me';
 		DIRECTUS_TOKEN?: string;
 	}
 }
