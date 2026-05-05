@@ -6,6 +6,8 @@ import { fetchTags } from '$lib/data/tags';
 import { PUBLIC_BASE_URL } from '$env/static/public';
 
 export const GET: RequestHandler = async ({ fetch }) => {
+	// Data functions already handle their own errors and return [] on failure,
+	// so the sitemap will still build with whatever is available.
 	const [posts, categories, tags] = await Promise.all([
 		fetchAllPosts(['slug'], fetch),
 		fetchCategories(fetch),
