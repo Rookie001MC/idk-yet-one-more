@@ -7,39 +7,49 @@ export async function fetchLatestPosts(
 	fields: any[] = ['*'],
 	fetch?: typeof globalThis.fetch
 ): Promise<BlogPost[]> {
-	const client = getDirectusClient(fetch);
-	const posts = await client.request(
-		readItems('blogPosts', {
-			fields,
-			limit,
-			sort: ['-datePublished'],
-			filter: {
-				status: {
-					_eq: 'published'
+	try {
+		const client = getDirectusClient(fetch);
+		const posts = await client.request(
+			readItems('blogPosts', {
+				fields,
+				limit,
+				sort: ['-datePublished'],
+				filter: {
+					status: {
+						_eq: 'published'
+					}
 				}
-			}
-		})
-	);
-	return posts as unknown as BlogPost[];
+			})
+		);
+		return posts as unknown as BlogPost[];
+	} catch (error) {
+		console.error('fetchLatestPosts error:', error);
+		return [];
+	}
 }
 
 export async function fetchAllPosts(
 	fields: any[] = ['*'],
 	fetch?: typeof globalThis.fetch
 ): Promise<BlogPost[]> {
-	const client = getDirectusClient(fetch);
-	const posts = await client.request(
-		readItems('blogPosts', {
-			fields,
-			sort: ['-datePublished'],
-			filter: {
-				status: {
-					_eq: 'published'
+	try {
+		const client = getDirectusClient(fetch);
+		const posts = await client.request(
+			readItems('blogPosts', {
+				fields,
+				sort: ['-datePublished'],
+				filter: {
+					status: {
+						_eq: 'published'
+					}
 				}
-			}
-		})
-	);
-	return posts as unknown as BlogPost[];
+			})
+		);
+		return posts as unknown as BlogPost[];
+	} catch (error) {
+		console.error('fetchAllPosts error:', error);
+		return [];
+	}
 }
 
 export async function fetchPostBySlug(
@@ -47,22 +57,27 @@ export async function fetchPostBySlug(
 	fields: any[] = ['*'],
 	fetch: typeof globalThis.fetch
 ): Promise<BlogPost | null> {
-	const client = getDirectusClient(fetch);
-	const posts = await client.request(
-		readItems('blogPosts', {
-			fields,
-			filter: {
-				slug: {
-					_eq: slug
+	try {
+		const client = getDirectusClient(fetch);
+		const posts = await client.request(
+			readItems('blogPosts', {
+				fields,
+				filter: {
+					slug: {
+						_eq: slug
+					},
+					status: {
+						_eq: 'published'
+					}
 				},
-				status: {
-					_eq: 'published'
-				}
-			},
-			limit: 1
-		})
-	);
-	return posts.length > 0 ? (posts[0] as unknown as BlogPost) : null;
+				limit: 1
+			})
+		);
+		return posts.length > 0 ? (posts[0] as unknown as BlogPost) : null;
+	} catch (error) {
+		console.error(`fetchPostBySlug error (slug: ${slug}):`, error);
+		return null;
+	}
 }
 
 export async function fetchPostsByCategory(
@@ -70,24 +85,29 @@ export async function fetchPostsByCategory(
 	fields: any[] = ['*'],
 	fetch?: typeof globalThis.fetch
 ): Promise<BlogPost[]> {
-	const client = getDirectusClient(fetch);
-	const posts = await client.request(
-		readItems('blogPosts', {
-			fields,
-			sort: ['-datePublished'],
-			filter: {
-				status: {
-					_eq: 'published'
-				},
-				category: {
-					slug: {
-						_eq: slug
+	try {
+		const client = getDirectusClient(fetch);
+		const posts = await client.request(
+			readItems('blogPosts', {
+				fields,
+				sort: ['-datePublished'],
+				filter: {
+					status: {
+						_eq: 'published'
+					},
+					category: {
+						slug: {
+							_eq: slug
+						}
 					}
 				}
-			}
-		})
-	);
-	return posts as unknown as BlogPost[];
+			})
+		);
+		return posts as unknown as BlogPost[];
+	} catch (error) {
+		console.error(`fetchPostsByCategory error (slug: ${slug}):`, error);
+		return [];
+	}
 }
 
 export async function fetchPostsByTag(
@@ -95,27 +115,32 @@ export async function fetchPostsByTag(
 	fields: any[] = ['*'],
 	fetch?: typeof globalThis.fetch
 ): Promise<BlogPost[]> {
-	const client = getDirectusClient(fetch);
-	const posts = await client.request(
-		readItems('blogPosts', {
-			fields,
-			sort: ['-datePublished'],
-			filter: {
-				status: {
-					_eq: 'published'
-				},
-				tags: {
-					// @ts-ignore - Directus SDK types can be tricky with M2M filtering
-					tagsId: {
-						slug: {
-							_eq: slug
+	try {
+		const client = getDirectusClient(fetch);
+		const posts = await client.request(
+			readItems('blogPosts', {
+				fields,
+				sort: ['-datePublished'],
+				filter: {
+					status: {
+						_eq: 'published'
+					},
+					tags: {
+						// @ts-ignore - Directus SDK types can be tricky with M2M filtering
+						tagsId: {
+							slug: {
+								_eq: slug
+							}
 						}
 					}
-				}
-			} as any
-		})
-	);
-	return posts as unknown as BlogPost[];
+				} as any
+			})
+		);
+		return posts as unknown as BlogPost[];
+	} catch (error) {
+		console.error(`fetchPostsByTag error (slug: ${slug}):`, error);
+		return [];
+	}
 }
 
 export async function fetchPostsByTagId(
@@ -123,25 +148,30 @@ export async function fetchPostsByTagId(
 	fields: any[] = ['*'],
 	fetch?: typeof globalThis.fetch
 ): Promise<BlogPost[]> {
-	const client = getDirectusClient(fetch);
-	const posts = await client.request(
-		readItems('blogPosts', {
-			fields,
-			sort: ['-datePublished'],
-			filter: {
-				status: {
-					_eq: 'published'
-				},
-				tags: {
-					// @ts-ignore
-					tagsId: {
-						id: {
-							_eq: id
+	try {
+		const client = getDirectusClient(fetch);
+		const posts = await client.request(
+			readItems('blogPosts', {
+				fields,
+				sort: ['-datePublished'],
+				filter: {
+					status: {
+						_eq: 'published'
+					},
+					tags: {
+						// @ts-ignore
+						tagsId: {
+							id: {
+								_eq: id
+							}
 						}
 					}
-				}
-			} as any
-		})
-	);
-	return posts as unknown as BlogPost[];
+				} as any
+			})
+		);
+		return posts as unknown as BlogPost[];
+	} catch (error) {
+		console.error(`fetchPostsByTagId error (id: ${id}):`, error);
+		return [];
+	}
 }
