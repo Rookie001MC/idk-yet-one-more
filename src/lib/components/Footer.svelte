@@ -14,12 +14,7 @@
 				<div class="social-links">
 					{#each siteConfig.social as social (social.name)}
 						{@const Icon = social.icon}
-						<a
-							href={resolve(social.url)}
-							target="_blank"
-							rel="noopener noreferrer"
-							aria-label={social.name}
-						>
+						<a href={social.url} target="_blank" rel="noopener noreferrer" aria-label={social.name}>
 							<Icon></Icon>
 						</a>
 					{/each}

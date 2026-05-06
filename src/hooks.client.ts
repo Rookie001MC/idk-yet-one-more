@@ -12,7 +12,6 @@ Sentry.init({
 	// Enable sending user PII (Personally Identifiable Information)
 	// https://docs.sentry.io/platforms/javascript/guides/sveltekit/configuration/options/#sendDefaultPii
 	sendDefaultPii: false,
-	tracesSampleRate: 1.0,
 	integrations: [Sentry.feedbackIntegration()]
 });
 
