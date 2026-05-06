@@ -10,10 +10,11 @@
 		<div class="footer-grid">
 			<!-- Left Column -->
 			<div class="footer-left">
-				<div class="site-title font-heading">Rookie's Blog</div>
+				<div class="site-title font-heading">{siteConfig.name}</div>
 				<div class="social-links">
 					{#each siteConfig.social as social (social.name)}
 						{@const Icon = social.icon}
+						<!-- eslint-disable-next-line svelte/no-navigation-without-resolve These are outbound links -->
 						<a href={social.url} target="_blank" rel="noopener noreferrer" aria-label={social.name}>
 							<Icon></Icon>
 						</a>
