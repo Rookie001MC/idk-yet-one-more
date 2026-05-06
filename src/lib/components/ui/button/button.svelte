@@ -1,5 +1,5 @@
 <script lang="ts" module>
-	import { resolve } from '$app/paths';
+	import { HttpRegex } from '$lib/utils/regex';
 	import type { HTMLAnchorAttributes, HTMLButtonAttributes } from 'svelte/elements';
 
 	export type ButtonVariant =
@@ -44,6 +44,8 @@
 	const buttonClasses = $derived(
 		`btn btn--variant-${variant} btn--size-${size} ${className || ''}`.trim()
 	);
+
+	const isExternalLink = $derived(!!href && HttpRegex.test(href));
 </script>
 
 {#if href}
@@ -51,7 +53,10 @@
 		bind:this={ref as HTMLAnchorElement}
 		data-slot="button"
 		class={buttonClasses}
-		href={disabled ? undefined : resolve(href)}
+		// eslint-disable-next-line svelte/no-navigation-without-resolve
+		href={disabled ? undefined : href}
+		target={isExternalLink ? '_blank' : undefined}
+		rel={isExternalLink ? 'noopener noreferrer' : undefined}
 		aria-disabled={disabled}
 		role={disabled ? 'link' : undefined}
 		tabindex={disabled ? -1 : undefined}
