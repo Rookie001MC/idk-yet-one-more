@@ -3,17 +3,20 @@
 	import MarkdownParser from '$lib/components/markdown/MarkdownParser.svelte';
 	import { MetaTags } from 'svelte-meta-tags';
 	import type { PageData } from './$types';
+	import toLocalizedLongDate from '$lib/utils/dateFormatter';
 
 	let { data }: { data: PageData } = $props();
 
-	const lastUpdated = $derived(
-		data.content?.date_updated
-			? new Date(data.content.date_updated).toLocaleDateString('en-US', {
-					month: 'long',
-					year: 'numeric'
-				})
-			: null
-	);
+	let lastUpdatedTimezoneString: string | null = $derived(null);
+
+	$effect(() => {
+		if (data.content?.date_updated) {
+			lastUpdatedTimezoneString = toLocalizedLongDate(data.content.date_updated, {
+				dateStyle: 'long',
+				timeStyle: 'short'
+			});
+		}
+	});
 </script>
 
 <MetaTags
@@ -28,8 +31,8 @@
 				<p class="lead">{data.content.excerpt}</p>
 			{/if}
 			<hr />
-			{#if lastUpdated}
-				<p class="footer-note">Last updated: {lastUpdated}</p>
+			{#if lastUpdatedTimezoneString}
+				<p class="footer-note">Last updated: {lastUpdatedTimezoneString}</p>
 			{/if}
 			{#if data.content.content}
 				<MarkdownParser content={data.content.content} />
