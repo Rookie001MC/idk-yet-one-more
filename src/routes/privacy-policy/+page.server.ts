@@ -1,12 +1,12 @@
 import { getDirectusClient } from '$lib/server/directus';
-import { readItems } from '@directus/sdk';
+import { readSingleton } from '@directus/sdk';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ fetch, setHeaders }) => {
 	try {
 		const client = getDirectusClient(fetch);
 		const data = await client.request(
-			readItems('privacyPolicy', {
+			readSingleton('privacyPolicy', {
 				fields: ['*'],
 				limit: 1
 			})
