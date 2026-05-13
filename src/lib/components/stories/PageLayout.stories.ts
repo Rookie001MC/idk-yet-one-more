@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/sveltekit';
-import PageLayout from '../layouts/PageLayout.svelte';
+import PageLayout from '../../layouts/PageLayout.svelte';
 
 const meta = {
 	title: 'Layouts/PageLayout',
