@@ -3,6 +3,7 @@
 
 	import Header from '$lib/components/Header.svelte';
 	import Footer from '$lib/components/Footer.svelte';
+	import DevelopmentMode from '$lib/components/DevelopmentMode.svelte';
 	import { Toaster } from '$lib/components/ui/sonner';
 	import { toast } from 'svelte-sonner';
 	import { onMount } from 'svelte';
@@ -78,6 +79,8 @@
 <MetaTags {...defaultMetaTags} />
 
 <Toaster richColors closeButton />
+
+<DevelopmentMode />
 
 <div class="app-layout">
 	<Header />
