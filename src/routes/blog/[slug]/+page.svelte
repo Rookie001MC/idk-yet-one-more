@@ -4,15 +4,15 @@
 	import { MetaTags } from 'svelte-meta-tags';
 	import { PUBLIC_BASE_URL } from '$env/static/public';
 	import { SvelteURLSearchParams } from 'svelte/reactivity';
+	import toLocalizedLongDate from '$lib/utils/dateFormatter';
 	let { data } = $props();
 	let post = $derived(data.post);
 
 	const formattedDate = $derived(
 		post?.datePublished
-			? new Date(post.datePublished).toLocaleDateString('vi-VN', {
-					day: '2-digit',
-					month: '2-digit',
-					year: 'numeric'
+			? toLocalizedLongDate(post.datePublished, {
+					dateStyle: 'medium',
+					timeStyle: 'short'
 				})
 			: ''
 	);

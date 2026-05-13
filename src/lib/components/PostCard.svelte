@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type BlogPost from '$lib/types/blogPost';
 	import { resolve } from '$app/paths';
+	import toLocalizedLongDate from '$lib/utils/dateFormatter';
 
 	let {
 		post,
@@ -15,10 +16,9 @@
 
 	const formattedDate = $derived(
 		post.datePublished
-			? new Date(post.datePublished).toLocaleDateString('vi-VN', {
-					day: '2-digit',
-					month: '2-digit',
-					year: 'numeric'
+			? toLocalizedLongDate(post.datePublished, {
+					dateStyle: 'medium',
+					timeStyle: 'short'
 				})
 			: ''
 	);
