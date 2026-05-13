@@ -56,8 +56,7 @@
 				<div class="tags">
 					{#each post.tags as tagObj (typeof tagObj.tagsId === 'object' ? tagObj.tagsId.id : tagObj.tagsId)}
 						{#if typeof tagObj.tagsId === 'object'}
-							<a href={resolve(`/tag/${tagObj.tagsId.slug}`)} class="tag">#{tagObj.tagsId.name}</a
-							>
+							<a href={resolve(`/tag/${tagObj.tagsId.slug}`)} class="tag">#{tagObj.tagsId.name}</a>
 						{/if}
 					{/each}
 				</div>
@@ -227,18 +226,6 @@
 			:global(ol) {
 				margin-bottom: 1.6em;
 				padding-left: 1.6em;
-			}
-
-			:global(ul) {
-				list-style: disc;
-			}
-
-			:global(ol) {
-				list-style: decimal;
-			}
-
-			:global(li) {
-				margin-bottom: 0.4em;
 			}
 
 			:global(code) {

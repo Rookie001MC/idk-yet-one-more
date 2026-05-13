@@ -40,6 +40,24 @@ hr {
 	border-top: 0.5px solid var(--color-border);
 }
 
+ul,
+ol {
+	padding-left: 1.6em;
+	margin-bottom: 1.4em;
+}
+
+ul {
+	list-style: disc;
+}
+
+ol {
+	list-style: decimal;
+}
+
+li {
+	margin-bottom: 0.35em;
+}
+
 strong {
 	color: var(--color-accent);
 	font-weight: 600;
