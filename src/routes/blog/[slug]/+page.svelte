@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
-	import BlogPostLayout from '$lib/components/layouts/BlogPostLayout.svelte';
+	import BlogPostLayout from '$lib/layouts/BlogPostLayout.svelte';
 	import { MetaTags } from 'svelte-meta-tags';
 	import { PUBLIC_BASE_URL } from '$env/static/public';
 	import { SvelteURLSearchParams } from 'svelte/reactivity';

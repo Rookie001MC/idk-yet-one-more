@@ -1,5 +1,5 @@
 <script lang="ts">
-	import PageLayout from '$lib/components/layouts/PageLayout.svelte';
+	import PageLayout from '$lib/layouts/PageLayout.svelte';
 	import MarkdownParser from '$lib/components/markdown/MarkdownParser.svelte';
 	import { MetaTags } from 'svelte-meta-tags';
 	import type { PageData } from './$types';
