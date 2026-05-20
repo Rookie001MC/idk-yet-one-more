@@ -2,7 +2,7 @@
 	import type BlogPost from '$lib/types/blogPost';
 	import { resolve } from '$app/paths';
 	import toLocalizedLongDate from '$lib/utils/dateFormatter';
-
+	import { generateExcerpt } from '$lib/utils/generateExcerpt';
 	let {
 		post,
 		featured = false,
@@ -22,6 +22,9 @@
 				})
 			: ''
 	);
+
+		/** CMS excerpt if set; otherwise auto-generated from the post content. */
+	const displayExcerpt = $derived(post.excerpt || generateExcerpt(post.content ?? ''));
 </script>
 
 <article class="post-card" class:featured class:compact>
@@ -66,11 +69,9 @@
 			</div>
 		{/if}
 
-		{#if !compact}
 			<p class="post-excerpt">
-				{post.excerpt}
+				{displayExcerpt}
 			</p>
-		{/if}
 	</div>
 </article>
 

@@ -3,6 +3,7 @@
 	import MarkdownParser from '$lib/components/markdown/MarkdownParser.svelte';
 	import toLocalizedLongDate from '$lib/utils/dateFormatter';
 	import { Image } from '$lib/components/ui/image';
+	import { generateExcerpt } from '$lib/utils/generateExcerpt';
 	import type BlogPost from '$lib/types/blogPost';
 
 	type Props = {
@@ -19,6 +20,9 @@
 				})
 			: ''
 	);
+
+	/** CMS excerpt if set; otherwise auto-generated from the post content. */
+	const displayExcerpt = $derived(post.excerpt || generateExcerpt(post.content ?? ''));
 </script>
 
 <article class="single-post">
@@ -50,6 +54,9 @@
 				<time datetime={post.datePublished ?? undefined}>{formattedDate}</time>
 			</div>
 			<h1 class="post-title font-heading">{post.title}</h1>
+			{#if displayExcerpt}
+				<p class="post-excerpt">{displayExcerpt}</p>
+			{/if}
 		</div>
 	</header>
 
@@ -81,7 +88,7 @@
 	.post-header {
 		position: relative;
 		margin-bottom: var(--space-xl);
-		min-height: 400px;
+		min-height: 550px;
 		display: flex;
 		flex-direction: column;
 		justify-content: flex-end;
@@ -128,6 +135,10 @@
 		position: relative;
 		z-index: 10;
 		text-align: center;
+
+		.post-title {
+			margin-bottom: 1.2rem;
+		}
 	}
 
 	.container {
