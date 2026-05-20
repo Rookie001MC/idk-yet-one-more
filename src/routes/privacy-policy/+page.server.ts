@@ -1,18 +1,14 @@
 import { error } from '@sveltejs/kit';
-import { env } from '$env/dynamic/private';
 import { getDirectusClient } from '$lib/server/directus';
 import { readSingleton } from '@directus/sdk';
 import type { PageServerLoad } from './$types';
 
-export const load: PageServerLoad = async ({ url, fetch, setHeaders }) => {
+export const load: PageServerLoad = async ({ url, cookies, fetch, setHeaders }) => {
 	const preview = url.searchParams.get('preview') === 'true';
 	const version = url.searchParams.get('version') ?? undefined;
-	const token = url.searchParams.get('token');
 
-	if (preview) {
-		if (!token || token !== env.PREVIEW_SECRET) {
-			throw error(401, 'Unauthorized');
-		}
+	if (preview && cookies.get('preview_session') !== '1') {
+		throw error(401, 'Unauthorized');
 	}
 
 	try {
