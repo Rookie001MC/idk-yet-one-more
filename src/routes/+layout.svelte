@@ -24,6 +24,9 @@
 	const resolvedTitle       = $derived(meta?.title       ?? siteConfig.name);
 	const resolvedDescription = $derived(meta?.description ?? siteConfig.description);
 	const resolvedImageUrl    = $derived(meta?.imageUrl    ?? `${PUBLIC_BASE_URL}/opengraph`);
+	// Default 'image/png': the Satori /opengraph route always emits PNG.
+	// Blog posts with a featured image pass 'image/jpeg' via meta.imageType.
+	const resolvedImageType   = $derived(meta?.imageType  ?? 'image/png');
 	const resolvedType        = $derived(meta?.type        ?? 'website');
 
 	onMount(() => {
@@ -71,7 +74,8 @@
 				url: resolvedImageUrl,
 				width: 1200,
 				height: 630,
-				alt: resolvedTitle
+				alt: resolvedTitle,
+				type: resolvedImageType
 			}
 		],
 		siteName: siteConfig.name,

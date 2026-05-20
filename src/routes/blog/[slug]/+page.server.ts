@@ -1,6 +1,7 @@
 import { error } from '@sveltejs/kit';
 import { PUBLIC_BASE_URL } from '$env/static/public';
 import { fetchPostBySlug, fetchPostBySlugPreview } from '$lib/data/blogPosts';
+import { generateExcerpt } from '$lib/utils/generateExcerpt';
 import type { PageServerLoad } from './$types';
 import type { PageMeta } from '$lib/types/pageMeta';
 
@@ -41,6 +42,7 @@ export const load: PageServerLoad = async ({ params, url, cookies, fetch, setHea
 		// 1200×630 through our asset proxy (which adds Directus auth + image transforms).
 		// This keeps file sizes well under the 5 MB limit that most crawlers enforce.
 		let ogImageUrl: string;
+		let ogImageType: string;
 		if (post.featuredImage && typeof post.featuredImage !== 'string') {
 			const ogAssetParams = new URLSearchParams({
 				width: '1200',
@@ -50,20 +52,24 @@ export const load: PageServerLoad = async ({ params, url, cookies, fetch, setHea
 				fit: 'cover'
 			});
 			ogImageUrl = `${PUBLIC_BASE_URL}/api/assets/${post.featuredImage.id}?${ogAssetParams.toString()}`;
+			ogImageType = 'image/jpeg';
 		} else {
 			const ogParams = new URLSearchParams();
 			ogParams.set('title', post.title || '');
-			if (post.excerpt) ogParams.set('description', post.excerpt);
+			const ogDescription = post.excerpt || generateExcerpt(post.content ?? '');
+			if (ogDescription) ogParams.set('description', ogDescription);
 			if (post.category && typeof post.category === 'object' && 'name' in post.category) {
 				ogParams.set('category', String(post.category.name));
 			}
 			ogImageUrl = `${PUBLIC_BASE_URL}/opengraph?${ogParams.toString()}`;
+			ogImageType = 'image/png';
 		}
 
 		const meta: PageMeta = {
 			title: post.title,
-			description: post.excerpt ?? undefined,
+			description: (post.excerpt || generateExcerpt(post.content ?? '')) || undefined,
 			imageUrl: ogImageUrl,
+			imageType: ogImageType,
 			type: 'article',
 			publishedTime: post.datePublished ?? undefined,
 			authors: ['Rookie Nguyen']
