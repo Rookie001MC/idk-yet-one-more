@@ -2,14 +2,14 @@
 	import { resolve } from '$app/paths';
 	import MarkdownParser from '$lib/components/markdown/MarkdownParser.svelte';
 	import toLocalizedLongDate from '$lib/utils/dateFormatter';
+	import { Image } from '$lib/components/ui/image';
 	import type BlogPost from '$lib/types/blogPost';
 
 	type Props = {
 		post: BlogPost;
-		featuredImageUrl?: string | null;
 	};
 
-	let { post, featuredImageUrl }: Props = $props();
+	let { post }: Props = $props();
 
 	const formattedDate = $derived(
 		post.datePublished
@@ -23,10 +23,18 @@
 
 <article class="single-post">
 	<header class="post-header">
-		{#if featuredImageUrl}
+		{#if post.featuredImage}
 			<div class="post-hero">
 				<div class="hero-image-wrapper" style={`view-transition-name: image-${post.slug}`}>
-					<img src={featuredImageUrl} alt={post.title} class="hero-image" />
+					<Image
+						src={post.featuredImage}
+						alt={post.title ?? ''}
+						lazy={false}
+						widths={[800, 1200, 1600, 2400]}
+						sizes="100vw"
+						fit="cover"
+						class="hero-image"
+					/>
 				</div>
 				<div class="hero-overlay"></div>
 			</div>
@@ -88,7 +96,14 @@
 		height: 100%;
 		z-index: 1;
 
-		.hero-image {
+		/* picture + img live inside <Image> — pierce scoping with :global */
+		:global(picture) {
+			display: block;
+			width: 100%;
+			height: 100%;
+		}
+
+		:global(.hero-image) {
 			width: 100%;
 			height: 100%;
 			object-fit: cover;
