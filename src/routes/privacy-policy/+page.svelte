@@ -2,7 +2,6 @@
 	import { onMount, untrack } from 'svelte';
 	import PageLayout from '$lib/layouts/PageLayout.svelte';
 	import MarkdownParser from '$lib/components/markdown/MarkdownParser.svelte';
-	import { MetaTags } from 'svelte-meta-tags';
 	import type { PageData } from './$types';
 	import toLocalizedLongDate from '$lib/utils/dateFormatter';
 
@@ -42,11 +41,6 @@
 		}
 	});
 </script>
-
-<MetaTags
-	title="Privacy Policy"
-	description="Privacy policy for Rookie's Blog. I don't collect your personal info."
-/>
 
 <PageLayout title="Privacy Policy">
 	<div class="prose">

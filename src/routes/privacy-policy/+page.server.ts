@@ -2,6 +2,7 @@ import { error } from '@sveltejs/kit';
 import { getDirectusClient } from '$lib/server/directus';
 import { readSingleton } from '@directus/sdk';
 import type { PageServerLoad } from './$types';
+import type { PageMeta } from '$lib/types/pageMeta';
 
 export const load: PageServerLoad = async ({ url, cookies, fetch, setHeaders }) => {
 	const preview = url.searchParams.get('preview') === 'true';
@@ -26,9 +27,14 @@ export const load: PageServerLoad = async ({ url, cookies, fetch, setHeaders }) 
 			});
 		}
 
-		return { content, preview, version: version ?? null };
+		const meta: PageMeta = {
+			title: 'Privacy Policy',
+			description: "Privacy policy for Rookie's Blog. I don't collect your personal info."
+		};
+
+		return { content, preview, version: version ?? null, meta };
 	} catch (err) {
 		console.error('Privacy policy load error:', err);
-		return { content: null, preview: false, version: null };
+		return { content: null, preview: false, version: null, meta: null };
 	}
 };

@@ -31,7 +31,6 @@ export function getAssetUrl(
 
 	const id = typeof fileOrString === 'string' ? fileOrString : fileOrString.id;
 	let path = `/api/assets/${id}`;
-
 	if (params) {
 		const searchParams = new URLSearchParams();
 		Object.entries(params).forEach(([key, value]) => {

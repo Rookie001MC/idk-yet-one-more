@@ -8,43 +8,23 @@
 	import { toast } from 'svelte-sonner';
 	import { onMount } from 'svelte';
 	import { onNavigate } from '$app/navigation';
-	import { MetaTags, type MetaTagsProps } from 'svelte-meta-tags';
+	import { MetaTags } from 'svelte-meta-tags';
 	import { page } from '$app/state';
 	import { PUBLIC_BASE_URL } from '$env/static/public';
 	import { env } from '$env/dynamic/public';
 	import siteConfig from '$lib/config';
+	import type { PageMeta } from '$lib/types/pageMeta';
 
 	let { data, children } = $props();
 
-	// Default meta tags for all pages
-	const defaultMetaTags: MetaTagsProps = $derived({
-		title: siteConfig.name,
-		titleTemplate: `%s | ${siteConfig.name}`,
-		description: siteConfig.description,
-		canonical: `${PUBLIC_BASE_URL}${page.url.pathname}`,
-		openGraph: {
-			type: 'website',
-			url: `${PUBLIC_BASE_URL}${page.url.pathname}`,
-			title: siteConfig.name,
-			description: siteConfig.description,
-			images: [
-				{
-					url: `${PUBLIC_BASE_URL}/opengraph`,
-					width: 1200,
-					height: 630,
-					alt: `${siteConfig.name} Cover`
-				}
-			],
-			siteName: siteConfig.name
-		},
-		twitter: {
-			cardType: 'summary_large_image',
-			title: siteConfig.name,
-			description: siteConfig.description,
-			image: `${PUBLIC_BASE_URL}/opengraph`,
-			imageAlt: `${siteConfig.name} Cover`
-		}
-	});
+	// Read page-level meta returned by any +page.server.ts or +page.ts load function.
+	// Falls back to site-wide defaults when a page doesn't supply its own meta.
+	const meta = $derived((page.data as { meta?: PageMeta }).meta);
+
+	const resolvedTitle       = $derived(meta?.title       ?? siteConfig.name);
+	const resolvedDescription = $derived(meta?.description ?? siteConfig.description);
+	const resolvedImageUrl    = $derived(meta?.imageUrl    ?? `${PUBLIC_BASE_URL}/opengraph`);
+	const resolvedType        = $derived(meta?.type        ?? 'website');
 
 	onMount(() => {
 		if (data.cmsError) {
@@ -76,7 +56,40 @@
 	{/if}
 </svelte:head>
 
-<MetaTags {...defaultMetaTags} />
+<MetaTags
+	title={resolvedTitle}
+	titleTemplate={`%s | ${siteConfig.name}`}
+	description={resolvedDescription}
+	canonical={`${PUBLIC_BASE_URL}${page.url.pathname}`}
+	openGraph={{
+		type: resolvedType,
+		url: `${PUBLIC_BASE_URL}${page.url.pathname}`,
+		title: resolvedTitle,
+		description: resolvedDescription,
+		images: [
+			{
+				url: resolvedImageUrl,
+				width: 1200,
+				height: 630,
+				alt: resolvedTitle
+			}
+		],
+		siteName: siteConfig.name,
+		...(resolvedType === 'article' && {
+			article: {
+				publishedTime: meta?.publishedTime,
+				authors: meta?.authors ?? ['Rookie Nguyen']
+			}
+		})
+	}}
+	twitter={{
+		cardType: 'summary_large_image',
+		title: resolvedTitle,
+		description: resolvedDescription,
+		image: resolvedImageUrl,
+		imageAlt: resolvedTitle
+	}}
+/>
 
 <Toaster richColors closeButton />
 

@@ -7,7 +7,7 @@
 	const isVisible = $derived(dev || isStaging);
 	const mode = $derived(dev ? 'dev' : 'staging');
 
-    const message = $derived(`THIS SITE IS IN ${mode === "dev" ? 'DEVELOPMENT' : 'STAGING'} MODE`);
+	const message = $derived(`THIS SITE IS IN ${mode === 'dev' ? 'DEVELOPMENT' : 'STAGING'} MODE`);
 </script>
 
 {#if isVisible}
@@ -40,7 +40,7 @@
 		text-transform: uppercase;
 		user-select: none;
 		pointer-events: none;
-        animation: blink 2s infinite;
+		animation: blink 2s infinite;
 	}
 
 	.env-banner--dev {
@@ -61,14 +61,15 @@
 		flex-shrink: 0;
 	}
 
-    @keyframes blink {
-        0%, 100% {
-            opacity: 1;
-        }
-        50% {
-            opacity: 0.5;
-        }
-    }
+	@keyframes blink {
+		0%,
+		100% {
+			opacity: 1;
+		}
+		50% {
+			opacity: 0.5;
+		}
+	}
 
 	.env-banner--dev .env-banner__dot {
 		background-color: #92400e;
