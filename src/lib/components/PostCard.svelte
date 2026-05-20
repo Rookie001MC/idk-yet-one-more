@@ -3,6 +3,7 @@
 	import { resolve } from '$app/paths';
 	import toLocalizedLongDate from '$lib/utils/dateFormatter';
 	import { generateExcerpt } from '$lib/utils/generateExcerpt';
+	import { Image } from '$lib/components/ui/image';
 	let {
 		post,
 		featured = false,
@@ -11,7 +12,6 @@
 		post: BlogPost;
 		featured?: boolean;
 		compact?: boolean;
-		featuredImageUrl?: string;
 	}>();
 
 	const formattedDate = $derived(
@@ -28,16 +28,19 @@
 </script>
 
 <article class="post-card" class:featured class:compact>
-	{#if post.featuredImageUrl}
+	{#if post.featuredImage}
 		<a
 			href={resolve(`/blog/${post.slug}`)}
 			class="post-image"
 			style={`view-transition-name: image-${post.slug}`}
 		>
-			<img
-				src={post.featuredImageUrl}
-				alt={post.featuredImage?.title || post.title}
-				loading="lazy"
+			<Image
+				src={post.featuredImage}
+				alt={post.title}
+				widths={[400, 800, 1200]}
+				sizes="(min-width: 1024px) 600px, (min-width: 768px) 50vw, 100vw"
+				fit="cover"
+				class="post-image-inner"
 			/>
 		</a>
 	{/if}
@@ -88,7 +91,13 @@
 		aspect-ratio: 16 / 9;
 		display: block;
 
-		img {
+		:global(picture) {
+			display: block;
+			width: 100%;
+			height: 100%;
+		}
+
+		:global(.post-image-inner) {
 			width: 100%;
 			height: 100%;
 			object-fit: cover;
@@ -96,7 +105,7 @@
 		}
 	}
 
-	.post-card:hover .post-image img {
+	.post-card:hover .post-image :global(.post-image-inner) {
 		transform: scale(1.05);
 	}
 

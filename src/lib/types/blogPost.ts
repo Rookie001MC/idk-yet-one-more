@@ -11,7 +11,6 @@ export default interface BlogPost {
 	content: string | null;
 	datePublished: string | null;
 	featuredImage: DirectusFile | string | null;
-	featuredImageUrl?: string | null;
 	category: Category | number | null;
 	tags: { tagsId: Tag | number }[];
 	user_created: string | null;
