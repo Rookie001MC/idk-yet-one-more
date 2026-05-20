@@ -6,7 +6,6 @@
 	import { PUBLIC_BASE_URL } from '$env/static/public';
 	import { SvelteURLSearchParams } from 'svelte/reactivity';
 	let { data } = $props();
-
 	let isPreview = $derived(data.preview ?? false);
 
 	// Snapshot into local $state so postMessage mutations are reactive.

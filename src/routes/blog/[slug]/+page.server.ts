@@ -36,7 +36,7 @@ export const load: PageServerLoad = async ({ params, url, cookies, fetch, setHea
 		}
 
 		let featuredImageUrl = null;
-		if (post.featuredImage && typeof post.featuredImage !== 'string') {
+		if (post.featuredImage) {
 			featuredImageUrl = getAssetUrl(post.featuredImage);
 		}
 

@@ -6,6 +6,16 @@
 	function toggleMenu() {
 		isMenuOpen = !isMenuOpen;
 	}
+
+	$effect(() => {
+		if (typeof document !== 'undefined') {
+			if (isMenuOpen) {
+				document.body.style.overflow = 'hidden';
+			} else {
+				document.body.style.overflow = '';
+			}
+		}
+	});
 </script>
 
 <header class="header">
