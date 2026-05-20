@@ -110,6 +110,33 @@ export async function fetchPostsByCategory(
 	}
 }
 
+export async function fetchPostBySlugPreview(
+	slug: string,
+	version: string | undefined,
+	fields: string[] = ['*'],
+	fetch: typeof globalThis.fetch
+): Promise<BlogPost | null> {
+	try {
+		const client = getDirectusClient(fetch);
+		const posts = await client.request(
+			readItems('blogPosts', {
+				fields,
+				filter: {
+					slug: {
+						_eq: slug
+					}
+				},
+				limit: 1,
+				...(version && { version })
+			})
+		);
+		return posts.length > 0 ? (posts[0] as unknown as BlogPost) : null;
+	} catch (error) {
+		console.error(`fetchPostBySlugPreview error (slug: ${slug}):`, error);
+		return null;
+	}
+}
+
 export async function fetchPostsByTag(
 	slug: string,
 	fields: string[] = ['*'],
