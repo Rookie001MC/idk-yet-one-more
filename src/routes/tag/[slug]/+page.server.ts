@@ -1,6 +1,7 @@
 import { fetchPostsByTag } from '$lib/data/blogPosts';
 import { fetchTagBySlug } from '$lib/data/tags';
-import { getAssetUrl } from '$lib/data/directusFile';
+import { definePageMetaTags } from 'svelte-meta-tags';
+import { PUBLIC_BASE_URL } from '$env/static/public';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ params, fetch }) => {
@@ -11,22 +12,35 @@ export const load: PageServerLoad = async ({ params, fetch }) => {
 		]);
 
 		if (!tag) {
-			return { tag: null, posts: [] };
+			return {
+				tag: null,
+				posts: [],
+				...definePageMetaTags({ title: 'Tag Not Found', robots: 'noindex,follow' })
+			};
 		}
 
-		const resolvedPosts = posts.map((post) => {
-			let featuredImageUrl = null;
-			if (post.featuredImage && typeof post.featuredImage !== 'string') {
-				featuredImageUrl = getAssetUrl(post.featuredImage, {
-					width: 1200,
-					height: 600,
-					fit: 'cover'
-				});
-			}
-			return { ...post, featuredImageUrl };
-		});
+		const description = `Posts tagged with ${tag.name}`;
+		const ogImageUrl = `${PUBLIC_BASE_URL}/opengraph?title=${encodeURIComponent(`#${tag.name}`)}&description=${encodeURIComponent(description)}&category=Tag`;
 
-		return { tag, posts: resolvedPosts };
+		return {
+			tag,
+			posts,
+			...definePageMetaTags({
+				title: tag.name,
+				description,
+				openGraph: {
+					title: `#${tag.name}`,
+					description,
+					images: [{ url: ogImageUrl, width: 1200, height: 630, alt: `#${tag.name}`, type: 'image/png' }]
+				},
+				twitter: {
+					title: `#${tag.name}`,
+					description,
+					image: ogImageUrl,
+					imageAlt: `#${tag.name}`
+				}
+			})
+		};
 	} catch (error) {
 		console.error('Tag page load error:', error);
 		return { tag: null, posts: [] };

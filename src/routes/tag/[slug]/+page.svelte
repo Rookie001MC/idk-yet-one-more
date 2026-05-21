@@ -1,36 +1,11 @@
 <script lang="ts">
 	import PostCard from '$lib/components/PostCard.svelte';
-	import { MetaTags } from 'svelte-meta-tags';
 	import { resolve } from '$app/paths';
-	import { PUBLIC_BASE_URL } from '$env/static/public';
 
 	let { data } = $props();
 	let tag = $derived(data.tag);
 	let posts = $derived(data.posts);
 </script>
-
-{#if tag}
-	<MetaTags
-		title={`Tag: ${tag.name}`}
-		description={`Posts tagged with ${tag.name}`}
-		openGraph={{
-			images: [
-				{
-					url: `${PUBLIC_BASE_URL}/opengraph?title=${encodeURIComponent(`#${tag.name}`)}&description=${encodeURIComponent(`Posts tagged with ${tag.name}`)}&category=Tag`,
-					width: 1200,
-					height: 630,
-					alt: `Tag: ${tag.name}`
-				}
-			]
-		}}
-		twitter={{
-			image: `${PUBLIC_BASE_URL}/opengraph?title=${encodeURIComponent(`#${tag.name}`)}&description=${encodeURIComponent(`Posts tagged with ${tag.name}`)}&category=Tag`,
-			imageAlt: `Tag: ${tag.name}`
-		}}
-	/>
-{:else}
-	<MetaTags title="Tag Not Found" />
-{/if}
 
 {#if !tag}
 	<div class="not-found">

@@ -1,6 +1,5 @@
 <script lang="ts">
 	import type DirectusFile from '$lib/types/directusFile';
-	import { PUBLIC_DIRECTUS_URL } from '$env/static/public';
 	import type { HTMLImgAttributes } from 'svelte/elements';
 
 	const isDev = import.meta.env.DEV;
@@ -19,6 +18,17 @@
 	/** MIME types that Directus can transform and image-transmutation can optimise. */
 	const SRCSET_SUPPORTED_MIME = new Set(['image/jpeg', 'image/png', 'image/webp', 'image/avif']);
 
+	/** Matches a bare Directus asset UUID (v4 format). */
+	const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+	/**
+	 * Matches the /assets/<uuid> segment inside any URL or path.
+	 * Captures the UUID so we can re-route the request through the local proxy.
+	 * Handles both full Directus URLs (https://cms.../assets/<id>) and proxy paths (/api/assets/<id>).
+	 */
+	const DIRECTUS_ASSET_URL_RE =
+		/\/assets\/([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})(?:[/?#]|$)/i;
+
 	// -------------------------------------------------------------------------
 	// Props
 	// -------------------------------------------------------------------------
@@ -26,6 +36,7 @@
 		/**
 		 * Accepts:
 		 *  - A Directus `DirectusFile` object (fetched with `featuredImage.*`)
+		 *  - A bare Directus asset UUID string (e.g. `"a1b2c3d4-e5f6-..."`) — srcset built via Directus transforms
 		 *  - A static path string starting with `/` (e.g. `/images/hero.jpg`)
 		 *  - An external URL string (https://...) — passed through, no srcset
 		 */
@@ -84,6 +95,28 @@
 		return typeof s === 'object' && s !== null && 'id' in s;
 	}
 
+	/** True when `s` is a bare Directus asset UUID (no leading slash, no protocol). */
+	function isDirectusUuid(s: string | DirectusFile): s is string {
+		return typeof s === 'string' && UUID_RE.test(s);
+	}
+
+	/**
+	 * Returns the Directus asset ID from any of:
+	 *  - A DirectusFile object               → s.id
+	 *  - A bare UUID string                   → s
+	 *  - A URL/path containing /assets/<uuid> → the captured UUID
+	 *    (handles https://cms.host/assets/<id>, /api/assets/<id>, etc.)
+	 */
+	function getDirectusId(s: string | DirectusFile): string | null {
+		if (isDirectusFile(s)) return s.id;
+		if (isDirectusUuid(s)) return s;
+		if (typeof s === 'string') {
+			const m = DIRECTUS_ASSET_URL_RE.exec(s);
+			if (m) return m[1];
+		}
+		return null;
+	}
+
 	function isExternalUrl(s: string): boolean {
 		return /^https?:\/\//.test(s);
 	}
@@ -97,14 +130,17 @@
 	 * SVGs are resolution-independent and need no variants.
 	 * GIFs may be animated — format conversion would break them.
 	 * For Directus files we use the MIME type; for static paths we fall back to extension.
+	 * For bare UUIDs we assume Directus can handle the transform (optimistic).
 	 */
 	function supportsSrcset(): boolean {
 		if (isDirectusFile(src)) return SRCSET_SUPPORTED_MIME.has(src.type);
+		if (isDirectusUuid(src)) return true; // bare UUID — Directus handles format conversion
+		if (typeof src === 'string' && DIRECTUS_ASSET_URL_RE.test(src)) return true; // full/partial Directus URL
 		if (isDev || skipSrcset) return false;
 		if (typeof src === 'string' && isStaticPath(src)) {
 			return /\.(png|jpe?g|webp|avif)$/i.test(src);
 		}
-		return false; // external URLs always pass through
+		return false; // other external URLs pass through as-is
 	}
 
 	const canUseSrcset = $derived(supportsSrcset());
@@ -113,14 +149,19 @@
 	// URL builders
 	// -------------------------------------------------------------------------
 
-	/** Builds a single Directus asset URL with transformation params. */
+	/**
+	 * Builds a Directus asset URL through the same-origin proxy at /api/assets/[id].
+	 * Using the proxy keeps Directus off-limits to the browser (no CORS / ORB issues),
+	 * injects the bearer token server-side, and forwards the correct Content-Type.
+	 */
 	function directusUrl(id: string, width: number, format: string): string {
-		const url = new URL(`${PUBLIC_DIRECTUS_URL}/assets/${id}`);
-		url.searchParams.set('width', String(width));
-		url.searchParams.set('format', format);
-		url.searchParams.set('quality', String(quality));
-		url.searchParams.set('fit', fit);
-		return url.toString();
+		const params = new URLSearchParams({
+			width: String(width),
+			format,
+			quality: String(quality),
+			fit
+		});
+		return `/api/assets/${id}?${params.toString()}`;
 	}
 
 	/**
@@ -141,8 +182,9 @@
 	// Srcset builders — returns undefined for external URLs (no srcset possible)
 	// -------------------------------------------------------------------------
 	function buildSrcset(format: string): string | undefined {
-		if (isDirectusFile(src)) {
-			return widths.map((w) => `${directusUrl(src.id, w, format)} ${w}w`).join(', ');
+		const id = getDirectusId(src);
+		if (id) {
+			return widths.map((w) => `${directusUrl(id, w, format)} ${w}w`).join(', ');
 		}
 		if (typeof src === 'string' && isStaticPath(src)) {
 			return widths.map((w) => `${staticUrl(src, w, format)} ${w}w`).join(', ');
@@ -154,22 +196,25 @@
 	// Derived values
 	// -------------------------------------------------------------------------
 
-	/** The <img src> fallback. For Directus: largest width as JPEG. For everything else: original. */
+	/** The <img src> fallback. For Directus (object or UUID): largest width as JPEG. For everything else: original. */
 	const fallbackSrc = $derived(
-		isDirectusFile(src) ? directusUrl(src.id, widths[widths.length - 1], 'jpg') : (src as string)
+		(() => {
+			const id = getDirectusId(src);
+			return id ? directusUrl(id, widths[widths.length - 1], 'jpg') : (src as string);
+		})()
 	);
 
 	const avifSrcset = $derived(canUseSrcset ? buildSrcset('avif') : undefined);
 	const webpSrcset = $derived(canUseSrcset ? buildSrcset('webp') : undefined);
 
 	/**
-	 * Fallback srcset on <img> itself (png for static, jpg for Directus).
+	 * Fallback srcset on <img> itself (png for static, jpg for Directus/UUID).
 	 * For external URLs this stays undefined so the browser just uses `src`.
 	 */
 	const fallbackSrcset = $derived(
 		canUseSrcset
-			? isDirectusFile(src)
-				? buildSrcset('jpg')
+			? getDirectusId(src) !== null
+				? buildSrcset('jpg') // any Directus source → jpg fallback
 				: typeof src === 'string' && isStaticPath(src)
 					? buildSrcset('png')
 					: undefined
@@ -183,8 +228,11 @@
 	Renders a responsive <picture> element with avif/webp sources and a
 	fallback <img>. Wraps in <figure> when a figcaption is provided.
 
-	Usage — Directus asset:
+	Usage — Directus asset object:
 	  <Image src={post.featuredImage} alt="..." sizes="(min-width:1200px) 740px, 100vw" />
+
+	Usage — bare Directus UUID (e.g. when relation not expanded):
+	  <Image src="a1b2c3d4-e5f6-7890-abcd-ef1234567890" alt="..." />
 
 	Usage — static asset (requires image-transmutation to have processed /images → /optimized-images):
 	  <Image src="/images/hero.jpg" alt="..." />

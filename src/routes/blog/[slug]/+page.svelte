@@ -39,7 +39,7 @@
 		</div>
 	</div>
 {:else}
-	<BlogPostLayout {post} featuredImageUrl={data.featuredImageUrl} />
+	<BlogPostLayout {post} />
 {/if}
 
 {#if isPreview}
