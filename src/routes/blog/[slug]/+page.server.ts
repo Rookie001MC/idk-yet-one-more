@@ -4,6 +4,7 @@ import { fetchPostBySlug, fetchPostBySlugPreview } from '$lib/data/blogPosts';
 import { generateExcerpt } from '$lib/utils/generateExcerpt';
 import { definePageMetaTags } from 'svelte-meta-tags';
 import type { PageServerLoad } from './$types';
+import siteConfig from '$lib/config';
 
 export const load: PageServerLoad = async ({ params, url, cookies, fetch, setHeaders }) => {
 	const preview = url.searchParams.get('preview') === 'true';
@@ -89,7 +90,7 @@ export const load: PageServerLoad = async ({ params, url, cookies, fetch, setHea
 					],
 					article: {
 						publishedTime: post.datePublished ?? undefined,
-						authors: ['Rookie Nguyen']
+						authors: [siteConfig.social.facebook.url],
 					}
 				},
 				twitter: {
