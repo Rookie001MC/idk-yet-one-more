@@ -8,26 +8,13 @@
 	import { toast } from 'svelte-sonner';
 	import { onMount } from 'svelte';
 	import { onNavigate } from '$app/navigation';
-	import { MetaTags } from 'svelte-meta-tags';
+	import { MetaTags, deepMerge } from 'svelte-meta-tags';
 	import { page } from '$app/state';
-	import { PUBLIC_BASE_URL } from '$env/static/public';
 	import { env } from '$env/dynamic/public';
-	import siteConfig from '$lib/config';
-	import type { PageMeta } from '$lib/types/pageMeta';
 
 	let { data, children } = $props();
 
-	// Read page-level meta returned by any +page.server.ts or +page.ts load function.
-	// Falls back to site-wide defaults when a page doesn't supply its own meta.
-	const meta = $derived((page.data as { meta?: PageMeta }).meta);
-
-	const resolvedTitle       = $derived(meta?.title       ?? siteConfig.name);
-	const resolvedDescription = $derived(meta?.description ?? siteConfig.description);
-	const resolvedImageUrl    = $derived(meta?.imageUrl    ?? `${PUBLIC_BASE_URL}/opengraph`);
-	// Default 'image/png': the Satori /opengraph route always emits PNG.
-	// Blog posts with a featured image pass 'image/jpeg' via meta.imageType.
-	const resolvedImageType   = $derived(meta?.imageType  ?? 'image/png');
-	const resolvedType        = $derived(meta?.type        ?? 'website');
+	let metaTags = $derived(deepMerge(data.baseMetaTags, page.data.pageMetaTags));
 
 	onMount(() => {
 		if (data.cmsError) {
@@ -59,41 +46,7 @@
 	{/if}
 </svelte:head>
 
-<MetaTags
-	title={resolvedTitle}
-	titleTemplate={`%s | ${siteConfig.name}`}
-	description={resolvedDescription}
-	canonical={`${PUBLIC_BASE_URL}${page.url.pathname}`}
-	openGraph={{
-		type: resolvedType,
-		url: `${PUBLIC_BASE_URL}${page.url.pathname}`,
-		title: resolvedTitle,
-		description: resolvedDescription,
-		images: [
-			{
-				url: resolvedImageUrl,
-				width: 1200,
-				height: 630,
-				alt: resolvedTitle,
-				type: resolvedImageType
-			}
-		],
-		siteName: siteConfig.name,
-		...(resolvedType === 'article' && {
-			article: {
-				publishedTime: meta?.publishedTime,
-				authors: meta?.authors ?? ['Rookie Nguyen']
-			}
-		})
-	}}
-	twitter={{
-		cardType: 'summary_large_image',
-		title: resolvedTitle,
-		description: resolvedDescription,
-		image: resolvedImageUrl,
-		imageAlt: resolvedTitle
-	}}
-/>
+<MetaTags {...metaTags} />
 
 <Toaster richColors closeButton />
 
