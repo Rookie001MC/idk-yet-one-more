@@ -1,5 +1,8 @@
 import { fetchLatestPosts } from '$lib/data/blogPosts';
 import { getAssetUrl } from '$lib/data/directusFile';
+import { definePageMetaTags } from 'svelte-meta-tags';
+
+const pageTags = definePageMetaTags({ title: 'Home' });
 
 export async function load({ fetch, setHeaders }) {
 	try {
@@ -29,12 +32,14 @@ export async function load({ fetch, setHeaders }) {
 		});
 
 		return {
-			latestPosts: resolvedPosts
+			latestPosts: resolvedPosts,
+			...pageTags
 		};
 	} catch (error) {
 		console.error('Home page load error:', error);
 		return {
-			latestPosts: []
+			latestPosts: [],
+			...pageTags
 		};
 	}
 }

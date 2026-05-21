@@ -2,8 +2,8 @@ import { error } from '@sveltejs/kit';
 import { PUBLIC_BASE_URL } from '$env/static/public';
 import { fetchPostBySlug, fetchPostBySlugPreview } from '$lib/data/blogPosts';
 import { generateExcerpt } from '$lib/utils/generateExcerpt';
+import { definePageMetaTags } from 'svelte-meta-tags';
 import type { PageServerLoad } from './$types';
-import type { PageMeta } from '$lib/types/pageMeta';
 
 export const load: PageServerLoad = async ({ params, url, cookies, fetch, setHeaders }) => {
 	const preview = url.searchParams.get('preview') === 'true';
@@ -28,7 +28,7 @@ export const load: PageServerLoad = async ({ params, url, cookies, fetch, setHea
 				);
 
 		if (!post) {
-			return { post: null, preview: false, version: null, meta: null };
+			return { post: null, preview: false, version: null };
 		}
 
 		if (!preview) {
@@ -65,19 +65,43 @@ export const load: PageServerLoad = async ({ params, url, cookies, fetch, setHea
 			ogImageType = 'image/png';
 		}
 
-		const meta: PageMeta = {
-			title: post.title,
-			description: (post.excerpt || generateExcerpt(post.content ?? '')) || undefined,
-			imageUrl: ogImageUrl,
-			imageType: ogImageType,
-			type: 'article',
-			publishedTime: post.datePublished ?? undefined,
-			authors: ['Rookie Nguyen']
-		};
+		const description = (post.excerpt || generateExcerpt(post.content ?? '')) || undefined;
 
-		return { post, preview, version: version ?? null, meta };
+		return {
+			post,
+			preview,
+			version: version ?? null,
+			...definePageMetaTags({
+				title: post.title,
+				description,
+				openGraph: {
+					type: 'article',
+					title: post.title,
+					description,
+					images: [
+						{
+							url: ogImageUrl,
+							width: 1200,
+							height: 630,
+							alt: post.title,
+							type: ogImageType
+						}
+					],
+					article: {
+						publishedTime: post.datePublished ?? undefined,
+						authors: ['Rookie Nguyen']
+					}
+				},
+				twitter: {
+					title: post.title,
+					description,
+					image: ogImageUrl,
+					imageAlt: post.title
+				}
+			})
+		};
 	} catch (err) {
 		console.error('Single post load error:', err);
-		return { post: null, preview: false, version: null, meta: null };
+		return { post: null, preview: false, version: null };
 	}
 };
