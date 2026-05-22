@@ -15,13 +15,18 @@ const config = {
 			mode: 'hash',
 			directives: {
 				'default-src': ["'none'"],
-				'script-src': ["'self'"],
+				'script-src': [
+					"'self'",
+					'https://stats.itsrookienguyen.me',
+					'https://static.cloudflareinsights.com/beacon.min.js'
+				],
 				'style-src': ["'self'", "'unsafe-inline'"],
 				'img-src': ["'self'", 'https:', 'data:', 'blob:'], // Consider that I might embed some other stuff in here
 				'connect-src': [
 					"'self'",
 					`${process.env.PUBLIC_DIRECTUS_URL}`,
-					'https://o4508445764550656.ingest.de.sentry.io'
+					'https://o4508445764550656.ingest.de.sentry.io',
+					'https://stats.itsrookienguyen.me/api/send'
 				],
 				'form-action': ["'self'"],
 				'frame-src': ["'self'", 'https:'],
