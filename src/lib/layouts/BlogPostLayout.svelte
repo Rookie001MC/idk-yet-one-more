@@ -252,7 +252,7 @@
 
 			:global(h4) {
 				font-family: var(--font-heading);
-				font-size: 1.2rem;
+				font-size: var(--font-size-h4);
 				margin: 1.6em 0 0.4em;
 			}
 
