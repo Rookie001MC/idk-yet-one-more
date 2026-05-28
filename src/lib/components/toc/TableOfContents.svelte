@@ -1,5 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import { fly, fade } from 'svelte/transition';
+	import { cubicOut, cubicIn } from 'svelte/easing';
 	import { List, X } from '@lucide/svelte';
 	import type { TocHeading } from '$lib/utils/toc';
 
@@ -21,9 +23,12 @@
 		mobileOpen = false;
 	}
 
-	function handleAnchorClick(id: string) {
+	function handleAnchorClick(id: string, e: MouseEvent) {
+		e.preventDefault();
 		activeId = id;
 		mobileOpen = false;
+		history.pushState(null, '', `#${id}`);
+		document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
 	}
 
 	onMount(() => {
@@ -68,7 +73,7 @@
 						<a
 							href="#{heading.id}"
 							class:active={activeId === heading.id}
-							onclick={() => handleAnchorClick(heading.id)}
+							onclick={(e) => handleAnchorClick(heading.id, e)}
 						>
 							{heading.text}
 						</a>
@@ -85,8 +90,18 @@
 		<!-- Mobile overlay / bottom sheet -->
 		{#if mobileOpen}
 			<div class="toc-overlay" role="dialog" aria-modal="true" aria-label="Table of contents">
-				<button class="toc-backdrop" onclick={close} aria-label="Close table of contents"></button>
-				<div class="toc-panel">
+				<button
+					class="toc-backdrop"
+					onclick={close}
+					aria-label="Close table of contents"
+					in:fade={{ duration: 250 }}
+					out:fade={{ duration: 200 }}
+				></button>
+				<div
+					class="toc-panel"
+					in:fly={{ y: 400, duration: 350, easing: cubicOut }}
+					out:fly={{ y: 400, duration: 250, easing: cubicIn }}
+				>
 					<div class="toc-panel-header">
 						<p class="toc-title">Table of Contents</p>
 						<button onclick={close} aria-label="Close">
@@ -99,7 +114,7 @@
 								<a
 									href="#{heading.id}"
 									class:active={activeId === heading.id}
-									onclick={() => handleAnchorClick(heading.id)}
+									onclick={(e) => handleAnchorClick(heading.id, e)}
 								>
 									{heading.text}
 								</a>
