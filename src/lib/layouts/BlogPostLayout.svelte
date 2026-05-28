@@ -345,7 +345,8 @@
 		}
 
 		.post-header {
-			min-height: 300px;
+			min-height: 500px;
+			margin-bottom: var(--space-sm);
 		}
 	}
 </style>
