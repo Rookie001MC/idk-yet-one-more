@@ -1,10 +1,12 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
 	import MarkdownParser from '$lib/components/markdown/MarkdownParser.svelte';
+	import TableOfContents from '$lib/components/toc/TableOfContents.svelte';
 	import toLocalizedLongDate from '$lib/utils/dateFormatter';
 	import { Image } from '$lib/components/ui/image';
 	import { generateExcerpt } from '$lib/utils/generateExcerpt';
 	import type BlogPost from '$lib/types/blogPost';
+	import { parseHeadings } from '$lib/utils/toc';
 
 	type Props = {
 		post: BlogPost;
@@ -23,6 +25,8 @@
 
 	/** CMS excerpt if set; otherwise auto-generated from the post content. */
 	const displayExcerpt = $derived(post.excerpt || generateExcerpt(post.content ?? ''));
+
+	const tocHeadings = $derived(parseHeadings(post.content ?? ''));
 </script>
 
 <article class="single-post">
@@ -60,22 +64,28 @@
 		</div>
 	</header>
 
-	<div class="post-body container">
-		<div class="content">
-			<MarkdownParser content={post.content ?? ''} />
+	<div class="post-body" class:has-toc={tocHeadings.length > 1}>
+		<div class="post-main">
+			<div class="content">
+				<MarkdownParser content={post.content ?? ''} />
+			</div>
+
+			{#if post.tags && post.tags.length > 0}
+				<footer class="post-footer">
+					<p class="tags-label">Tags</p>
+					<div class="tags">
+						{#each post.tags as tagObj (typeof tagObj.tagsId === 'object' ? tagObj.tagsId.id : tagObj.tagsId)}
+							{#if typeof tagObj.tagsId === 'object'}
+								<a href={resolve(`/tag/${tagObj.tagsId.slug}`)} class="tag">#{tagObj.tagsId.name}</a>
+							{/if}
+						{/each}
+					</div>
+				</footer>
+			{/if}
 		</div>
 
-		{#if post.tags && post.tags.length > 0}
-			<footer class="post-footer">
-				<p class="tags-label">Tags</p>
-				<div class="tags">
-					{#each post.tags as tagObj (typeof tagObj.tagsId === 'object' ? tagObj.tagsId.id : tagObj.tagsId)}
-						{#if typeof tagObj.tagsId === 'object'}
-							<a href={resolve(`/tag/${tagObj.tagsId.slug}`)} class="tag">#{tagObj.tagsId.name}</a>
-						{/if}
-					{/each}
-				</div>
-			</footer>
+		{#if tocHeadings.length > 1}
+			<TableOfContents headings={tocHeadings} />
 		{/if}
 	</div>
 </article>
@@ -135,17 +145,14 @@
 		position: relative;
 		z-index: 10;
 		text-align: center;
-
-		.post-title {
-			margin-bottom: 1.2rem;
-		}
-	}
-
-	.container {
 		width: 100%;
 		max-width: 740px;
 		margin: 0 auto;
 		padding: 0 var(--space-sm);
+
+		.post-title {
+			margin-bottom: 1.2rem;
+		}
 	}
 
 	.post-meta {
@@ -182,6 +189,25 @@
 	}
 
 	.post-body {
+		width: 100%;
+		max-width: 740px;
+		margin: 0 auto;
+		padding: 0 var(--space-sm);
+
+		&.has-toc {
+			@media (min-width: 1201px) {
+				max-width: 1060px;
+				display: grid;
+				grid-template-columns: minmax(0, 740px) 220px;
+				column-gap: var(--space-lg);
+				align-items: start;
+			}
+		}
+	}
+
+	.post-main {
+		min-width: 0;
+
 		.content {
 			font-family: var(--font-body);
 			font-size: var(--font-size-body);
