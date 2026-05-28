@@ -3,26 +3,26 @@
 // Runtime types generated with workerd@1.20260504.1 2026-04-19 nodejs_als
 declare namespace Cloudflare {
 	interface GlobalProps {
-		mainModule: typeof import("./.svelte-kit/cloudflare/_worker");
+		// mainModule: typeof import("./.svelte-kit/cloudflare/_worker");
 	}
 	interface StagingEnv {
 		ASSETS: Fetcher;
-		PUBLIC_DIRECTUS_URL: "https://directus.itsrookienguyen.me";
-		PUBLIC_BASE_URL: "https://staging.itsrookienguyen.me";
+		PUBLIC_DIRECTUS_URL: 'https://directus.itsrookienguyen.me';
+		PUBLIC_BASE_URL: 'https://staging.itsrookienguyen.me';
 	}
 	interface ProductionEnv {
 		ASSETS: Fetcher;
-		PUBLIC_DIRECTUS_URL: "https://directus.itsrookienguyen.me";
-		PUBLIC_BASE_URL: "https://itsrookienguyen.me";
-		PUBLIC_UMAMI_URL: "https://stats.itsrookienguyen.me/script.js";
-		PUBLIC_UMAMI_WEBSITE_ID: "575dcbcd-acd3-474e-8a73-e77789f4cc34";
+		PUBLIC_DIRECTUS_URL: 'https://directus.itsrookienguyen.me';
+		PUBLIC_BASE_URL: 'https://itsrookienguyen.me';
+		PUBLIC_UMAMI_URL: 'https://stats.itsrookienguyen.me/script.js';
+		PUBLIC_UMAMI_WEBSITE_ID: '575dcbcd-acd3-474e-8a73-e77789f4cc34';
 	}
 	interface Env {
 		ASSETS: Fetcher;
-		PUBLIC_DIRECTUS_URL?: "https://directus.itsrookienguyen.me";
-		PUBLIC_BASE_URL?: "https://staging.itsrookienguyen.me" | "https://itsrookienguyen.me";
-		PUBLIC_UMAMI_URL?: "https://stats.itsrookienguyen.me/script.js";
-		PUBLIC_UMAMI_WEBSITE_ID?: "575dcbcd-acd3-474e-8a73-e77789f4cc34";
+		PUBLIC_DIRECTUS_URL?: 'https://directus.itsrookienguyen.me';
+		PUBLIC_BASE_URL?: 'https://staging.itsrookienguyen.me' | 'https://itsrookienguyen.me';
+		PUBLIC_UMAMI_URL?: 'https://stats.itsrookienguyen.me/script.js';
+		PUBLIC_UMAMI_WEBSITE_ID?: '575dcbcd-acd3-474e-8a73-e77789f4cc34';
 		DIRECTUS_TOKEN?: string;
 	}
 }
@@ -10805,7 +10805,7 @@ type AIGatewayHeaders = {
 	[key: string]: string | number | boolean | object;
 };
 type AIGatewayUniversalRequest = {
-	provider: AIGatewayProviders | string;
+	provider: AIGatewayProviders | string; // eslint-disable-line
 	endpoint: string;
 	headers: Partial<AIGatewayHeaders>;
 	query: unknown;
@@ -10823,7 +10823,7 @@ declare abstract class AiGateway {
 			signal?: AbortSignal;
 		}
 	): Promise<Response>;
-	getUrl(provider?: AIGatewayProviders | string): Promise<string>;
+	getUrl(provider?: AIGatewayProviders | string): Promise<string>; // eslint-disable-line
 }
 // Copyright (c) 2022-2025 Cloudflare, Inc.
 // Licensed under the Apache 2.0 license found in the LICENSE file or at:

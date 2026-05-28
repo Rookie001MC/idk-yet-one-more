@@ -17,11 +17,13 @@
     - Note that, while this is fixed, this can still be dragged back and forth ever slightly. If possible, this should be completely fixed in the future. 
   - [x] Increase the height of the Article page  
 
-- [ ] Blog Table of Contents
-  - [ ] Mobile: button, see https://svelte.dev's ToC button. Can be a full page overlay, with the TOC floating above it.
-  - [ ] PC: ToC stays on top with the position where the content starts, and moves with the content.
+- [x] Blog Table of Contents
+  - [x] Mobile: button, see https://svelte.dev's ToC button. Can be a full page overlay, with the TOC floating above it.
+  - [x] PC: ToC stays on top with the position where the content starts, and moves with the content.
 
 - [x] Expand the Image component to also allow Directus Asset UUID optimization
+
+- [ ] Refactor the layout blog (BlogPostLayout.svelte) to avoid using it's own scoped style and use the global SCSS styles. 
 
 - [ ] Search feature
 

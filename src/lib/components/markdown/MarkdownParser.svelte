@@ -1,8 +1,8 @@
 <script lang="ts">
 	import SvelteMarkdown from '@humanspeak/svelte-markdown';
 	import { markedAlert } from '@humanspeak/svelte-markdown/extensions';
+	import type { HeadingSnippetProps } from '@humanspeak/svelte-markdown';
 
-	// Custom UI components to wire into Svelte-Markdown
 	import Admonition from '$lib/components/ui/admonition/index';
 	import type { AdmonitionVariant } from '$lib/components/ui/admonition/index';
 	import Blockquote from '$lib/components/ui/Blockquote.svelte';
@@ -21,11 +21,6 @@
 		inline?: boolean;
 	} = $props();
 
-	/**
-	 * Custom renderers — add Svelte components here per token type, e.g.:
-	 *   code: CodeBlockRenderer,
-	 *   link: LinkRenderer,
-	 */
 	const renderers = {
 		image: ImageRenderer
 	};
@@ -45,5 +40,14 @@
 		<Blockquote>
 			<MarkdownParser content={props.text ?? ''} />
 		</Blockquote>
+	{/snippet}
+
+	{#snippet heading(props: HeadingSnippetProps)}
+		{@const id = props.options.headerIds
+			? (props.options.headerPrefix ?? '') + props.slug(props.text)
+			: undefined}
+		<svelte:element this={`h${props.depth}`} {id}>
+			{@render props.children?.()}
+		</svelte:element>
 	{/snippet}
 </SvelteMarkdown>
