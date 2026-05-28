@@ -76,7 +76,8 @@
 					<div class="tags">
 						{#each post.tags as tagObj (typeof tagObj.tagsId === 'object' ? tagObj.tagsId.id : tagObj.tagsId)}
 							{#if typeof tagObj.tagsId === 'object'}
-								<a href={resolve(`/tag/${tagObj.tagsId.slug}`)} class="tag">#{tagObj.tagsId.name}</a>
+								<a href={resolve(`/tag/${tagObj.tagsId.slug}`)} class="tag">#{tagObj.tagsId.name}</a
+								>
 							{/if}
 						{/each}
 					</div>
@@ -98,7 +99,7 @@
 	.post-header {
 		position: relative;
 		margin-bottom: var(--space-xl);
-		min-height: 550px;
+		min-height: 650px;
 		display: flex;
 		flex-direction: column;
 		justify-content: flex-end;
