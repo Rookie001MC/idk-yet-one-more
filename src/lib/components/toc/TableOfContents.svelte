@@ -4,6 +4,7 @@
 	import { cubicOut, cubicIn } from 'svelte/easing';
 	import { List, X } from '@lucide/svelte';
 	import type { TocHeading } from '$lib/utils/toc';
+	import { Card } from '$lib/components/ui/card';
 
 	let {
 		headings = undefined,
@@ -66,20 +67,22 @@
 	<nav class="toc" aria-label="Table of contents">
 		<!-- Desktop sidebar -->
 		<div class="toc-inner">
-			<p class="toc-title">Table of Contents</p>
-			<ol class="toc-list">
-				{#each items as heading (heading.id)}
-					<li class="toc-item" data-level={heading.level}>
-						<a
-							href="#{heading.id}"
-							class:active={activeId === heading.id}
-							onclick={(e) => handleAnchorClick(heading.id, e)}
-						>
-							{heading.text}
-						</a>
-					</li>
-				{/each}
-			</ol>
+			<Card>
+				<p class="toc-title">Table of Contents</p>
+				<ol class="toc-list">
+					{#each items as heading (heading.id)}
+						<li class="toc-item" data-level={heading.level}>
+							<a
+								href="#{heading.id}"
+								class:active={activeId === heading.id}
+								onclick={(e) => handleAnchorClick(heading.id, e)}
+							>
+								{heading.text}
+							</a>
+						</li>
+					{/each}
+				</ol>
+			</Card>
 		</div>
 
 		<!-- Mobile FAB -->
@@ -175,11 +178,14 @@
 	}
 
 	.toc-title {
-		font-size: var(--font-size-h3);
+		font-size: var(--font-size-xs);
+		text-transform: uppercase;
+		letter-spacing: 0.1em;
 		margin: 0 0 var(--space-xs);
-		font-weight: 400;
-		font-family: var(--font-heading);
-		color: var(--color-text);
+		font-weight: 600;
+		font-family: var(--font-body);
+		color: var(--color-text-muted);
+		opacity: 0.5;
 	}
 
 	.toc-list {
@@ -192,7 +198,7 @@
 		a {
 			display: block;
 			width: fit-content;
-			font-size: var(--font-size-lg);
+			font-size: var(--font-size-base);
 			color: var(--color-text);
 			opacity: 0.85;
 			text-decoration: none;
@@ -253,11 +259,19 @@
 		position: relative;
 		z-index: 1;
 		background: var(--color-bg-deep);
-		border-top: 1px solid var(--color-border);
+		border: 1px solid var(--color-border);
 		border-radius: var(--radius-lg) var(--radius-lg) 0 0;
 		padding: var(--space-md);
 		max-height: 70vh;
 		overflow-y: auto;
+
+		.toc-title {
+			font-size: var(--font-size-xs);
+		}
+
+		.toc-item a {
+			font-size: var(--font-size-base);
+		}
 	}
 
 	.toc-panel-header {
