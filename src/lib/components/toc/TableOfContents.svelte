@@ -61,7 +61,7 @@
 	<nav class="toc" aria-label="Table of contents">
 		<!-- Desktop sidebar -->
 		<div class="toc-inner">
-			<p class="toc-title">On this page</p>
+			<p class="toc-title">Table of Contents</p>
 			<ol class="toc-list">
 				{#each items as heading (heading.id)}
 					<li class="toc-item" data-level={heading.level}>
@@ -88,7 +88,7 @@
 				<button class="toc-backdrop" onclick={close} aria-label="Close table of contents"></button>
 				<div class="toc-panel">
 					<div class="toc-panel-header">
-						<p class="toc-title">On this page</p>
+						<p class="toc-title">Table of Contents</p>
 						<button onclick={close} aria-label="Close">
 							<X size={18} />
 						</button>
@@ -117,7 +117,7 @@
 		/* Desktop: sticky sidebar */
 		@media (min-width: 1201px) {
 			position: sticky;
-			top: var(--space-md);
+			top: var(--space-xl);
 			max-height: calc(100vh - var(--space-xl));
 			overflow-y: auto;
 		}
@@ -160,13 +160,11 @@
 	}
 
 	.toc-title {
-		font-size: var(--font-size-xs);
-		text-transform: uppercase;
-		letter-spacing: 0.1em;
-		color: var(--color-text-muted);
-		opacity: 0.5;
+		font-size: var(--font-size-h3);
 		margin: 0 0 var(--space-xs);
-		font-weight: 600;
+		font-weight: 400;
+		font-family: var(--font-heading);
+		color: var(--color-text);
 	}
 
 	.toc-list {
@@ -178,9 +176,10 @@
 	.toc-item {
 		a {
 			display: block;
-			font-size: var(--font-size-sm);
-			color: var(--color-text-muted);
-			opacity: 0.6;
+			width: fit-content;
+			font-size: var(--font-size-lg);
+			color: var(--color-text);
+			opacity: 0.85;
 			text-decoration: none;
 			border-left: 2px solid transparent;
 			padding: 0.2em 0 0.2em 0.5rem;
@@ -228,7 +227,7 @@
 	.toc-backdrop {
 		position: absolute;
 		inset: 0;
-		background: rgba(0, 0, 0, 0.6);
+		background: rgba(0, 0, 0, 0.35);
 		backdrop-filter: blur(2px);
 		border: none;
 		cursor: default;
