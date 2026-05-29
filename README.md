@@ -6,7 +6,7 @@ This is (once again) a space for myself where I document the thoughts of myself 
 
 Once again, we are literally *"về bắt đầu"* one more time XDDD.
 
-![hehe](./github/readme/view.svg)
+![hehe](./.github/readme/view.svg)
 
 > [!NOTE]
 > This site is still under construction!
