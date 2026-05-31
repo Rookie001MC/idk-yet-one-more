@@ -1,6 +1,10 @@
 import { getDirectusClient } from '$lib/server/directus';
 import { readItems } from '@directus/sdk';
+import type { QueryFields } from '@directus/sdk';
 import type BlogPost from '$lib/types/blogPost';
+import type { Schema } from '$lib/types/schema';
+
+type BlogPostFields = QueryFields<Schema, BlogPost>;
 
 export async function fetchLatestPosts(
 	limit: number = 3,
@@ -11,7 +15,7 @@ export async function fetchLatestPosts(
 		const client = getDirectusClient(fetch);
 		const posts = await client.request(
 			readItems('blogPosts', {
-				fields,
+				fields: fields as BlogPostFields,
 				limit,
 				sort: ['-datePublished'],
 				filter: {
@@ -36,7 +40,7 @@ export async function fetchAllPosts(
 		const client = getDirectusClient(fetch);
 		const posts = await client.request(
 			readItems('blogPosts', {
-				fields,
+				fields: fields as BlogPostFields,
 				sort: ['-datePublished'],
 				filter: {
 					status: {
@@ -61,7 +65,7 @@ export async function fetchPostBySlug(
 		const client = getDirectusClient(fetch);
 		const posts = await client.request(
 			readItems('blogPosts', {
-				fields,
+				fields: fields as BlogPostFields,
 				filter: {
 					slug: {
 						_eq: slug
@@ -89,7 +93,7 @@ export async function fetchPostsByCategory(
 		const client = getDirectusClient(fetch);
 		const posts = await client.request(
 			readItems('blogPosts', {
-				fields,
+				fields: fields as BlogPostFields,
 				sort: ['-datePublished'],
 				filter: {
 					status: {
@@ -120,7 +124,7 @@ export async function fetchPostBySlugPreview(
 		const client = getDirectusClient(fetch);
 		const posts = await client.request(
 			readItems('blogPosts', {
-				fields,
+				fields: fields as BlogPostFields,
 				filter: {
 					slug: {
 						_eq: slug
@@ -146,14 +150,13 @@ export async function fetchPostsByTag(
 		const client = getDirectusClient(fetch);
 		const posts = await client.request(
 			readItems('blogPosts', {
-				fields,
+				fields: fields as BlogPostFields,
 				sort: ['-datePublished'],
 				filter: {
 					status: {
 						_eq: 'published'
 					},
 					tags: {
-						// @ts-expect-error - Directus SDK types can be tricky with M2M filtering
 						tagsId: {
 							slug: {
 								_eq: slug
@@ -179,14 +182,13 @@ export async function fetchPostsByTagId(
 		const client = getDirectusClient(fetch);
 		const posts = await client.request(
 			readItems('blogPosts', {
-				fields,
+				fields: fields as BlogPostFields,
 				sort: ['-datePublished'],
 				filter: {
 					status: {
 						_eq: 'published'
 					},
 					tags: {
-						// @ts-expect-error - Directus SDK types can be tricky with M2M filtering
 						tagsId: {
 							id: {
 								_eq: id

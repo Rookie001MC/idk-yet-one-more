@@ -1,7 +1,7 @@
 import { sentrySvelteKit } from '@sentry/sveltekit';
 /// <reference types="vitest/config" />
 import { sveltekit } from '@sveltejs/kit/vite';
-import { defineConfig } from 'vite';
+import { defineConfig } from 'vitest/config';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { storybookTest } from '@storybook/addon-vitest/vitest-plugin';

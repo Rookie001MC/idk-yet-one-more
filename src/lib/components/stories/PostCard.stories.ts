@@ -22,6 +22,7 @@ const mockBlogPost: BlogPost = {
 	slug: 'sample-blog-post',
 	excerpt:
 		'This is a sample excerpt for the blog post. It should be a few sentences long to demonstrate the excerpt functionality.',
+	disableAutoExcerpt: false,
 	datePublished: '2026-04-26T10:00:00Z',
 	featuredImage: {
 		id: 'img-123',
