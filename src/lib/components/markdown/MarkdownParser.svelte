@@ -1,7 +1,7 @@
 <script lang="ts">
 	import SvelteMarkdown from '@humanspeak/svelte-markdown';
 	import { markedAlert } from '@humanspeak/svelte-markdown/extensions';
-	import type { HeadingSnippetProps } from '@humanspeak/svelte-markdown';
+	import type { HeadingSnippetProps, MarkedExtension, SvelteMarkdownOptions } from '@humanspeak/svelte-markdown';
 
 	import Admonition from '$lib/components/ui/admonition/index';
 	import type { AdmonitionVariant } from '$lib/components/ui/admonition/index';
@@ -24,9 +24,17 @@
 	const renderers = {
 		image: ImageRenderer
 	};
+
+	const extensions: MarkedExtension<string, string>[] = [
+		markedAlert()
+	]
+
+	const options: SvelteMarkdownOptions = {
+		breaks: true
+	}
 </script>
 
-<SvelteMarkdown source={content ?? ''} {renderers} extensions={[markedAlert()]} isInline={inline}>
+<SvelteMarkdown source={content ?? ''} {renderers} extensions={extensions} isInline={inline} options={options}>
 	{#snippet alert(props: { alertType: string; text: string })}
 		<Admonition variant={props.alertType.toLowerCase() as AdmonitionVariant}>
 			<Admonition.Title />
