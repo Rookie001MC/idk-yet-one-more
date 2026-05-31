@@ -159,7 +159,8 @@
 			width: String(width),
 			format,
 			quality: String(quality),
-			fit
+			fit,
+			withoutEnlargement: 'true'
 		});
 		return `/api/assets/${id}?${params.toString()}`;
 	}
