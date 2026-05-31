@@ -4,7 +4,7 @@
 	import TableOfContents from '$lib/components/toc/TableOfContents.svelte';
 	import toLocalizedLongDate from '$lib/utils/dateFormatter';
 	import { Image } from '$lib/components/ui/image';
-	import { generateExcerpt } from '$lib/utils/generateExcerpt';
+	import { resolveBlogPostExcerpt } from '$lib/utils/blogPostExcerpt';
 	import type BlogPost from '$lib/types/blogPost';
 	import { parseHeadings } from '$lib/utils/toc';
 
@@ -23,8 +23,8 @@
 			: ''
 	);
 
-	/** CMS excerpt if set; otherwise auto-generated from the post content. */
-	const displayExcerpt = $derived(post.excerpt || generateExcerpt(post.content ?? ''));
+	/** CMS excerpt if set; otherwise auto-generated unless disabled for free-form posts. */
+	const displayExcerpt = $derived(resolveBlogPostExcerpt(post));
 
 	const tocHeadings = $derived(parseHeadings(post.content ?? ''));
 </script>

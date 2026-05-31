@@ -1,7 +1,7 @@
 import { error } from '@sveltejs/kit';
 import { PUBLIC_BASE_URL } from '$env/static/public';
 import { fetchPostBySlug, fetchPostBySlugPreview } from '$lib/data/blogPosts';
-import { generateExcerpt } from '$lib/utils/generateExcerpt';
+import { resolveBlogPostExcerpt } from '$lib/utils/blogPostExcerpt';
 import { definePageMetaTags } from 'svelte-meta-tags';
 import type { PageServerLoad } from './$types';
 import siteConfig from '$lib/config';
@@ -57,7 +57,7 @@ export const load: PageServerLoad = async ({ params, url, cookies, fetch, setHea
 		} else {
 			const ogParams = new URLSearchParams();
 			ogParams.set('title', post.title || '');
-			const ogDescription = post.excerpt || generateExcerpt(post.content ?? '');
+			const ogDescription = resolveBlogPostExcerpt(post);
 			if (ogDescription) ogParams.set('description', ogDescription);
 			if (post.category && typeof post.category === 'object' && 'name' in post.category) {
 				ogParams.set('category', String(post.category.name));
@@ -66,7 +66,7 @@ export const load: PageServerLoad = async ({ params, url, cookies, fetch, setHea
 			ogImageType = 'image/png';
 		}
 
-		const description = (post.excerpt || generateExcerpt(post.content ?? '')) || undefined;
+		const description = resolveBlogPostExcerpt(post) || undefined;
 
 		return {
 			post,
