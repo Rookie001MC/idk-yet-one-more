@@ -8,6 +8,7 @@ export default interface BlogPost {
 	title: string;
 	slug: string;
 	excerpt: string | null;
+	disableAutoExcerpt: boolean
 	content: string | null;
 	datePublished: string | null;
 	featuredImage: DirectusFile | string | null;
