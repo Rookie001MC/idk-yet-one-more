@@ -25,6 +25,12 @@
 
 - [ ] Refactor the layout blog (BlogPostLayout.svelte) to avoid using it's own scoped style and use the global SCSS styles. 
 
+- [ ] Image component to make a placeholder when the image is loading. (or maybe building the entire skeleton)
+
 - [ ] Search feature
 
-- [ ] Gallery Page
+- [ ] Switch components to use the Directus Visual Editor library
+
+- [ ] Gallery Page with full data collection
+
+- [ ] Comments (?, privacy issues if not dealt correctly)
