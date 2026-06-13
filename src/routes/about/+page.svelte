@@ -1,4 +1,4 @@
-﻿<script lang="ts">
+<script lang="ts">
 	import { Admonition } from '$lib/components/ui/admonition';
 	import Blockquote from '$lib/components/ui/Blockquote.svelte';
 	import { Image } from '$lib/components/ui/image';
@@ -116,75 +116,3 @@
 		</section>
 	</div>
 </article>
-
-<style lang="scss">
-	.about-page {
-		padding-bottom: var(--space-xl);
-	}
-
-	.about-header {
-		position: relative;
-		min-height: 70vh;
-		display: flex;
-		flex-direction: column;
-		justify-content: flex-end;
-		padding-bottom: var(--space-lg);
-		margin-bottom: var(--space-xl);
-	}
-
-	.header-image-container {
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
-		z-index: 1;
-	}
-
-	.header-content {
-		position: relative;
-		z-index: 10;
-		color: var(--color-text);
-
-		h1 {
-			font-size: var(--font-size-hero);
-			margin: 0 0 var(--space-xs);
-		}
-
-		.subtitle {
-			font-size: var(--font-size-body);
-			opacity: 0.9;
-		}
-	}
-
-	.container {
-		max-width: 800px;
-		margin: 0 auto;
-		padding: 0 var(--space-sm);
-	}
-
-	.about-content {
-		.section {
-			margin-bottom: var(--space-xl);
-
-			h2 {
-				margin-bottom: var(--space-md);
-			}
-
-			h3 {
-				margin: var(--space-lg) 0 var(--space-sm);
-			}
-
-			p {
-				margin-bottom: var(--space-md);
-				line-height: 1.8;
-			}
-		}
-	}
-
-	@media (max-width: 768px) {
-		.about-header {
-			min-height: 50vh;
-		}
-	}
-</style>
