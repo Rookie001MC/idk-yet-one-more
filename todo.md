@@ -23,9 +23,13 @@
 
 - [x] Expand the Image component to also allow Directus Asset UUID optimization
 
-- [ ] Refactor the layout blog (BlogPostLayout.svelte) to avoid using it's own scoped style and use the global SCSS styles. 
+- [x] Refactor scoped `<style>` blocks across layouts and pages to use global SCSS styles where applicable, keeping only truly page/component-specific styles scoped.
+  - Layouts: `BlogPostLayout.svelte`, `PageLayout.svelte`, `+layout.svelte`
+  - Pages: `+page.svelte`, `about`, `blog`, `blog/[slug]`, `category/[slug]`, `contact`, `privacy-policy`, `tag/[slug]`
+  - Components with shared-style candidates: `Header.svelte`, `Footer.svelte`, `PostCard.svelte`, `TableOfContents.svelte`
 
 - [ ] Image component to make a placeholder when the image is loading. (or maybe building the entire skeleton)
+  - Can use the Skeleton component from Shadcn-Svelte to save time.
 
 - [ ] Search feature
 
