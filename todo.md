@@ -14,8 +14,8 @@
 
 - [x] Fix Mobile layout bugs
   - [x] The entire mobile layout can be dragged sideways
-    - Note that, while this is fixed, this can still be dragged back and forth ever slightly. If possible, this should be completely fixed in the future. 
-  - [x] Increase the height of the Article page  
+    - Note that, while this is fixed, this can still be dragged back and forth ever slightly. If possible, this should be completely fixed in the future.
+  - [x] Increase the height of the Article page
 
 - [x] Blog Table of Contents
   - [x] Mobile: button, see https://svelte.dev's ToC button. Can be a full page overlay, with the TOC floating above it.
@@ -30,7 +30,7 @@
 
 - [x] Write custom Embed key, or custom interface extension, to allow `<iframe>` embeds.
 
-- [ ] Image component to make a placeholder when the image is loading. (or maybe building the entire skeleton)
+- [x] Image component to make a placeholder when the image is loading. (or maybe building the entire skeleton)
   - Can use the Skeleton component from Shadcn-Svelte to save time.
 
 - [ ] Search feature

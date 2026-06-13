@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { Image } from '$lib/components/ui/image';
 	import type { Snippet } from 'svelte';
 
 	type Props = {
@@ -27,7 +28,14 @@
 
 				{#if featuredImage}
 					<div class="featured-image-wrapper">
-						<img src={featuredImage.src} alt={featuredImage.alt || ''} class="featured-image" />
+						<Image
+							src={featuredImage.src}
+							alt={featuredImage.alt || ''}
+							width={1200}
+							height={514}
+							sizes="(min-width: 1200px) 1200px, 100vw"
+							class="featured-image"
+						/>
 					</div>
 				{/if}
 			</div>

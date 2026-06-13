@@ -3,18 +3,28 @@
 
 	import Header from '$lib/components/Header.svelte';
 	import Footer from '$lib/components/Footer.svelte';
+	import NavigationSkeleton from '$lib/components/NavigationSkeleton.svelte';
 	import DevelopmentMode from '$lib/components/DevelopmentMode.svelte';
 	import { Toaster } from '$lib/components/ui/sonner';
 	import { toast } from 'svelte-sonner';
 	import { onMount } from 'svelte';
 	import { onNavigate } from '$app/navigation';
 	import { MetaTags, deepMerge } from 'svelte-meta-tags';
-	import { page } from '$app/state';
+	import { navigating, page } from '$app/state';
 	import { env } from '$env/dynamic/public';
+
+	type NavigationSkeletonVariant = 'page' | 'post';
 
 	let { data, children } = $props();
 
 	let metaTags = $derived(deepMerge(data.baseMetaTags, page.data.pageMetaTags));
+	let navigationRouteId = $derived(navigating.to?.route.id ?? null);
+	let isRouteNavigation = $derived(
+		Boolean(navigating.type && !navigating.willUnload && navigationRouteId)
+	);
+	let navigationSkeletonVariant: NavigationSkeletonVariant = $derived(
+		navigationRouteId === '/blog/[slug]' ? 'post' : 'page'
+	);
 
 	onMount(() => {
 		if (data.cmsError) {
@@ -54,6 +64,9 @@
 
 <div class="app-layout">
 	<Header />
+	{#if isRouteNavigation}
+		<NavigationSkeleton variant={navigationSkeletonVariant} />
+	{/if}
 	<main class="main-content">
 		{@render children()}
 	</main>

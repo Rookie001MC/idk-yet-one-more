@@ -1,5 +1,7 @@
 <script lang="ts">
+	import { Skeleton } from '$lib/components/ui/skeleton';
 	import type DirectusFile from '$lib/types/directusFile';
+	import type { Attachment } from 'svelte/attachments';
 	import type { HTMLImgAttributes } from 'svelte/elements';
 
 	const isDev = import.meta.env.DEV;
@@ -71,6 +73,12 @@
 		 * Skip generating Source sets
 		 */
 		skipSrcset?: boolean;
+		/** Show a loading placeholder until the image finishes loading. */
+		skeleton?: boolean;
+		/** Override the reserved image ratio, e.g. "16 / 9". */
+		aspectRatio?: string;
+		/** Extra classes for the loading placeholder. */
+		skeletonClass?: string;
 		class?: string;
 	}
 
@@ -85,8 +93,18 @@
 		fit = 'cover',
 		class: className = '',
 		skipSrcset = false,
+		skeleton = true,
+		aspectRatio,
+		skeletonClass = '',
+		width = undefined,
+		height = undefined,
+		onload = undefined,
+		onerror = undefined,
 		...imgProps
 	}: Props = $props();
+
+	let isLoaded = $state(false);
+	let hasError = $state(false);
 
 	// -------------------------------------------------------------------------
 	// Source type detection
@@ -223,6 +241,75 @@
 	);
 
 	const loading = $derived(lazy ? 'lazy' : 'eager');
+	const imageClasses = $derived(['cms-image', className].filter(Boolean).join(' '));
+	const skeletonClasses = $derived(['cms-image-skeleton', skeletonClass].filter(Boolean).join(' '));
+	const classTokens = $derived(className.split(/\s+/).filter(Boolean));
+	const shouldUseAbsoluteShell = $derived(classTokens.includes('hero-bg'));
+	const shouldUseContentSpacing = $derived(classTokens.includes('content-image'));
+
+	function toPositiveNumber(value: string | number | null | undefined): number | null {
+		if (typeof value === 'number') return value > 0 ? value : null;
+		if (typeof value === 'string') {
+			const parsed = Number(value);
+			return Number.isFinite(parsed) && parsed > 0 ? parsed : null;
+		}
+		return null;
+	}
+
+	function getIntrinsicAspectRatio(): string | undefined {
+		if (aspectRatio) return aspectRatio;
+		if (isDirectusFile(src) && src.width && src.height) return `${src.width} / ${src.height}`;
+
+		const imageWidth = toPositiveNumber(width);
+		const imageHeight = toPositiveNumber(height);
+		return imageWidth && imageHeight ? `${imageWidth} / ${imageHeight}` : undefined;
+	}
+
+	const resolvedAspectRatio = $derived(getIntrinsicAspectRatio());
+	const shellClasses = $derived(
+		[
+			'cms-image-shell',
+			shouldUseAbsoluteShell && 'cms-image-shell--absolute',
+			shouldUseContentSpacing && 'cms-image-shell--content',
+			resolvedAspectRatio && 'cms-image-shell--has-ratio',
+			isLoaded && 'cms-image-shell--loaded',
+			hasError && 'cms-image-shell--error'
+		]
+			.filter(Boolean)
+			.join(' ')
+	);
+	const shellStyle = $derived(
+		resolvedAspectRatio ? `aspect-ratio: ${resolvedAspectRatio}` : undefined
+	);
+	const showSkeleton = $derived(skeleton && !isLoaded);
+	type ImageEvent = Event & { currentTarget: EventTarget & HTMLImageElement };
+
+	function handleLoad(event: Event) {
+		isLoaded = true;
+		hasError = false;
+		onload?.(event as ImageEvent);
+	}
+
+	function handleError(event: Event) {
+		isLoaded = true;
+		hasError = true;
+		onerror?.(event as ImageEvent);
+	}
+
+	function trackImageState(source: string): Attachment<HTMLImageElement> {
+		return (node) => {
+			isLoaded = false;
+			hasError = false;
+			if (!source) return;
+
+			queueMicrotask(() => {
+				if (!node.complete) return;
+
+				isLoaded = true;
+				hasError = node.naturalWidth === 0;
+			});
+		};
+	}
 </script>
 
 <!--
@@ -243,24 +330,35 @@
 -->
 
 {#snippet img()}
-	<picture>
-		{#if avifSrcset}
-			<source srcset={avifSrcset} {sizes} type="image/avif" />
+	<div class={shellClasses} style={shellStyle}>
+		{#if showSkeleton}
+			<Skeleton class={skeletonClasses} />
 		{/if}
-		{#if webpSrcset}
-			<source srcset={webpSrcset} {sizes} type="image/webp" />
-		{/if}
-		<img
-			src={fallbackSrc}
-			srcset={fallbackSrcset || undefined}
-			{sizes}
-			{alt}
-			{loading}
-			decoding="async"
-			class={['cms-image', className].filter(Boolean).join(' ')}
-			{...imgProps}
-		/>
-	</picture>
+
+		<picture class="cms-image-picture">
+			{#if avifSrcset}
+				<source srcset={avifSrcset} {sizes} type="image/avif" />
+			{/if}
+			{#if webpSrcset}
+				<source srcset={webpSrcset} {sizes} type="image/webp" />
+			{/if}
+			<img
+				{@attach trackImageState(fallbackSrc)}
+				src={fallbackSrc}
+				srcset={fallbackSrcset || undefined}
+				{sizes}
+				{alt}
+				{loading}
+				{width}
+				{height}
+				decoding="async"
+				class={imageClasses}
+				onload={handleLoad}
+				onerror={handleError}
+				{...imgProps}
+			/>
+		</picture>
+	</div>
 {/snippet}
 
 {#if figcaption}
@@ -275,7 +373,64 @@
 	{@render img()}
 {/if}
 
-<style>
+<style lang="scss">
+	.cms-image-shell {
+		position: relative;
+		display: block;
+		width: 100%;
+		height: 100%;
+		overflow: hidden;
+	}
+
+	.cms-image-shell--absolute {
+		position: absolute;
+		inset: 0;
+	}
+
+	.cms-image-shell--content {
+		margin: var(--space-lg) 0;
+		border-radius: var(--radius-md);
+	}
+
+	.cms-image-picture,
+	.cms-image {
+		display: block;
+		width: 100%;
+	}
+
+	.cms-image-shell--has-ratio .cms-image-picture,
+	.cms-image-shell--has-ratio .cms-image {
+		height: 100%;
+	}
+
+	.cms-image-shell--has-ratio .cms-image {
+		object-fit: cover;
+	}
+
+	.cms-image-shell--content .cms-image {
+		margin: 0;
+	}
+
+	.cms-image-skeleton {
+		position: absolute;
+		inset: 0;
+		z-index: 1;
+		width: 100%;
+		height: 100%;
+		border-radius: inherit;
+		pointer-events: none;
+	}
+
+	.cms-image-shell--loaded .cms-image {
+		animation: cms-image-fade-in 0.2s ease-out both;
+	}
+
+	@keyframes cms-image-fade-in {
+		from {
+			opacity: 0;
+		}
+	}
+
 	.cms-image-figure {
 		margin: 0;
 	}

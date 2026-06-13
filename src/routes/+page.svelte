@@ -11,7 +11,7 @@
 
 <!-- Hero Section -->
 <section class="hero">
-	<Image src="/images/site-cover.jpg" alt="Site Cover" class="hero-bg" />
+	<Image src="/images/site-cover.jpg" alt="Site Cover" width={1080} height={738} class="hero-bg" />
 	<div class="hero-overlay"></div>
 
 	<div class="hero-content">
