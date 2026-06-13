@@ -1,12 +1,18 @@
 <script lang="ts">
 	import SvelteMarkdown from '@humanspeak/svelte-markdown';
 	import { markedAlert } from '@humanspeak/svelte-markdown/extensions';
-	import type { HeadingSnippetProps, MarkedExtension, SvelteMarkdownOptions } from '@humanspeak/svelte-markdown';
+	import type {
+		HeadingSnippetProps,
+		MarkedExtension,
+		SvelteMarkdownOptions
+	} from '@humanspeak/svelte-markdown';
 
 	import Admonition from '$lib/components/ui/admonition/index';
 	import type { AdmonitionVariant } from '$lib/components/ui/admonition/index';
 	import Blockquote from '$lib/components/ui/Blockquote.svelte';
+	import EmbedRenderer from './EmbedRenderer.svelte';
 	import ImageRenderer from './ImageRenderer.svelte';
+	import { markedEmbed } from './markedEmbed';
 
 	// Self-import for recursive rendering of blockquote / alert inner content.
 	// props.text is raw markdown, not HTML — so it must be parsed again to get
@@ -22,19 +28,18 @@
 	} = $props();
 
 	const renderers = {
+		embed: EmbedRenderer,
 		image: ImageRenderer
 	};
 
-	const extensions: MarkedExtension<string, string>[] = [
-		markedAlert()
-	]
+	const extensions: MarkedExtension<string, string>[] = [markedAlert(), markedEmbed()];
 
 	const options: SvelteMarkdownOptions = {
 		breaks: true
-	}
+	};
 </script>
 
-<SvelteMarkdown source={content ?? ''} {renderers} extensions={extensions} isInline={inline} options={options}>
+<SvelteMarkdown source={content ?? ''} {renderers} {extensions} isInline={inline} {options}>
 	{#snippet alert(props: { alertType: string; text: string })}
 		<Admonition variant={props.alertType.toLowerCase() as AdmonitionVariant}>
 			<Admonition.Title />

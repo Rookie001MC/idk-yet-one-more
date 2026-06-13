@@ -29,7 +29,12 @@ const config = {
 					'https://stats.itsrookienguyen.me/api/send'
 				],
 				'form-action': ["'self'"],
-				'frame-src': ["'self'", 'https:'],
+				'frame-src': [
+					"'self'",
+					'https://open.spotify.com',
+					'https://www.youtube.com',
+					'https://www.youtube-nocookie.com'
+				],
 				'frame-ancestors': ["'self'", `${process.env.PUBLIC_DIRECTUS_URL}`],
 				'font-src': ["'self'"],
 				'object-src': ["'none'"],

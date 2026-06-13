@@ -28,6 +28,8 @@
   - Pages: `+page.svelte`, `about`, `blog`, `blog/[slug]`, `category/[slug]`, `contact`, `privacy-policy`, `tag/[slug]`
   - Components with shared-style candidates: `Header.svelte`, `Footer.svelte`, `PostCard.svelte`, `TableOfContents.svelte`
 
+- [x] Write custom Embed key, or custom interface extension, to allow `<iframe>` embeds.
+
 - [ ] Image component to make a placeholder when the image is loading. (or maybe building the entire skeleton)
   - Can use the Skeleton component from Shadcn-Svelte to save time.
 
