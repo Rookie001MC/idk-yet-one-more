@@ -9,7 +9,7 @@
 <article class="about-page">
 	<header class="about-header">
 		<div class="header-image-container">
-			<Image src="/images/about-cover.jpg" alt="Hero" class="hero-bg" />
+			<Image src="/images/about-cover.jpg" alt="Hero" width={3543} height={2397} class="hero-bg" />
 			<div class="hero-overlay"></div>
 		</div>
 		<div class="container header-content">
@@ -65,7 +65,13 @@
 				Besides the events, I also have worked as an Observer for Garena Vietnam's Arena of Valor
 				tournaments, most notably Arena of Valor's International Championship 2023 and 2024.
 			</p>
-			<Image src="/images/0546.jpg" alt="Broadcast Work" class="content-image" />
+			<Image
+				src="/images/0546.jpg"
+				alt="Broadcast Work"
+				width={4288}
+				height={2848}
+				class="content-image"
+			/>
 		</section>
 
 		<section class="section">
@@ -79,7 +85,13 @@
 				To see objects, scenery, and a lot of everyday life inside a small frame, to imagine how
 				things work in these objects is a thrilling work on its own.
 			</p>
-			<Image src="/images/the-film-cam.jpg" alt="Photography" class="content-image" />
+			<Image
+				src="/images/the-film-cam.jpg"
+				alt="Photography"
+				width={1080}
+				height={738}
+				class="content-image"
+			/>
 		</section>
 
 		<section class="section">
