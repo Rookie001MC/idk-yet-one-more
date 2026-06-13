@@ -39,3 +39,8 @@ I sometimes do develop components in Storybook. To run Storybook:
 ```bash
 bun run storybook
 ```
+
+## License
+
+- Except noticed below, source code for this project is [licensed under MIT](./LICENSE-CODE).
+- The blog content, photos, and assets are licensed under [Creative Commons Attribution-NonCommercial 4.0 International](https://creativecommons.org/licenses/by-nc/4.0/).
