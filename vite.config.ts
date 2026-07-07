@@ -9,6 +9,7 @@ import { playwright } from '@vitest/browser-playwright';
 import { sveltekitOG } from '@ethercorps/sveltekit-og/plugin';
 const dirname =
 	typeof __dirname !== 'undefined' ? __dirname : path.dirname(fileURLToPath(import.meta.url));
+const commit = process.env['COMMIT_HASH'] ?? process.env['WORKERS_CI_COMMIT_SHA'] ?? '';
 
 // More info at: https://storybook.js.org/docs/next/writing-tests/integrations/vitest-addon
 export default defineConfig({
@@ -53,5 +54,8 @@ export default defineConfig({
 				}
 			}
 		]
+	},
+	define: {
+		'import.meta.env.COMMIT_HASH': JSON.stringify(commit)
 	}
 });
