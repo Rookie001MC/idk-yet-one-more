@@ -3,6 +3,8 @@
 	import { resolve } from '$app/paths';
 
 	const currentYear = new Date().getFullYear();
+	const commitHash = import.meta.env.COMMIT_HASH;
+	const shortCommitHash = commitHash ? commitHash.slice(0, 7) : '';
 </script>
 
 <footer class="footer">
@@ -38,7 +40,14 @@
 		</div>
 
 		<div class="footer-bottom">
-			<p>&copy; {currentYear}. Rookie's Blog. Built with SvelteKit.</p>
+			<p>&copy; {currentYear}. nhqthang. Built with SvelteKit, hosted on Cloudflare.</p>
+			{#if shortCommitHash}
+				<a
+					class="footer-commit"
+					href={'https://github.com/Rookie001MC/idk-yet-one-more/commit/' + shortCommitHash}
+					><code>{shortCommitHash}</code></a
+				>
+			{/if}
 		</div>
 	</div>
 </footer>
