@@ -52,7 +52,12 @@
 
 <svelte:head>
 	{#if env.PUBLIC_UMAMI_URL !== '' && env.PUBLIC_UMAMI_WEBSITE_ID !== ''}
-		<script defer data-website-id={env.PUBLIC_UMAMI_WEBSITE_ID} src={env.PUBLIC_UMAMI_URL}></script>
+		<script
+			defer
+			data-website-id={env.PUBLIC_UMAMI_WEBSITE_ID}
+			src={env.PUBLIC_UMAMI_URL}
+			data-performance="true"
+		></script>
 	{/if}
 </svelte:head>
 
