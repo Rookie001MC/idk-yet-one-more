@@ -151,6 +151,20 @@
 	border-top: 1px solid rgba(255, 255, 255, 0.1);
 	color: var(--color-text-muted);
 	font-size: var(--font-size-sm);
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--space-sm);
+	flex-wrap: wrap;
+
+	p {
+		margin: 0;
+	}
+}
+
+.footer-commit {
+	white-space: nowrap;
 }
 
 @media (max-width: 768px) {
