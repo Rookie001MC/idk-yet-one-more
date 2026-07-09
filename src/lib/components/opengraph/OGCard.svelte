@@ -19,7 +19,7 @@
 				</div>
 			{/if}
 			<h1
-				style="color: #ffffff; font-size: 64px; font-weight: 700; line-height: 1.1; max-width: 900px; margin: 0; font-family: 'Instrument Serif', system-ui, -apple-system, serif;"
+				style="color: #ffffff; font-size: 64px; font-weight: 700; line-height: 1.1; max-width: 900px; margin: 0; font-family: 'CDA Independence Display', system-ui, -apple-system, serif;"
 			>
 				{title}
 			</h1>

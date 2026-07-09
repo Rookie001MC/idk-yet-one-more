@@ -5,11 +5,11 @@ import { CustomFont, resolveFonts } from '@ethercorps/sveltekit-og/fonts';
 import siteConfig from '$lib/config';
 import OGCard from '$lib/components/opengraph/OGCard.svelte';
 
-import HeadingFontPath from '$lib/components/opengraph/fonts/InstrumentSerif-Regular.ttf?url';
+import HeadingFontPath from '$lib/components/opengraph/fonts/CDAIndependenceDisplay-Medium.otf?url';
 import BodyFontPath from '$lib/components/opengraph/fonts/EBGaramond-Medium.ttf?url';
 
 const CustomHeading = new CustomFont(
-	'Instrument Serif',
+	'CDA Independence Display',
 	() => read(HeadingFontPath).arrayBuffer(),
 	{ weight: 400 }
 );
